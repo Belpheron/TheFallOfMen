@@ -2,7 +2,7 @@
 (function() {
     var fallOfMenApp = angular.module("fallOfMenApp", []);
     fallOfMenApp.controller("controller", function($scope) {
-        $scope.show = 'login';
+        $scope.show = 0;
     });
 
     //directives    

@@ -1,16 +1,16 @@
-<section class="loginBox" ng-show="show == 'register'">
-    <fieldset>
+<form name="registerForm" class="registerBox row" ng-show="show == 1" action="" method="post" novalidate>
+    <div class="col-md-6 registerLeftBox">
         <legend>Personal data</legend>
         <label>Name *</label>
-        <input type="text" name="nameBox" class="form-control"/>
+        <input type="text" name="nameBox" class="form-control" required/>
         <label>Surname1 *</label>
-        <input type="text" name="surname1Box" class="form-control"/>
+        <input type="text" name="surname1Box" class="form-control" required/>
         <label>Surname2</label>
         <input type="text" name="surname2Box" class="form-control"/>
         <label>Birthdate *</label>
-        <input type="text" name="birthDateBox" calendar ng-model="date" class="form-control"/>
+        <input type="text" name="birthDateBox" calendar ng-model="date" class="form-control" required/>
         <label>Email *</label>
-        <input type="text" name="birthDateBox" calendar ng-model="date" class="form-control"/>
+        <input type="text" name="birthDateBox" calendar ng-model="date" class="form-control" required/>
         <label>Country</label>
         <select class="form-control" polla="esto debe ir con un ng-options mas una carga inicial de paises de la base de datos.">
             <option>none</option>
@@ -18,17 +18,18 @@
             <option>3</option>
             <option>4</option>
         </select>
-    </fieldset>
-    <fieldset>
+    </div>
+    <div class="col-md-6 registerRightBox">
         <legend>Account data</legend>  
-        <label>Select user name*</label>
-        <input name="userNameBox" class="form-control" type="text">
-        <label>Select a password</label>
-        <input type="password" class="form-control" name="passwordBox"/>
-        <label>Rewrite a password</label>
-        <input type="password" class="form-control" name="rePasswordBox"/>
-    </fieldset>
-    <hr/>
-    <button type="submit" name="registerButton" class="form-control">Register</button>
-    <button name="backButton" class="form-control btn-danger" ng-click="show = 'login'">Back</button>
-</section>
+        <label>Desired user name *</label>
+        <input name="userNameBox" class="form-control" type="text" required>
+        <label>Password *</label>
+        <input type="password" class="form-control" name="passwordBox" required/>
+        <label>Repeat password *</label>
+        <input type="password" class="form-control" name="rePasswordBox" required/>
+        <hr/>
+        <button type="submit" ng-disabled="registerForm.$invalid" name="registerButton" class="btn btn-success">Register</button>
+        <hr/>
+        <button name="backButton" class="btn-danger btn" ng-click="show = 1">Back</button>
+    </div>    
+</form>

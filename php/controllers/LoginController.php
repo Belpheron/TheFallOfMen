@@ -26,8 +26,10 @@ class LoginController implements ControllerInterface {
     public function run() {
 
         if (isset($_POST["loginButton"])) {
-            $userName = $_POST["userNameBox"];
-            $userPass = md5($_POST["passBox"]);
+            $userName = $this->cleanText($_POST["userNameBox"]);
+            $userPass = md5($this->cleanText($_POST["passBox"]));
+            echo "username=".$userName;
+            
             $loginUser = new User($userName, $userPass);
             $foundUser = $this->ado->getUser($loginUser);
             if ($foundUser != null) {
@@ -42,9 +44,22 @@ class LoginController implements ControllerInterface {
                 $_SESSION["user"] = $loginUser;
                 header("Location: mainWindow.php");
             } else {
-                header("Location: index.php?error=1");
+                //header("Location: index.php?error=1");
             }
         }
+    }
+    
+    /**
+     * @name cleanText()
+     * @author Juan
+     * @version 1.0
+     * @date 04/05/2016
+     * @description cleans text of html characters and spaces
+     * @param $text : the text to clean
+     * @return : the cleaned text
+     */
+    private function cleanText($text) {
+        return htmlspecialchars(stripslashes(trim($text)));
     }
 
 }
