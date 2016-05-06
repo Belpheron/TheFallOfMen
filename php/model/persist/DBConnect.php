@@ -26,7 +26,7 @@ class DBConnect {
      * @name setConexion()
      * @description sets default parameters for conexion
      */
-    private function setConnection() {
+    private function setConnection() {  
         $this->server = "localhost";
         $this->dataBase = "fallenofmen";
         $this->user = "alumne";

@@ -32,7 +32,7 @@ $controller->run();
         <!--CONTROL-->
         <script src="js/control/LoginPage.js" type="text/javascript"></script>
         <script src="js/control/generalFunctions.js" type="text/javascript"></script>
-        
+
         <!--MODEL-->
         <script src="js/model/RegisterObj.js" type="text/javascript"></script>
         <script src="js/model/Country.js" type="text/javascript"></script>
@@ -58,14 +58,38 @@ $controller->run();
             </form>
             <span class="text-danger">
                 <?php
-                if (isset($_GET["error"])) {
+                if (isset($_GET["error"]))
+                {
                     $error = $_GET["error"];
-                    switch ($error) {
+                    switch ($error)
+                    {
                         case 1:
                             echo "Username and/or password not found. <a class='text-primary' ng-click='show = 1'>Register</a> for free!!";
                             break;
                         case 2:
-                            echo "Please log in bitch";
+                            echo "No session started, Login please.";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ?>
+            </span>
+            <span class="text-success">
+                <?php
+                if (isset($_GET["send"]))
+                {
+                    $action = $_GET["send"];
+                    switch ($action)
+                    {
+                        case 0:
+                            echo "Email send successfully!";
+                            break;
+                        case 1:
+                            echo "Error reported while sending email.";
+                            break;
+                        case 2:
+                            echo "Introduced email not found in database.";
                             break;
                         case 3:
                             echo "Found errors during register. Please fill the formulary again.";
@@ -87,6 +111,8 @@ $controller->run();
             </span>
         </section>
         <section><a class="text-primary" ng-click="show = 1">Register</a></section>
-        <register-template></register-template>
-    </body>
+        <section><a class="text-primary" ng-click="show = 2">Retrieve credentials</a></section>
+    <register-template></register-template>
+    <retrieve-credentials-template></retrieve-credentials-template>
+</body>
 </html>
