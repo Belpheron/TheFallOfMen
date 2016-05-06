@@ -19,7 +19,7 @@ class User {
     private $idRobotStatistic;
     
     //constructor
-    function __construct($userName, $password, $coins = "", $userType = "", $idProfile = "", 
+    function __construct($userName, $password = "", $coins = "", $userType = "", $idProfile = "", 
             $idUserStatistic = "", $idRobotStatistic = "") {
         $this->userName = $userName;
         $this->password = $password;

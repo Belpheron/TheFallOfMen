@@ -4,6 +4,7 @@ require_once "php/controllers/ControllerInterface.php";
 require_once "php/model/persist/DBConnect.php";
 require_once "php/model/User.php";
 require_once "php/model/persist/LoginADO.php";
+require_once "php/model/Register.php";
 
 class LoginController implements ControllerInterface {
 
@@ -25,6 +26,7 @@ class LoginController implements ControllerInterface {
      */
     public function run() {
 
+        //login button click
         if (isset($_POST["loginButton"])) {
             $userName = $this->cleanText($_POST["userNameBox"]);
             $userPass = md5($this->cleanText($_POST["passBox"]));
@@ -42,9 +44,36 @@ class LoginController implements ControllerInterface {
                 $loginUser->setIdRobotStatistic($foundUser["idRobotStatistic"]);
                 //save user object in session variable
                 $_SESSION["user"] = $loginUser;
-                header("Location: mainWindow.php");
+                if ($this->ado->addOnlineUser($loginUser)) {
+                    header("Location: mainWindow.php");
+                } else {
+                    header("Location: index.php?error=4");
+                }                
             } else {
-                //header("Location: index.php?error=1");
+                header("Location: index.php?error=1");
+            }
+        }
+        
+        //submit register button click
+        if (isset($_POST["registerButton"])) {
+            $name = $this->cleanText($_POST["nameBox"]);
+            $surname1 = $this->cleanText($_POST["surname1Box"]);
+            $surname2 = $this->cleanText($_POST["surname2Box"]);
+            $birthDate = $this->cleanText($_POST["birthDateBox"]);
+            $email = $this->cleanText($_POST["emailBox"]);
+            $countryId = $_POST["countrySelect"];
+            $userName = $this->cleanText($_POST["userNameBox"]);
+            $password = md5($this->cleanText($_POST["passwordBox"]));
+            $robotSkinId = $_POST["robotSkinId"];
+            
+            $user = new Register($name, $surname1, $surname2, $email, $birthDate, 
+                    $countryId, $userName, $password, $robotSkinId);
+            
+            $result = $this->ado->saveRegister($user);
+            if ($result) {
+                header("Location: index.php?register=1");
+            } else {
+                header("Location: index.php?error=3");
             }
         }
     }

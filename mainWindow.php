@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
 //includes
+require_once "php/model/persist/LoginADO.php";
+require_once "php/model/User.php";
+
 //session control
 session_start();
 
@@ -9,6 +12,9 @@ if (!isset($_SESSION["user"])) {
 }
 
 if (isset($_GET["logOut"])) {
+    $ado = new LoginADO();
+    $user = $_SESSION["user"];
+    $ado->removeOnlineUser($user);
     session_destroy();
     Header("Location: index.php");
 }

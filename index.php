@@ -12,7 +12,7 @@ $controller->run();
 ?>
 <html ng-app="fallOfMenApp">
     <head>
-        <title>The fall of men pollaman- Login</title>
+        <title>The fall of men - Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -31,9 +31,12 @@ $controller->run();
 
         <!--CONTROL-->
         <script src="js/control/LoginPage.js" type="text/javascript"></script>
+        <script src="js/control/generalFunctions.js" type="text/javascript"></script>
         
         <!--MODEL-->
         <script src="js/model/RegisterObj.js" type="text/javascript"></script>
+        <script src="js/model/Country.js" type="text/javascript"></script>
+        <script src="js/model/RobotSkin.js" type="text/javascript"></script>
     </head>
     <body ng-controller="controller as ctrl" class="background">
         <header class="menuBar">
@@ -64,9 +67,21 @@ $controller->run();
                         case 2:
                             echo "Please log in bitch";
                             break;
+                        case 3:
+                            echo "Found errors during register. Please fill the formulary again.";
+                            break;
+                        case 4:
+                            echo "Error found while creating the session. Please try later.";
                         default:
                             break;
                     }
+                }
+                ?>
+            </span>
+            <span class="text-success">
+                <?php
+                if (isset($_GET["register"])) {
+                    echo "Register succesfull. You can now login.";
                 }
                 ?>
             </span>

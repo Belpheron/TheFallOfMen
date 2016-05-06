@@ -2,20 +2,6 @@ body, html{
     height: 100%;
     width: 100%;
 }
-@font-face {
-    font-family: 'Glyphicons Halflings';
-    src: url('../fonts/glyphicons-halflings-regular.eot');
-    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
-        url('../fonts/glyphicons-halflings-regular.woff') format('woff'), 
-        url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
-        url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
-.ng-invalid.ng-dirty {
-  border-color:red;
-}
-.ng-valid.ng-dirty {
-  border-color:green;
-}
 .loginBox{
     width: 20%;
     position: absolute;
@@ -34,4 +20,11 @@ body, html{
     padding: 20px;
     margin-top: 5vh;
 }
-
+#registerBirthDate{
+    cursor: pointer;
+}
+.robotInfoBox{
+    font-size: 0.8em;
+    margin-top: 5vh;
+    padding: 5px;
+}

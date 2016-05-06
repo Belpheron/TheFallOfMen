@@ -1,35 +1,84 @@
-<form name="registerForm" class="registerBox row" ng-show="show == 1" action="" method="post" novalidate>
-    <div class="col-md-6 registerLeftBox">
+<form name="registerForm" class="registerBox row" ng-show="show == 1" action="" method="post" novalidate>    
+    <div class="col-md-5 registerLeftBox">
         <legend>Personal data</legend>
         <label>Name *</label>
-        <input type="text" name="nameBox" class="form-control" required/>
-        <label>Surname1 *</label>
-        <input type="text" name="surname1Box" class="form-control" required/>
-        <label>Surname2</label>
-        <input type="text" name="surname2Box" class="form-control"/>
+        <input type="text" name="nameBox" ng-change="register.validateName()" 
+               ng-pattern="/^[A-Z][a-z ]+$/" ng-model="register.name" class="form-control" required/>
+        <small class="text-danger" ng-show="!register.validName">
+            First letter must be upper case. Minimum 4 characters long.<br/>
+        </small>
+        <label>Surname 1 *</label>
+        <input type="text" ng-model="register.surname1" ng-pattern="/^[A-Z][a-z ]+$/" 
+               ng-change="register.validateSurname1()" name="surname1Box" class="form-control" required/>
+        <small class="text-danger" ng-show="!register.validSurname1">
+            First letter must be upper case. Minimum 4 characters long.<br/>
+        </small>
+        <label>Surname 2 </label>
+        <input type="text" ng-model="register.surname2" ng-pattern="/^[A-Z][a-z ]+$/" 
+               ng-change="register.validateSurname2()" name="surname2Box" class="form-control"/>
+        <small class="text-danger" ng-show="!register.validSurname2">
+            First letter must be upper case. Minimum 4 characters long.<br/>
+        </small>
         <label>Birthdate *</label>
-        <input type="text" name="birthDateBox" calendar ng-model="date" class="form-control" required/>
+        <input type="text" name="birthDateBox" id="registerBirthDate" readonly 
+               ng-change="register.validateBirthDate()" calendar ng-model="register.birthDate" 
+               class="form-control" required/>
+        <small class="text-danger" ng-show="!register.validBirthDate">
+            Birth date cannot be greater than today!<br/>
+        </small>
         <label>Email *</label>
-        <input type="text" name="birthDateBox" calendar ng-model="date" class="form-control" required/>
+        <input type="text" name="emailBox" ng-model="register.email" id="emailBox" 
+               ng-pattern="/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/" ng-blur="validateEmail()" 
+               class="form-control" required/>
+        <small class='text-danger' ng-show="!register.validEmail">
+            Email must follow this format 'email@domain.extension'<br/>
+        </small>
+        <small class="text-danger" ng-show="register.emailInUse">
+            That e-mail is already in use.<br/>
+        </small>
         <label>Country</label>
-        <select class="form-control" polla="esto debe ir con un ng-options mas una carga inicial de paises de la base de datos.">
-            <option>none</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
+        <select class="form-control" name="countrySelect" ng-init="loadCountries()" ng-model="register.countryId">
+            <option ng-repeat="country in countryList" value="{{country.id}}">
+                {{country.name}} ({{country.iso}})</option>
         </select>
     </div>
-    <div class="col-md-6 registerRightBox">
+    <div class="col-md-5 registerRightBox">
         <legend>Account data</legend>  
         <label>Desired user name *</label>
-        <input name="userNameBox" class="form-control" type="text" required>
+        <input name="userNameBox" id="userNameBox" ng-model="register.userName" class="form-control" 
+               ng-pattern="/^[A-Za-z0-9_]{4,}$/" type="text" ng-blur="validateUserName()" required>
+        <small class="text-danger" ng-show="!register.validUserName">
+            Minimum 4 characters long. Only letters, numbers and underscore '_'.<br/>
+        </small>
+        <small class="text-danger" ng-show="register.nickInUse">
+            That user name is already in use.<br/>
+        </small>
         <label>Password *</label>
-        <input type="password" class="form-control" name="passwordBox" required/>
+        <input type="password" ng-pattern="/^[A-Za-z0-9_]{4,}$/" ng-model="register.password" 
+               class="form-control" ng-change="validatePassword()" 
+               name="passwordBox" required/>
+        <small class="text-danger" ng-show="!register.validPassword">
+            Minimum 4 characters long. Only letters, numbers and underscore '_'.<br/>
+        </small>        
         <label>Repeat password *</label>
-        <input type="password" class="form-control" name="rePasswordBox" required/>
+        <input ng-pattern="/^[A-Za-z0-9_]{4,}$/" ng-model="register.repeatPassword" 
+               ng-change="register.validateEqualPasswords()" type="password" 
+               class="form-control" name="rePasswordBox" required/>
+        <small class="text-danger" ng-show="!register.equalPasswords">
+            Passwords must match.<br/>
+        </small>
         <hr/>
         <button type="submit" ng-disabled="registerForm.$invalid" name="registerButton" class="btn btn-success">Register</button>
         <hr/>
         <button name="backButton" class="btn-danger btn" ng-click="show = 1">Back</button>
-    </div>    
+    </div>  
+    <div class="col-md-2" ng-init="loadRobotSkins()">
+        <legend>Choose your robot!</legend>
+        <select ng-change="getSkinDescription()" name="robotSkinId" class="form-control" ng-model="register.robotSkinId">
+            <option value="{{skin.getId()}}" ng-repeat="skin in robotSkinList">{{skin.getName()}}</option>
+        </select>
+        <div class="row robotInfoBox">
+            {{skinDescription}}
+        </div>
+    </div>
 </form>

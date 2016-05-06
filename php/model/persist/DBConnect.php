@@ -16,6 +16,11 @@ class DBConnect {
         $this->connect();
     }
     
+    //accessors
+    public function getLink() {
+        return $this->link;
+    }
+    
     //methods
     /**
      * @name setConexion()
@@ -23,7 +28,7 @@ class DBConnect {
      */
     private function setConnection() {
         $this->server = "localhost";
-        $this->dataBase = "fallofmen";
+        $this->dataBase = "fallenofmen";
         $this->user = "alumne";
         $this->password = "alumne";
     }
