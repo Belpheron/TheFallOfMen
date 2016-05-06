@@ -12,7 +12,7 @@ $controller->run();
 ?>
 <html ng-app="fallOfMenApp">
     <head>
-        <title>The fall of men pollaman- Login</title>
+        <title>The fall of men- Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -31,7 +31,7 @@ $controller->run();
 
         <!--CONTROL-->
         <script src="js/control/LoginPage.js" type="text/javascript"></script>
-        
+
         <!--MODEL-->
         <script src="js/model/RegisterObj.js" type="text/javascript"></script>
     </head>
@@ -55,14 +55,38 @@ $controller->run();
             </form>
             <span class="text-danger">
                 <?php
-                if (isset($_GET["error"])) {
+                if (isset($_GET["error"]))
+                {
                     $error = $_GET["error"];
-                    switch ($error) {
+                    switch ($error)
+                    {
                         case 1:
                             echo "Username and/or password not found. <a class='text-primary' ng-click='show = 1'>Register</a> for free!!";
                             break;
                         case 2:
-                            echo "Please log in bitch";
+                            echo "No session started, Login please.";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ?>
+            </span>
+            <span class="text-success">
+                <?php
+                if (isset($_GET["send"]))
+                {
+                    $action = $_GET["send"];
+                    switch ($action)
+                    {
+                        case 0:
+                            echo "Email send successfully!";
+                            break;
+                        case 1:
+                            echo "Error reported while sending email.";
+                            break;
+                        case 2:
+                            echo "Introduced email not found in database.";
                             break;
                         default:
                             break;
@@ -72,6 +96,8 @@ $controller->run();
             </span>
         </section>
         <section><a class="text-primary" ng-click="show = 1">Register</a></section>
-        <register-template></register-template>
-    </body>
+        <section><a class="text-primary" ng-click="show = 2">Retrieve credentials</a></section>
+    <register-template></register-template>
+    <retrieve-credentials-template></retrieve-credentials-template>
+</body>
 </html>
