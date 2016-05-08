@@ -8,7 +8,8 @@
  * @returns {Boolean}   true if the given object is a date
  *                      false if not
  */
-function isDate(txtDate) {
+function isDate(txtDate)
+{
     var currVal = txtDate;
     if (currVal == '')
         return false;
@@ -38,5 +39,37 @@ function isDate(txtDate) {
     }
     return true;
 }
+
+/**
+ * @name getMyDate()
+ * @author Franc
+ * @date 08/05/2016
+ * @version 1.0
+ * @description return a current date in format MySQL (yyyy-mm-dd)
+ * @param none
+ * @returns Date.
+ */
+function getMyDate()
+{
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10)
+    {
+        dd = '0' + dd
+    }
+
+    if (mm < 10)
+    {
+        mm = '0' + mm
+    }
+    //this format is best to compares & like MySQL
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+}
+
+
 
 

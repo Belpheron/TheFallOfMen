@@ -75,37 +75,50 @@ $controller->run();
                 }
                 ?>
             </span>
+            <?php
+            if (isset($_GET["send"]))
+            {
+                $action = $_GET["send"];
+                switch ($action)
+                {
+                    case 0:
+                        echo "<span class='text-success'>";
+                        echo "Email send successfully!";
+                        break;
+                    case 1:
+                        echo "<span class='text-danger'>";
+                        echo "Error reported while sending email.";
+                        break;
+                    case 2:
+                        echo "<span class='text-warning'>";
+                        echo "Introduced email not found in database.";
+                        break;
+                    case 3:
+                        echo "<span class='text-danger'>";
+                        echo "Found errors during register. Please fill the formulary again.";
+                        break;
+                    case 4:
+                        echo "<span class='text-danger'>";
+                        echo "Error found while creating the session. Please try later.";
+                    default:
+                        break;
+                }
+                echo "</span>";
+            }
+            ?>
             <span class="text-success">
                 <?php
-                if (isset($_GET["send"]))
+                if (isset($_GET["register"]))
                 {
-                    $action = $_GET["send"];
-                    switch ($action)
-                    {
-                        case 0:
-                            echo "Email send successfully!";
-                            break;
-                        case 1:
-                            echo "Error reported while sending email.";
-                            break;
-                        case 2:
-                            echo "Introduced email not found in database.";
-                            break;
-                        case 3:
-                            echo "Found errors during register. Please fill the formulary again.";
-                            break;
-                        case 4:
-                            echo "Error found while creating the session. Please try later.";
-                        default:
-                            break;
-                    }
+                    echo "Register succesfull. You can now login.";
                 }
                 ?>
             </span>
             <span class="text-success">
                 <?php
-                if (isset($_GET["register"])) {
-                    echo "Register succesfull. You can now login.";
+                if (isset($_GET["recovery"]))
+                {
+                    echo "Succes to reset password, Try to login.";
                 }
                 ?>
             </span>

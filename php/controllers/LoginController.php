@@ -9,11 +9,14 @@ require_once "php/mailer/class.phpmailer.php";
 
 class LoginController implements ControllerInterface
 {
+
     //properties  
-    private $ado;
+    private
+            $ado;
 
     //constructor 
-    public function __construct()
+    public
+            function __construct()
     {
         $this->ado = new LoginADO();
     }
@@ -26,8 +29,9 @@ class LoginController implements ControllerInterface
      * @date 02/05/2016
      * @description main controller run method
      */
-
-    public function run() {
+    public
+            function run()
+    {
         //login button click
         if (isset($_POST["loginButton"]))
         {
@@ -47,18 +51,24 @@ class LoginController implements ControllerInterface
                 $loginUser->setIdRobotStatistic($foundUser["idRobotStatistic"]);
                 //save user object in session variable
                 $_SESSION["user"] = $loginUser;
-                if ($this->ado->addOnlineUser($loginUser)) {
+                if ($this->ado->addOnlineUser($loginUser))
+                {
                     header("Location: mainWindow.php");
-                } else {
+                }
+                else
+                {
                     header("Location: index.php?error=4");
-                }                
-            } else {
+                }
+            }
+            else
+            {
                 header("Location: index.php?error=1");
             }
         }
-        
+
         //submit register button click
-        if (isset($_POST["registerButton"])) {
+        if (isset($_POST["registerButton"]))
+        {
             $name = $this->cleanText($_POST["nameBox"]);
             $surname1 = $this->cleanText($_POST["surname1Box"]);
             $surname2 = $this->cleanText($_POST["surname2Box"]);
@@ -68,18 +78,20 @@ class LoginController implements ControllerInterface
             $userName = $this->cleanText($_POST["userNameBox"]);
             $password = md5($this->cleanText($_POST["passwordBox"]));
             $robotSkinId = $_POST["robotSkinId"];
-            
-            $user = new Register($name, $surname1, $surname2, $email, $birthDate, 
-                    $countryId, $userName, $password, $robotSkinId);
-            
+
+            $user = new Register($name, $surname1, $surname2, $email, $birthDate, $countryId, $userName, $password, $robotSkinId);
+
             $result = $this->ado->saveRegister($user);
-            if ($result) {
+            if ($result)
+            {
                 header("Location: index.php?register=1");
-            } else {
+            }
+            else
+            {
                 header("Location: index.php?error=3");
             }
         }
-        
+
         if (isset($_POST["sendEmailButton"]))
         {
             $emailTo = $this->cleanText($_POST["emailBox"]);
@@ -101,8 +113,17 @@ class LoginController implements ControllerInterface
                 $mail->isHTML(true);
                 $mail->setFrom('fallenofmen@gmail.com', 'Administration');
                 $mail->addReplyTo("fallenofmen@gmail.com", "Administrator");
-                $content = "<b>Click <a href='localhost/proyecto/TheFallOfMen/index.php?recovery=".md5($result['username'])."-".$result['password']."'>here</a> to reset your password.</b>";
-                $mail->Subject = "Envío de email usando SMTP de Gmail";
+                $cript = "";
+                //start a own codification
+                for ($i = 0; $i < strlen($result["username"]); $i++)
+                {
+                    $cript .= ord($result["username"]{$i}) + 5; //5 is a random number.
+                    $cript .= "$";
+                }
+                //final encrypt.
+                $cript = bin2hex($cript);
+                $content = "<b>Click <a href='localhost/proyecto/TheFallOfMen/index.php?recovery=" . $cript . "&token=" . md5("fallOfMen") . "'>here</a> to reset your password.</b>";
+                $mail->Subject = "Reset password your account";
                 $mail->msgHTML($content);
                 //indicate the receiver
                 $address = $emailTo;
@@ -124,11 +145,20 @@ class LoginController implements ControllerInterface
                 header("Location: index.php?send=2");
             }
         }
-        
-        if (isset ($_GET["recovery"]))
+
+        if (isset($_GET["token"]) && isset($_GET["recovery"]))
         {
-            $credentials = split("/-/", $_GET["recovery"]);
-            header("Location: recovey.php");
+            $credentials = $_GET["token"];
+            $name = $_GET["recovery"];
+            $variable = md5("userName");
+            if ($credentials == md5("fallOfMen"))
+            {
+                header("Location: recovery.php?" . $variable . "=" . $name);
+            }
+            else
+            {
+                header("Location: index.php");
+            }
         }
     }
 
