@@ -30,6 +30,15 @@ class UserADO implements ADOinterface {
         }
         return null;
     }
+    
+    public function getAllOnline() {
+        $sql = "SELECT * FROM onlineusers";
+        $query = $this->dbConnection->execute($sql, []);
+        if ($query != null) {            
+            return $query->fetchAll();
+        }
+        return null;
+    }
 
     public function delete($entity) {
         

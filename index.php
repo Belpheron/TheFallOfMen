@@ -94,8 +94,6 @@ $controller->run();
                         case 3:
                             echo "Found errors during register. Please fill the formulary again.";
                             break;
-                        case 4:
-                            echo "Error found while creating the session. Please try later.";
                         default:
                             break;
                     }

@@ -59,6 +59,16 @@ class UserController implements ControllerInterface {
                     $outputData[1] = "No emails found.";
                 }
                 break;
+            case 102:
+                $result = $this->ado->getAllOnline();
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                    $outputData[1] = "No users online found.";
+                }
+                break;
             default:
                 $outPutData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";

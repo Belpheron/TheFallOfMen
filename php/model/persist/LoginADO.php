@@ -3,6 +3,7 @@
 require_once "php/model/persist/DBConnect.php";
 
 class LoginADO {
+
     //properties
     private $dbConnection;
 
@@ -23,11 +24,15 @@ class LoginADO {
      */
     public function removeOnlineUser($user) {
         $sql = "DELETE FROM onlineusers WHERE idUser = ?";
-        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
-        if ($query != null) {
-            return true;
+        try {
+            $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+            if ($query != null) {
+                return true;
+            }
+            return false;
+        } catch (Exception $ex) {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -41,11 +46,15 @@ class LoginADO {
      */
     public function addOnlineUser($user) {
         $sql = "INSERT INTO onlineusers (idUser) VALUES (?)";
-        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
-        if ($query != null) {
-            return true;
+        try {
+            $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+            if ($query != null) {
+                return true;
+            }
+            return false;
+        } catch (Exception $ex) {
+            return false;
         }
-        return false;
     }
 
     /**

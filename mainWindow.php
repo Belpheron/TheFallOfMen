@@ -43,11 +43,18 @@ if (isset($_GET["logOut"])) {
         
         <!--CONTROL-->
         <script src="js/control/MainWindow.js" type="text/javascript"></script>
+        
+        <!--MODEL-->
+        <script src="js/model/Home.js" type="text/javascript"></script>
+        <script src="js/model/Profile.js" type="text/javascript"></script>
+        <script src="js/model/RobotStatistic.js" type="text/javascript"></script>
+        <script src="js/model/User.js" type="text/javascript"></script>
+        <script src="js/model/UserStatistic.js" type="text/javascript"></script>
     </head>
     <body ng-controller="controller as ctrl" class="background">
         <header class="menuBar row">
             <a href="mainWindow.php?logOut=1" class="menuButton btn btn-danger">LOGOUT</a>
-            <button class="menuButton btn btn-primary" ng-click="currentWindow = 'home'">HOME</button>
+            <button class="menuButton btn btn-primary" ng-click="showHome()">HOME</button>
             <button class="menuButton btn btn-primary" ng-click="currentWindow = 'hangar'">HANGAR</button>
             <button class="menuButton btn btn-primary" ng-click="currentWindow = 'shop'">SHOP</button>
             <button class="menuButton btn btn-primary" ng-click="currentWindow = 'profile'">PROFILE</button>
