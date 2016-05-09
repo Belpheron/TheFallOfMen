@@ -7,14 +7,15 @@ require_once "php/model/persist/LoginADO.php";
 require_once "php/model/Register.php";
 require_once "php/mailer/class.phpmailer.php";
 
-class LoginController implements ControllerInterface
-{
+class LoginController implements ControllerInterface {
+
     //properties  
-    private $ado;
+    private
+            $ado;
 
     //constructor 
-    public function __construct()
-    {
+    public
+            function __construct() {
         $this->ado = new LoginADO();
     }
 
@@ -26,18 +27,15 @@ class LoginController implements ControllerInterface
      * @date 02/05/2016
      * @description main controller run method
      */
-
     public function run() {
         //login button click
-        if (isset($_POST["loginButton"]))
-        {
+        if (isset($_POST["loginButton"])) {
             $userName = $this->cleanText($_POST["userNameBox"]);
             $userPass = md5($this->cleanText($_POST["passBox"]));
             echo "username=" . $userName;
             $loginUser = new User($userName, $userPass);
             $foundUser = $this->ado->getUser($loginUser);
-            if ($foundUser != null)
-            {
+            if ($foundUser != null) {
                 //if user is found, create a user object with data from database
                 $loginUser->setCoins($foundUser["coins"]);
                 $loginUser->setUserType($foundUser["userType"]);
@@ -45,15 +43,18 @@ class LoginController implements ControllerInterface
                 $loginUser->setIdProfile($foundUser["idProfile"]);
                 $loginUser->setIdUserStatistic($foundUser["idUserStatistic"]);
                 $loginUser->setIdRobotStatistic($foundUser["idRobotStatistic"]);
-                //save user object in session variable
-                $_SESSION["user"] = $loginUser;
-                $this->ado->addOnlineUser($loginUser);
-                header("Location: mainWindow.php");                              
+                //save user object in session variable                
+                if ($this->ado->addOnlineUser($loginUser)) {
+                    $_SESSION["user"] = $loginUser;
+                    header("Location: mainWindow.php");
+                } else {
+                    header("Location: index.php?error=4");
+                }
             } else {
                 header("Location: index.php?error=1");
             }
         }
-        
+
         //submit register button click
         if (isset($_POST["registerButton"])) {
             $name = $this->cleanText($_POST["nameBox"]);
@@ -65,10 +66,9 @@ class LoginController implements ControllerInterface
             $userName = $this->cleanText($_POST["userNameBox"]);
             $password = md5($this->cleanText($_POST["passwordBox"]));
             $robotSkinId = $_POST["robotSkinId"];
-            
-            $user = new Register($name, $surname1, $surname2, $email, $birthDate, 
-                    $countryId, $userName, $password, $robotSkinId);
-            
+
+            $user = new Register($name, $surname1, $surname2, $email, $birthDate, $countryId, $userName, $password, $robotSkinId);
+
             $result = $this->ado->saveRegister($user);
             if ($result) {
                 header("Location: index.php?register=1");
@@ -76,12 +76,10 @@ class LoginController implements ControllerInterface
                 header("Location: index.php?error=3");
             }
         }
-        
-        if (isset($_POST["sendEmailButton"]))
-        {
+
+        if (isset($_POST["sendEmailButton"])) {
             $emailTo = $this->cleanText($_POST["emailBox"]);
-            if (($result = $this->ado->existEmail($emailTo)) != null)
-            {
+            if (($result = $this->ado->existEmail($emailTo)) != null) {
                 $mail = new PHPMailer();
                 //indicate to use SMTP
                 $mail->isSMTP();
@@ -98,34 +96,42 @@ class LoginController implements ControllerInterface
                 $mail->isHTML(true);
                 $mail->setFrom('fallenofmen@gmail.com', 'Administration');
                 $mail->addReplyTo("fallenofmen@gmail.com", "Administrator");
-                $content = "<b>Click <a href='localhost/proyecto/TheFallOfMen/index.php?recovery=".md5($result['username'])."-".$result['password']."'>here</a> to reset your password.</b>";
-                $mail->Subject = "Envío de email usando SMTP de Gmail";
+                $cript = "";
+                //start a own codification
+                for ($i = 0; $i < strlen($result["username"]); $i++) {
+                    $cript .= ord($result["username"]{$i}) + 5; //5 is a random number.
+                    $cript .= "$";
+                }
+                //final encrypt.
+                $cript = bin2hex($cript);
+                $content = "<b>Click <a href='localhost/proyecto/TheFallOfMen/index.php?recovery=" . $cript . "&token=" . md5("fallOfMen") . "'>here</a> to reset your password.</b>";
+                $mail->Subject = "Reset password your account";
                 $mail->msgHTML($content);
                 //indicate the receiver
                 $address = $emailTo;
                 $mail->addAddress($address, $result["username"]);
-                if (!$mail->send())
-                {
+                if (!$mail->send()) {
                     //not send , error.
                     header("Location: index.php?send=1");
-                }
-                else
-                {
+                } else {
                     //send
                     header("Location: index.php?send=0");
                 }
-            }
-            else
-            {
+            } else {
                 //email not exist
                 header("Location: index.php?send=2");
             }
         }
-        
-        if (isset ($_GET["recovery"]))
-        {
-            $credentials = split("/-/", $_GET["recovery"]);
-            header("Location: recovey.php");
+
+        if (isset($_GET["token"]) && isset($_GET["recovery"])) {
+            $credentials = $_GET["token"];
+            $name = $_GET["recovery"];
+            $variable = md5("userName");
+            if ($credentials == md5("fallOfMen")) {
+                header("Location: recovery.php?" . $variable . "=" . $name);
+            } else {
+                header("Location: index.php");
+            }
         }
     }
 
@@ -139,8 +145,7 @@ class LoginController implements ControllerInterface
      * @return : the cleaned text
      */
     private
-            function cleanText($text)
-    {
+            function cleanText($text) {
         return htmlspecialchars(stripslashes(trim($text)));
     }
 

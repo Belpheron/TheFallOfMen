@@ -1,3 +1,10 @@
+<?php
+$variable = md5("userName");
+if (!isset($_GET[$variable]))
+{
+    header("Location: index.php");
+}
+?>
 <html ng-app="fallOfMenApp">
     <head>
         <title>Recovery</title>
@@ -10,7 +17,7 @@
         <script src="js/frameWorks/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 
         <!--STYLE-->
-        <link href="css/LoginStyle.css" rel="stylesheet" type="text/css"/>
+        <link href="css/generalStyle.css" rel="stylesheet" type="text/css"/>
         <link href="js/frameWorks/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
         <!--CONTROL-->
@@ -18,16 +25,16 @@
     
     </head>
     <body ng-controller="recovery">
-        <form name="resetPassForm" class="registerBox row" action="" method="post" novalidate ng-submit="recovery.save()">
+        <form name="resetPassForm" class="registerBox row" novalidate ng-submit="save() && show==0">
             <div class="col-md-6 registerLeftBox">
                 <h3>Reset credentials</h3>
                 <label>Write new password</label>
-                <input type="text" id="passwordBox" name="passwordBox" class="form-control" ng-model="password" ng-pattern="/^[a-zA-Z0-9_]{4,}$/" required/>
+                <input type="password" id="passwordBox" name="passwordBox" class="form-control" ng-model="password" ng-change="checkPassword()" ng-pattern="/^[a-zA-Z0-9_]{4,}$/" required/>
                 <label>Repeat new password</label>
-                <input type="text" id="rPasswordBox" name="repeatPassBox" class="form-control" ng-model="rPassword" ng-change="recovery.checkPassword()" ng-pattern="/^[a-zA-Z0-9_]{4,}$/" required/>
-                <label class="text-danger" ng-if="show==1">The field not match with 'password'</label>
+                <input type="password" id="rPasswordBox" name="repeatPassBox" class="form-control" ng-model="rPassword" ng-change="checkPassword()" ng-pattern="/^[a-zA-Z0-9_]{4,}$/" required/>
+                <span class="text-danger" ng-if="show==1">The field not match with 'password'</span>
                 <hr/>
-                <button type="submit" id="ResetButton" ng-disabled="resetPassForm.$invalid" name="ResetButton" class="btn btn-success">Reset & Save</button>
+                <button type="submit" id="RButton" ng-disabled="resetPassForm.$invalid || show==1" name="RButton" class="btn btn-success">Reset & Save</button>
             </div>    
         </form>
     </body>

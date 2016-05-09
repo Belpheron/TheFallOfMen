@@ -58,52 +58,59 @@ $controller->run();
             </form>
             <span class="text-danger">
                 <?php
-                if (isset($_GET["error"]))
-                {
+                if (isset($_GET["error"])) {
                     $error = $_GET["error"];
-                    switch ($error)
-                    {
+                    switch ($error) {
                         case 1:
                             echo "Username and/or password not found. <a class='text-primary' ng-click='show = 1'>Register</a> for free!!";
                             break;
                         case 2:
                             echo "No session started, Login please.";
                             break;
-                        default:
-                            break;
-                    }
-                }
-                ?>
-            </span>
-            <span class="text-success">
-                <?php
-                if (isset($_GET["send"]))
-                {
-                    $action = $_GET["send"];
-                    switch ($action)
-                    {
-                        case 0:
-                            echo "Email send successfully!";
-                            break;
-                        case 1:
-                            echo "Error reported while sending email.";
-                            break;
-                        case 2:
-                            echo "Introduced email not found in database.";
-                            break;
                         case 3:
                             echo "Found errors during register. Please fill the formulary again.";
                             break;
+                        case 4:
+                            echo "Error found while creating the session. Please try later.";
                         default:
                             break;
                     }
                 }
                 ?>
             </span>
+            <?php
+            if (isset($_GET["send"])) {
+                $action = $_GET["send"];
+                switch ($action) {
+                    case 0:
+                        echo "<span class='text-success'>";
+                        echo "Email send successfully!";
+                        break;
+                    case 1:
+                        echo "<span class='text-danger'>";
+                        echo "Error reported while sending email.";
+                        break;
+                    case 2:
+                        echo "<span class='text-warning'>";
+                        echo "Introduced email not found in database.";
+                        break;
+                    default:
+                        break;
+                }
+                echo "</span>";
+            }
+            ?>
             <span class="text-success">
                 <?php
                 if (isset($_GET["register"])) {
                     echo "Register succesfull. You can now login.";
+                }
+                ?>
+            </span>
+            <span class="text-success">
+                <?php
+                if (isset($_GET["recovery"])) {
+                    echo "Succes to reset password, Try to login.";
                 }
                 ?>
             </span>

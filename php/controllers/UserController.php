@@ -10,7 +10,7 @@ class UserController implements ControllerInterface {
     private $jsonData;
     private $ado;
 
-    //constructor
+//constructor
     function __construct($action, $jsonData) {
         $this->setAction($action);
         $this->setJsonData(json_decode($jsonData));
@@ -18,7 +18,7 @@ class UserController implements ControllerInterface {
         $this->ado = new UserADO();
     }
 
-    //accessors
+//accessors
     public function getAction() {
         return $this->action;
     }
@@ -40,6 +40,7 @@ class UserController implements ControllerInterface {
         $outputData = [];
         switch ($this->getAction()) {
             case 100:
+                //comprobe if nick alredy exist
                 $user = new User($this->jsonData->userName);
                 $result = $this->ado->get($user);
                 if ($result != null) {
@@ -47,8 +48,10 @@ class UserController implements ControllerInterface {
                 } else {
                     $outputData[0] = false;
                     $outputData[1] = "No user found with that user name.";
+                    error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: UserController, action 100.\n", 3, "log/my-errors.log");
                 }
                 break;
+            //comprobe if email alredy exist
             case 101:
                 $result = $this->ado->getEmail($this->jsonData->email);
                 if ($result != null) {
@@ -57,9 +60,23 @@ class UserController implements ControllerInterface {
                 } else {
                     $outputData[0] = false;
                     $outputData[1] = "No emails found.";
+                    error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: UserController, action 101.\n", 3, "log/my-errors.log");
                 }
                 break;
+            //allows change a reset password.
             case 102:
+                $user = $this->ado->deCript($this->jsonData[0]);
+                $result = $this->ado->updateResetPassword($user, $this->jsonData[1]);
+                if ($result == true) {
+                    $outputData[0] = true;
+                    $outputData[1] = "Changed succesfull.";
+                } else {
+                    $outputData[0] = false;
+                    $outputData[1] = "Impossible reset and update your password, contact Web developer.";
+                    error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: UserController, action 102.\n", 3, "log/my-errors.log");
+                }
+                break;
+            case 103:
                 $result = $this->ado->getAllOnline();
                 if ($result != null) {
                     $outputData[0] = true;
@@ -69,16 +86,16 @@ class UserController implements ControllerInterface {
                     $outputData[1] = "No users online found.";
                 }
                 break;
+
             default:
                 $outPutData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";
-                error_log("Action not correct in UserController, value: " . $this->getAction());
+                error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: action not correct in UserController, value: " . $this->getAction(), 3, "log/my-errors.log");
                 break;
         }
-
         return $outputData;
     }
-}
 
+}
 ?>
 
