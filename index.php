@@ -98,7 +98,6 @@ $controller->run();
                         echo "<span class='text-warning'>";
                         echo "Introduced email not found in database.";
                         break;
-
                     default:
                         break;
                 }
@@ -114,12 +113,12 @@ $controller->run();
                 ?>
             </span>
             <span class="text-success">
-                <?php
-                if (isset($_GET["recovery"]))
-                {
-                    echo "Succes to reset password, Try to login.";
-                }
-                ?>
+<?php
+if (isset($_GET["recovery"]))
+{
+    echo "Succes to reset password, Try to login.";
+}
+?>
             </span>
         </section>
         <section><a class="text-primary" ng-click="show = 1">Register</a></section>

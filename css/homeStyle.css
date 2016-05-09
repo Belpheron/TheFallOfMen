@@ -15,3 +15,6 @@
     margin-left: 50vh;
     margin-top: 2vh;
 }
+.userTooltip{
+    border: 1px solid black;
+}
