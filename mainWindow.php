@@ -12,11 +12,12 @@ if (!isset($_SESSION["user"])) {
 }
 
 if (isset($_GET["logOut"])) {
-    $ado = new LoginADO();
-    $user = $_SESSION["user"];
-    $ado->removeOnlineUser($user);
     session_destroy();
-    Header("Location: index.php");
+    if ($_GET["logOut"] == 1) {
+        Header("Location: index.php");
+    } else {
+        Header("Location: index.php?error=5");
+    }   
 }
 ?>
 <html ng-app="fallOfMenApp">
@@ -51,9 +52,10 @@ if (isset($_GET["logOut"])) {
         <script src="js/model/User.js" type="text/javascript"></script>
         <script src="js/model/UserStatistic.js" type="text/javascript"></script>
     </head>
-    <body ng-controller="controller as ctrl" class="background">
+    <body ng-controller="controller as ctrl" class="background" 
+          ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName() ?>')">
         <header class="menuBar row">
-            <a href="mainWindow.php?logOut=1" class="menuButton btn btn-danger">LOGOUT</a>
+            <button class="menuButton btn btn-danger" ng-click="logout()">LOGOUT</a>
             <button class="menuButton btn btn-primary" ng-click="showHome()">HOME</button>
             <button class="menuButton btn btn-primary" ng-click="currentWindow = 'hangar'">HANGAR</button>
             <button class="menuButton btn btn-primary" ng-click="currentWindow = 'shop'">SHOP</button>

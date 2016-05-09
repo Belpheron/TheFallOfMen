@@ -45,6 +45,7 @@ class UserController implements ControllerInterface {
                 $result = $this->ado->get($user);
                 if ($result != null) {
                     $outputData[0] = true;
+                    $outputData[1] = $result;
                 } else {
                     $outputData[0] = false;
                     $outputData[1] = "No user found with that user name.";
@@ -60,7 +61,7 @@ class UserController implements ControllerInterface {
                 } else {
                     $outputData[0] = false;
                     $outputData[1] = "No emails found.";
-                    error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: UserController, action 101.\n", 3, "log/my-errors.log");
+                    //error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: UserController, action 101.\n", 3, "log/my-errors.log");
                 }
                 break;
             //allows change a reset password.
@@ -77,7 +78,8 @@ class UserController implements ControllerInterface {
                 }
                 break;
             case 103:
-                $result = $this->ado->getAllOnline();
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->getAllOnline($user);
                 if ($result != null) {
                     $outputData[0] = true;
                     $outputData[1] = $result;
@@ -86,7 +88,37 @@ class UserController implements ControllerInterface {
                     $outputData[1] = "No users online found.";
                 }
                 break;
-
+            case 104:
+                $user = new User($this->jsonData->userName);
+                if ($this->ado->removeOnlineUser($user)) {
+                    $outputData[0] = true;
+                } else {
+                    $outputData[0] = false;
+                    $outputData[1] = "Error found while deleting the session.";
+                }
+                break;
+            case 105:
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->getFriends($user);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                    $outputData[1] = "No friends found.";
+                }
+                break;
+            case 106:
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->getBlocked($user);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                    $outputData[1] = "No blocked users found.";
+                }
+                break;
             default:
                 $outPutData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";

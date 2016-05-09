@@ -4,19 +4,74 @@ var userTimer;
 //angular code
 (function() {
     var fallOfMenApp = angular.module("fallOfMenApp", []);
-    fallOfMenApp.controller("controller", function($scope, $http, accessService) {
-        //scope variables
-        $scope.home = new Home(accessService);        
+    fallOfMenApp.controller("controller", function($scope, $window, $http, accessService) {
+        
+        //home variables
+        $scope.home = new Home(accessService, $scope);  
+        $scope.currentUser = new User();
+        $scope.onlineUserList = [];
+        $scope.onlineFriendList = [];
+        $scope.onlineBlockedList = [];
 
         //interface variables
         $scope.currentWindow = "profile";
 
         //methods
+        /**
+         * @name loadUserDetails()
+         * @author Juan
+         * @version 1.0
+         * @date 09/05/2106
+         * @description loads basic user details from database
+         * @param userName : the user name to load
+         * @returns {n/a}
+         */
+        $scope.loadUserDetails = function(userName) {
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 100, jsonData: {userName:userName}});
+            promise.then(function(outputData) {
+                if (outputData[0] === true) {
+                    $scope.currentUser = new User(outputData[1].userName, outputData[1].coins);
+                }
+            });
+        }
+        
+        /**
+         * @name logout()
+         * @author Juan
+         * @version 1.0
+         * @date 09/05/2016
+         * @description removes userName from onlineusers table
+         * @returns {n/a}
+         */
+        $scope.logout = function() {
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 104, jsonData: {userName:$scope.currentUser.getUserName()}});
+            promise.then(function(outputData) {
+                if (outputData[0] === true) {
+                    window.open("mainWindow.php?logOut=1", "_self");
+                } else {
+                    window.open("mainWindow.php?logOut=2", "_self");
+                }
+            });
+        }
+        
+        //event to fire on tab closing
+        //$window.onunload =  $scope.logout;
+        
+        /**
+         * @name showHome()
+         * @author Juan
+         * @version 1.0
+         * @date 09/05/2016
+         * @descripton loads online users data and creates a new Home object, then
+         *      shows the home tab
+         * @returns {undefined}
+         */
         $scope.showHome = function() {
             $scope.home.start();
             $scope.currentWindow = "home";
         }
-    });
+    });  
+    
 
     //directives
     fallOfMenApp.factory('accessService', function($http, $log, $q) {

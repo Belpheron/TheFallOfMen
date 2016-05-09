@@ -5,6 +5,9 @@ require_once "php/controllers/LoginController.php";
 
 //session control
 session_start();
+if (isset($_SESSION["user"])) {
+    header("Location: mainWindow.php");
+}
 
 //controller start
 $controller = new LoginController();
@@ -71,7 +74,11 @@ $controller->run();
                             echo "Found errors during register. Please fill the formulary again.";
                             break;
                         case 4:
-                            echo "Error found while creating the session. Please try later.";
+                            echo "Entered user already online. Please try later.";
+                            break;
+                        case 5:
+                            echo "Loged out with problems. Please contact administrator.";
+                            break;
                         default:
                             break;
                     }

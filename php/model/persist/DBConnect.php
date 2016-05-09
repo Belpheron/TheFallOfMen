@@ -35,8 +35,8 @@ class DBConnect
     {
         $this->server = "localhost";
         $this->dataBase = "fallenofmen";
-        $this->user = "franc";
-        $this->password = "9983212";
+        $this->user = "alumne";
+        $this->password = "alumne";
     }
 
     /**

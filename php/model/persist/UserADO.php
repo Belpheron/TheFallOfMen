@@ -26,6 +26,24 @@ class UserADO implements ADOinterface
         }
         return null;
     }
+    
+    public function getFriends($user) {
+        $sql = "SELECT * FROM friend WHERE iduserName = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        if ($query != null) {
+            return $query->fetchAll();
+        }
+        return null;
+    }
+    
+    public function getBlocked($user) {
+        $sql = "SELECT * FROM bloqued WHERE iduserName = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        if ($query != null) {
+            return $query->fetchAll();
+        }
+        return null;
+    }
 
     public function getAll()
     {
@@ -38,13 +56,22 @@ class UserADO implements ADOinterface
         return null;
     }
     
-    public function getAllOnline() {
-        $sql = "SELECT * FROM onlineusers";
-        $query = $this->dbConnection->execute($sql, []);
+    public function getAllOnline($user) {
+        $sql = "SELECT * FROM onlineusers WHERE idUser != ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         if ($query != null) {            
             return $query->fetchAll();
         }
         return null;
+    }
+    
+    public function removeOnlineUser($user) {
+        $sql = "DELETE FROM onlineusers WHERE idUser = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        if ($query != null) {
+            return true;
+        }
+        return false;
     }
 
     public function delete($entity)
