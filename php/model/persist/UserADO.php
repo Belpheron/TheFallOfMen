@@ -87,7 +87,7 @@ class UserADO implements ADOinterface
         }
         catch (Exception $e)
         {
-            error_log("[".$today["wday"]."/".$today["mon"]."/".$today["year"]."][".$today["hours"].":".$today["minutes"].":".$today["seconds"]." ".$e->getMessage(), 3, "log/my-errors.log");
+            error_log("[".$today["wday"]."/".$today["mon"]."/".$today["year"]."][".$today["hours"].":".$today["minutes"].":".$today["seconds"]."] ".$e->getMessage(), 3, "log/my-errors.log");
             $result = false;
         }
         return $result;

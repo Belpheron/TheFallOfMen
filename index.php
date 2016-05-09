@@ -69,6 +69,11 @@ $controller->run();
                         case 2:
                             echo "No session started, Login please.";
                             break;
+                        case 3:
+                            echo "Found errors during register. Please fill the formulary again.";
+                            break;
+                        case 4:
+                            echo "Error found while creating the session. Please try later.";
                         default:
                             break;
                     }
@@ -93,13 +98,7 @@ $controller->run();
                         echo "<span class='text-warning'>";
                         echo "Introduced email not found in database.";
                         break;
-                    case 3:
-                        echo "<span class='text-danger'>";
-                        echo "Found errors during register. Please fill the formulary again.";
-                        break;
-                    case 4:
-                        echo "<span class='text-danger'>";
-                        echo "Error found while creating the session. Please try later.";
+
                     default:
                         break;
                 }

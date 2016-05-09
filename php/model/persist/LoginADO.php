@@ -58,7 +58,7 @@ class LoginADO {
      * @return : the found user
      */
     public function getUser($user) {
-        $sql = "SELECT * FROM user WHERE userName = ? AND password = ?";
+        $sql = "SELECT * FROM user WHERE userName = ? AND password = ? AND active = 1";
         $query = $this->dbConnection->execute($sql, [$user->getUserName(), $user->getPassword()]);
         if ($query != null) {
             return $query->fetch();
@@ -93,8 +93,8 @@ class LoginADO {
             $idRobot = $this->dbConnection->getLink()->lastInsertId();
 
             //creates user
-            $sql = "INSERT INTO user (userName, password, coins, userType, idProfile, idUserStatistic, idRobotStatistic) VALUES (?,?,?,?,?,?,?)";
-            $query = $this->dbConnection->execute($sql, [$user->getUserName(), $user->getPassword(), 10, 0, $idProfile, $idStatistic, $idRobot]);
+            $sql = "INSERT INTO user (userName, password, coins, userType, idProfile, idUserStatistic, idRobotStatistic, active) VALUES (?,?,?,?,?,?,?,?)";
+            $query = $this->dbConnection->execute($sql, [$user->getUserName(), $user->getPassword(), 10, 0, $idProfile, $idStatistic, $idRobot, 1]);
             if ($query != null) {
                 return true;
             } else {

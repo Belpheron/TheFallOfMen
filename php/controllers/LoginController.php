@@ -49,6 +49,7 @@ class LoginController implements ControllerInterface
                 $loginUser->setIdProfile($foundUser["idProfile"]);
                 $loginUser->setIdUserStatistic($foundUser["idUserStatistic"]);
                 $loginUser->setIdRobotStatistic($foundUser["idRobotStatistic"]);
+                $loginUser->setActive(1);
                 //save user object in session variable
                 $_SESSION["user"] = $loginUser;
                 if ($this->ado->addOnlineUser($loginUser))
