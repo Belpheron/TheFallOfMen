@@ -49,9 +49,9 @@ $controller->run();
         <section class="loginBox" ng-show="show == 0">
             <form class="loginForm" action="" method="post">
                 <label>User name</label>
-                <input type="text" name="userNameBox" class="form-control" ng-pattern="/^[A-Za-z]$/"/>
+                <input type="text" name="userNameBox" class="form-control" ng-pattern="/^[aA-zZ0-9_]{4,}$/"/>
                 <label>Password</label>
-                <input type="password" name="passBox" class="form-control"/>
+                <input type="password" name="passBox" class="form-control" ng-pattern="/^[aA-zZ0-9_]{4,}$/"/>
                 <hr/>
                 <button type="submit" name="loginButton" 
                         class="form-control btn btn-success">Login</button>
@@ -73,7 +73,8 @@ $controller->run();
                             echo "Found errors during register. Please fill the formulary again.";
                             break;
                         case 4:
-                            echo "Error found while creating the session. Please try later.";
+                            echo "The user alredy connected!.";
+                            break;
                         default:
                             break;
                     }

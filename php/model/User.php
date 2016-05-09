@@ -21,7 +21,7 @@ class User
     private $active;
 
     //constructor
-    function __construct($userName, $password = "", $coins = "", $userType = "", $idProfile = "", $idUserStatistic = "", $idRobotStatistic = "", $active="")
+    function __construct($userName, $password = "", $coins = "", $userType = "", $idProfile = "", $idUserStatistic = "", $idRobotStatistic = "")
     {
         $this->userName = $userName;
         $this->password = $password;
@@ -30,7 +30,6 @@ class User
         $this->idProfile = $idProfile;
         $this->idUserStatistic = $idUserStatistic;
         $this->idRobotStatistic = $idRobotStatistic;
-        $this->active = $active;
     }
 
     //accessors

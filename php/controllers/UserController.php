@@ -48,7 +48,7 @@ class UserController implements ControllerInterface {
                 } else {
                     $outputData[0] = false;
                     $outputData[1] = "No user found with that user name.";
-                    error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: UserController, action 100.\n", 3, "log/my-errors.log");
+                    error_log("FAIL: UserController, action 100.\n", 3, "log/my-errors.log");
                 }
                 break;
             //comprobe if email alredy exist
@@ -60,7 +60,7 @@ class UserController implements ControllerInterface {
                 } else {
                     $outputData[0] = false;
                     $outputData[1] = "No emails found.";
-                    error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: UserController, action 101.\n", 3, "log/my-errors.log");
+                    error_log("FAIL: UserController, action 101.\n", 3, "log/my-errors.log");
                 }
                 break;
             //allows change a reset password.
@@ -73,7 +73,7 @@ class UserController implements ControllerInterface {
                 } else {
                     $outputData[0] = false;
                     $outputData[1] = "Impossible reset and update your password, contact Web developer.";
-                    error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: UserController, action 102.\n", 3, "log/my-errors.log");
+                    error_log("FAIL: UserController, action 102.\n", 3, "log/my-errors.log");
                 }
                 break;
             case 103:
@@ -90,7 +90,7 @@ class UserController implements ControllerInterface {
             default:
                 $outPutData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";
-                error_log("[" . $today["wday"] . "/" . $today["mon"] . "/" . $today["year"] . "][" . $today["hours"] . ":" . $today["minutes"] . ":" . $today["seconds"] . "] FAIL: action not correct in UserController, value: " . $this->getAction(), 3, "log/my-errors.log");
+                error_log("FAIL: action not correct in UserController, value: " . $this->getAction(), 3, "log/my-errors.log");
                 break;
         }
         return $outputData;

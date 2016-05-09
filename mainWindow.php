@@ -7,11 +7,13 @@ require_once "php/model/User.php";
 //session control
 session_start();
 
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"]))
+{
     header("Location:index.php?error=2");
 }
 
-if (isset($_GET["logOut"])) {
+if (isset($_GET["logOut"]))
+{
     $ado = new LoginADO();
     $user = $_SESSION["user"];
     $ado->removeOnlineUser($user);
@@ -40,9 +42,10 @@ if (isset($_GET["logOut"])) {
         <link href="css/shopStyle.css" rel="stylesheet" type="text/css"/>
         <link href="css/profileStyle.css" rel="stylesheet" type="text/css"/>
         <link href="js/frameWorks/jquery-ui-1.12.0-rc.2/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-        
+
         <!--CONTROL-->
         <script src="js/control/MainWindow.js" type="text/javascript"></script>
+        <script src="js/control/ProfileWindow.js" type="text/javascript"></script>
         
         <!--MODEL-->
         <script src="js/model/Home.js" type="text/javascript"></script>
@@ -61,17 +64,17 @@ if (isset($_GET["logOut"])) {
         </header>
         <!--para mayor rapidez hacemos todos los menus en una misma pagina, asi mismo podremos hacer un efecto slider-->
         <!--esto sera la pestaña de home -->
-        <home-template></home-template>
-        <!--esto sera la pestaña de  hangar-->
-        <hangar-template></hangar-template>
-        <!--esto sera la pestaña de home -->
-        <shop-template></shop-template>
-        <!--esto sera la pestaña de home -->
-        <main ng-show="currentWindow == 'profile'">
-            <div class="row">
-                <profile-template></profile-template>
-                <statistic-template></statistic-template>
-            </div>
-        </main>
-    </body>
+    <home-template></home-template>
+    <!--esto sera la pestaña de  hangar-->
+    <hangar-template></hangar-template>
+    <!--esto sera la pestaña de home -->
+    <shop-template></shop-template>
+    <!--esto sera la pestaña de home -->
+    <main ng-show="currentWindow == 'profile'">
+        <div class="row">
+            <profile-template></profile-template>
+            <statistic-template></statistic-template>
+        </div>
+    </main>
+</body>
 </html>

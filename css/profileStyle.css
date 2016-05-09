@@ -8,3 +8,10 @@
     height: 80vh;
     margin-left: 10vh;
 }
+.popUp{
+   background-color: silver;
+    left: 25vw;
+    position: absolute;
+    top: 30vh;
+    z-index: 999;
+}

@@ -2,26 +2,34 @@
 var userTimer;
 
 //angular code
-(function() {
+(function ()
+{
     var fallOfMenApp = angular.module("fallOfMenApp", []);
-    fallOfMenApp.controller("controller", function($scope, $http, accessService) {
+    fallOfMenApp.controller("controller", function ($scope, $http, accessService)
+    {
         //scope variables
-        $scope.home = new Home(accessService);        
+        $scope.home = new Home(accessService, $scope);
+        $scope.profile = new ProfileWindow(accessService, $scope);
 
         //interface variables
         $scope.currentWindow = "profile";
+        $scope.showDisclaimerDropOut=0;
 
         //methods
-        $scope.showHome = function() {
+        $scope.showHome = function ()
+        {
             $scope.home.start();
             $scope.currentWindow = "home";
         }
+        
     });
 
     //directives
-    fallOfMenApp.factory('accessService', function($http, $log, $q) {
+    fallOfMenApp.factory('accessService', function ($http, $log, $q)
+    {
         return {
-            getData: function(url, async, method, params, data) {
+            getData: function (url, async, method, params, data)
+            {
                 var deferred = $q.defer();
                 $http({
                     url: url,
@@ -30,10 +38,12 @@ var userTimer;
                     params: params,
                     data: data,
                 })
-                        .success(function(response, status, headers, config) {
+                        .success(function (response, status, headers, config)
+                        {
                             deferred.resolve(response);
                         })
-                        .error(function(msg, code) {
+                        .error(function (msg, code)
+                        {
                             deferred.reject(msg);
                             $log.error(msg, code);
                         });
@@ -42,51 +52,61 @@ var userTimer;
             }
         }
     });
-    fallOfMenApp.directive("homeTemplate", function() {
+    fallOfMenApp.directive("homeTemplate", function ()
+    {
         return {
             restrict: 'E',
             templateUrl: "templates/home-template.html",
-            controller: function() {
+            controller: function ()
+            {
 
             },
             controllerAs: 'homeTemplate'
         };
     });
-    fallOfMenApp.directive("hangarTemplate", function() {
+    fallOfMenApp.directive("hangarTemplate", function ()
+    {
         return {
             restrict: 'E',
             templateUrl: "templates/hangar-template.html",
-            controller: function() {
+            controller: function ()
+            {
 
             },
             controllerAs: 'hangarTemplate'
         };
     });
-    fallOfMenApp.directive("profileTemplate", function() {
+    fallOfMenApp.directive("profileTemplate", function ()
+    {
         return {
             restrict: 'E',
             templateUrl: "templates/profile-template.html",
-            controller: function() {
+            controller: function ()
+            {
 
             },
             controllerAs: 'profileTemplate'
         };
     });
-    fallOfMenApp.directive("statisticTemplate", function() {
+    fallOfMenApp.directive("statisticTemplate", function ()
+    {
         return {
             restrict: 'E',
             templateUrl: "templates/statistic-template.html",
-            controller: function() {
+            controller: function ()
+            {
 
             },
             controllerAs: 'statisticTemplate'
         };
     });
-    fallOfMenApp.directive("shopTemplate", function() {
+    fallOfMenApp.directive("shopTemplate", function ()
+    {
         return {
             restrict: 'E',
             templateUrl: "templates/shop-template.html",
-            controller: function() {
+            controller: function ()
+            {
 
             },
             controllerAs: 'shopTemplate'

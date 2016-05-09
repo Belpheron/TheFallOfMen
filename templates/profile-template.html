@@ -1,25 +1,37 @@
 <div class="col-md-5 profilePersonalDataWindow">
-    <form action="" method="post" class="form-group">
+    <form name="profileForm" class="form-group" novalidate="">
         <label>Name *</label>
-        <input type="text" class="form-control" value="Lorem ipsum"/>
+        <input type="text" class="form-control" value="Lorem ipsum" required=""/>
         <label>Surname 1 *</label>
-        <input type="text" class="form-control" value="Lorem ipsum"/>
+        <input type="text" class="form-control" value="Lorem ipsum" required=""/>
         <label>Surname 2</label>
         <input type="text" class="form-control" value="Lorem ipsum"/>
         <label>Phone</label>
         <input type="text" class="form-control" value="123456789"/>
         <label>Email *</label>
-        <input type="text" class="form-control" value="asdf@adsf.com"/>
-        <label>BirthDate *</label>
-        <input type="text" calendar ng-model="birthDate" class="form-control"/>
+        <input type="text" class="form-control" value="asdf@adsf.com" required=""/>
         <label>Country *</label>
         <select class="form-control">
             <option selected>1</option>
             <option>2</option>
             <option>3</option>
         </select>
-        <hr/>
-        <button class="btn btn-success">Save changes</button>
-        <button class="btn btn-danger">Request drop out</button>
+        <label>Password</label>
+        <input type="password" class="form-control"/>
+        <label>Repeat password</label>
+        <input type="password" class="form-control"/>
+        <button  type="submit" class="btn btn-success">Save changes</button>
+        <button class="btn btn-danger pull-right" ng-click="showDisclaimerDropOut = 1">Request drop out</button>
     </form>
 </div>
+
+<div class="col-md-5 popUp" ng-show="showDisclaimerDropOut == 1">
+    <form name="requestDropOutForm" class="form-group" novalidate="" ng-submit="profile.dropOutUser()">
+        <label class="text-warning">Warning, This action is for drop out of application!, to continue insert your password.</label>
+        <input type="password" ng-model="pass"  class="form-control" required="" ng-pattern="/^[aA-zZ0-9_]{4,}$/"/>
+        <hr/>
+        <button  type="submit" class="btn btn-success" ng-disabled="requestDropOutForm.$invalid">Continue and drop out</button>
+        <button class="btn btn-danger pull-right" ng-click="showDisclaimerDropOut = 0">Sorry I dont like this</button>
+    </form>
+</div>
+
