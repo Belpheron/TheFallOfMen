@@ -2,6 +2,7 @@
 
 require_once "../model/persist/DBConnect.php";
 require_once "../model/persist/ADOinterface.php";
+require_once "../model/Register.php";
 
 class UserADO implements ADOinterface
 {
@@ -37,11 +38,13 @@ class UserADO implements ADOinterface
         }
         return null;
     }
-    
-    public function getAllOnline() {
+
+    public function getAllOnline()
+    {
         $sql = "SELECT * FROM onlineusers";
         $query = $this->dbConnection->execute($sql, []);
-        if ($query != null) {            
+        if ($query != null)
+        {
             return $query->fetchAll();
         }
         return null;
@@ -87,10 +90,10 @@ class UserADO implements ADOinterface
     {
         $ePassword = md5($password);
         $sql = "UPDATE `user` SET password = ? WHERE userName =?";
-        $array = [$ePassword, $user];      
+        $array = [$ePassword, $user];
         try
         {
-            $query=$this->dbConnection->execute($sql, $array);
+            $query = $this->dbConnection->execute($sql, $array);
             $result = true;
         }
         catch (Exception $e)
@@ -120,6 +123,61 @@ class UserADO implements ADOinterface
             $name .= chr($value[$i] - 5);
         }
         return $name;
+    }
+
+    /**
+     * @name setInactive()
+     * @author Franc
+     * @version 1.0
+     * @date 10/05/2016
+     * @description set a user to inactive.
+     * @param $entity user object
+     * @return : boolean
+     */
+    public function setInactive($entity)
+    {
+        $sql = "UPDATE `user` SET active = 0 WHERE userName = ?";
+        $array = [$entity->getUserName()];
+        try
+        {
+            $query = $this->dbConnection->execute($sql, $array);
+            $result = true;
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage(), 3, "log/my-errors.log");
+            $result = false;
+        }
+        return $result;
+    }
+
+    /**
+     * @name comprobeValidate()
+     * @author Franc
+     * @version 1.0
+     * @date 10/05/2016
+     * @description comprobe if user exist and password are correct.
+     * @param : $user object user.
+     * @return : int: num of row found.
+     */
+    public function comprobeValidate($user)
+    {
+        try
+        {
+            $sql = "SELECT count(userName) AS n FROM user WHERE `userName` = ? AND `password` = ? AND `active` = 1";
+            $query = $this->dbConnection->execute($sql, [$user->getUserName(), $user->getPassword()]);
+            if ($query != null)
+            {
+                $result = $query->fetch(PDO::FETCH_ASSOC);
+                return $result["n"];
+            }
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            echo $e->getMessage();
+            return 0;
+        }
     }
 
 }

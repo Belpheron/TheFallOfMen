@@ -1,6 +1,6 @@
 <?php
 
-require_once "php/model/persist/DBConnect.php";
+require_once "DBConnect.php";
 
 class LoginADO
 {

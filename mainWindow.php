@@ -53,6 +53,7 @@ if (isset($_GET["logOut"]))
         <script src="js/model/RobotStatistic.js" type="text/javascript"></script>
         <script src="js/model/User.js" type="text/javascript"></script>
         <script src="js/model/UserStatistic.js" type="text/javascript"></script>
+        <script src="js/model/RegisterObj.js" type="text/javascript"></script>
     </head>
     <body ng-controller="controller as ctrl" class="background">
         <header class="menuBar row">

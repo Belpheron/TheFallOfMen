@@ -26,12 +26,13 @@
 </div>
 
 <div class="col-md-5 popUp" ng-show="showDisclaimerDropOut == 1">
-    <form name="requestDropOutForm" class="form-group" novalidate="" ng-submit="profile.dropOutUser()">
+    <form name="requestDropOutForm" class="form-group" novalidate="" ng-submit="requestDropOutForm.$valid && profile.dropOutUser()">
         <label class="text-warning">Warning, This action is for drop out of application!, to continue insert your password.</label>
         <input type="password" ng-model="pass"  class="form-control" required="" ng-pattern="/^[aA-zZ0-9_]{4,}$/"/>
         <hr/>
         <button  type="submit" class="btn btn-success" ng-disabled="requestDropOutForm.$invalid">Continue and drop out</button>
-        <button class="btn btn-danger pull-right" ng-click="showDisclaimerDropOut = 0">Sorry I dont like this</button>
+        <button  type="button" class="btn btn-danger pull-right" ng-click="showDisclaimerDropOut = 0">Sorry I dont like this</button>
+        <span class="text-danger"><br>{{message}}</span>
     </form>
 </div>
 
