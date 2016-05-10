@@ -5,6 +5,9 @@ var userTimer;
 (function() {
     var fallOfMenApp = angular.module("fallOfMenApp", []);
     fallOfMenApp.controller("controller", function($scope, $window, $http, accessService) {
+        //profile variables
+        $scope.profile = new ProfileWindow(accessService, $scope);
+        $scope.showDisclaimerDropOut=0;
         
         //home variables
         $scope.home = new Home(accessService, $scope);  
@@ -148,5 +151,3 @@ var userTimer;
         };
     });
 })();
-
-
