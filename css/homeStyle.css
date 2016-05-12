@@ -4,7 +4,6 @@
     padding: 5px;
     border-radius: 5px;
     margin-left: 5vh;
-    width: 30%;
 }
 .chatWindow{
     border: 1px solid silver;
@@ -13,8 +12,8 @@
     margin-left: 5vh;
 }
 .textEntry{
-    margin-left: 50vh;
     margin-top: 2vh;
+    margin-left: 5vh;
 }
 .userTooltip{
     border: 1px solid silver;
@@ -30,4 +29,34 @@
 }
 .userTooltip:hover {
     background-color: yellowgreen;
+}
+.playerTooltip{
+    display: none;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: white;
+    border-radius: 10px;
+}
+.playerTooltipCloseCross{
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 7px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.7em;
+}
+.tooltipButton{
+    margin-bottom: 5px;
+}
+.popUpWindow{
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
 }

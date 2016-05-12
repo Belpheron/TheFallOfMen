@@ -1,25 +1,31 @@
 //global variables
-var userTimer;
+var userLoadTimer;
+var chatMessageLoadTimer;
+var duelRequestTimer;
+var responseTimer;
+var checkRequestResponseTimer;
+
+//jQuery code
 
 //angular code
 (function() {
     var fallOfMenApp = angular.module("fallOfMenApp", []);
-    fallOfMenApp.controller("controller", function($scope, $window, $http, accessService) {
+    fallOfMenApp.controller("controller", function($scope, $window, $http, $compile, accessService) {
         //profile variables
         $scope.profile = new ProfileWindow(accessService, $scope);
-        $scope.showDisclaimerDropOut=0;
-        
+        $scope.showDisclaimerDropOut = 0;
+
         //home variables
-        $scope.home = new Home(accessService, $scope);  
+        $scope.home = new Home(accessService, $scope);
         $scope.currentUser = new User();
-        $scope.onlineUserList = [];
-        $scope.onlineFriendList = [];
-        $scope.onlineBlockedList = [];
+        $scope.loginDateTime = getNowSQLDatetime();
 
         //interface variables
         $scope.currentWindow = "profile";
+        $scope.showBlocker = false;
 
-        //methods
+        //methods         
+
         /**
          * @name loadUserDetails()
          * @author Juan
@@ -30,14 +36,14 @@ var userTimer;
          * @returns {n/a}
          */
         $scope.loadUserDetails = function(userName) {
-            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 100, jsonData: {userName:userName}});
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 100, jsonData: {userName: userName}});
             promise.then(function(outputData) {
                 if (outputData[0] === true) {
                     $scope.currentUser = new User(outputData[1].userName, outputData[1].coins);
                 }
             });
         }
-        
+
         /**
          * @name logout()
          * @author Juan
@@ -47,7 +53,7 @@ var userTimer;
          * @returns {n/a}
          */
         $scope.logout = function() {
-            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 104, jsonData: {userName:$scope.currentUser.getUserName()}});
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 104, jsonData: {userName: $scope.currentUser.getUserName()}});
             promise.then(function(outputData) {
                 if (outputData[0] === true) {
                     window.open("mainWindow.php?logOut=1", "_self");
@@ -56,10 +62,10 @@ var userTimer;
                 }
             });
         }
-        
+
         //event to fire on tab closing
         //$window.onunload =  $scope.logout;
-        
+
         /**
          * @name showHome()
          * @author Juan
@@ -73,10 +79,31 @@ var userTimer;
             $scope.home.start();
             $scope.currentWindow = "home";
         }
-    });  
-    
+    });
+
 
     //directives
+    fallOfMenApp.directive('compileData', function($compile) {
+        return {
+            scope: true,
+            link: function(scope, element, attrs) {
+
+                var elmnt;
+
+                attrs.$observe('template', function(myTemplate) {
+                    if (angular.isDefined(myTemplate)) {
+                        // compile the provided template against the current scope
+                        elmnt = $compile(myTemplate)(scope);
+
+                        element.html(""); // dummy "clear"
+
+                        element.append(elmnt);
+                    }
+                });
+            }
+        };
+    });
+
     fallOfMenApp.factory('accessService', function($http, $log, $q) {
         return {
             getData: function(url, async, method, params, data) {

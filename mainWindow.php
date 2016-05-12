@@ -44,16 +44,20 @@ if (isset($_GET["logOut"])) {
         
         <!--CONTROL-->
         <script src="js/control/MainWindow.js" type="text/javascript"></script>
+        <script src="js/control/ProfileWindow.js" type="text/javascript"></script>
+        <script src="js/control/generalFunctions.js" type="text/javascript"></script>
         
         <!--MODEL-->
         <script src="js/model/Home.js" type="text/javascript"></script>
         <script src="js/model/Profile.js" type="text/javascript"></script>
         <script src="js/model/RobotStatistic.js" type="text/javascript"></script>
         <script src="js/model/User.js" type="text/javascript"></script>
-        <script src="js/model/UserStatistic.js" type="text/javascript"></script>
+        <script src="js/model/UserStatistic.js" type="text/javascript"></script>   
+        <script src="js/model/ChatMessage.js" type="text/javascript"></script>
     </head>
     <body ng-controller="controller as ctrl" class="background" 
           ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName() ?>')">
+        <div class="blocker" ng-show="showBlocker"></div>
         <header class="menuBar row">
             <button class="menuButton btn btn-danger" ng-click="logout()">LOGOUT</a>
             <button class="menuButton btn btn-primary" ng-click="showHome()">HOME</button>
@@ -75,5 +79,6 @@ if (isset($_GET["logOut"])) {
                 <statistic-template></statistic-template>
             </div>
         </main>
+        <span class="text-primary">Connected as <strong>{{currentUser.getUserName()}}</strong></span>
     </body>
 </html>

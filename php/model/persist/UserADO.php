@@ -16,6 +16,49 @@ class UserADO implements ADOinterface
     }
 
     //methods
+    public function removeBlock($user, $friend) {
+        $sql = "DELETE FROM bloqued WHERE iduserName = ? AND idUserNameBloqued = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query == null || $query->rowCount() == 0) {
+            return false;
+        }
+        return true;
+    }
+    
+    public function blockUser($user, $friend) {
+        $sql = "INSERT INTO bloqued (iduserName, idUserNameBloqued) VALUES (?, ?)";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query != null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function removeFriendShip($user, $friend) {
+        $sql = "DELETE FROM friend WHERE iduserName = ? AND idUserNameFriend = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query->rowCount() != 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function addFriend($user, $friend) {
+        $sql = "INSERT INTO friend (iduserName, idUserNameFriend) VALUES (?, ?)";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query != null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function checkFriendShip($user, $friend) {
+        $sql = "SELECT * FROM friend WHERE iduserName = ? AND idUserNameFriend = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query->rowCount() == 0 || $query == null) return false;
+        return true;
+    }
+    
     public function getEmail($email)
     {
         $sql = "SELECT * FROM profile WHERE email = ?";
