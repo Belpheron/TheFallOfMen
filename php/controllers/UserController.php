@@ -100,6 +100,7 @@ class UserController implements ControllerInterface
                     $outputData[1] = "No user found with that user name.";
                 }
                 break;
+
             //comprobe if email alredy exist
             case 101:
                 $result = $this->ado->getEmail($this->jsonData->email);
@@ -112,13 +113,12 @@ class UserController implements ControllerInterface
                 {
                     $outputData[0] = false;
                     $outputData[1] = "No emails found.";
-                    error_log("FAIL: UserController, action 101.\n", 3, "log/my-errors.log");
                 }
                 break;
             //allows change a reset password.
             case 102:
                 $user = $this->ado->deCript($this->jsonData[0]);
-                $result = $this->ado->updateResetPassword($user, md5($this->jsonData[1]));
+                $result = $this->ado->updateResetPassword($user, $this->jsonData[1]);
                 if ($result == true)
                 {
                     $outputData[0] = true;
@@ -128,16 +128,33 @@ class UserController implements ControllerInterface
                 {
                     $outputData[0] = false;
                     $outputData[1] = "Impossible reset and update your password, contact Web developer.";
-                    error_log("FAIL: UserController, action 102.\n", 3, "log/my-errors.log");
                 }
                 break;
-            //comprobe if exsit a user
             case 103:
-                $result = $this->ado->getAllOnline();
-                if ($result != null)
+                $user = new User($this->jsonData->userName);
+                $all = $this->ado->getAllOnline($user);
+                if ($all != null)
                 {
                     $outputData[0] = true;
-                    $outputData[1] = $result;
+                    $outputData[1] = $all;
+                    $friends = $this->ado->getFriends($user);
+                    if ($friends != null)
+                    {
+                        $outputData[2] = $friends;
+                        $blocked = $this->ado->getBlocked($user);
+                        if ($blocked != null)
+                        {
+                            $outputData[3] = $blocked;
+                        }
+                        else
+                        {
+                            $outputData[3] = false;
+                        }
+                    }
+                    else
+                    {
+                        $outputData[2] = false;
+                    }
                 }
                 else
                 {
@@ -145,71 +162,86 @@ class UserController implements ControllerInterface
                     $outputData[1] = "No users online found.";
                 }
                 break;
-
-            //set to inactive a user.
-            case 200:
-                $pass = md5($this->jsonData->password);
-                $user = new User($this->jsonData->userName, $pass);
-                if ($this->ado->comprobeValidate($user) == 1)
+            case 104:
+                $user = new User($this->jsonData->userName);
+                if ($this->ado->removeOnlineUser($user))
                 {
-                    $result = $this->ado->setInactive($user);
-                    if ($result != null)
-                    {
-                        //correct
-                        $outputData[0] = true;
-                        $outputData[1] = $result;
-                    }
-                    else
-                    {
-                        //uncontrolled error
-                        $outputData[0] = false;
-                        $outputData[1] = "Imposible to set inactive.";
-                    }
+                    $outputData[0] = true;
                 }
                 else
                 {
-                    //password incorrect.
                     $outputData[0] = false;
-                    $outputData[1] = "Password incorrect.";
+                    $outputData[1] = "Error found while deleting the session.";
                 }
                 break;
-
-            case 201:
-                $profile = new Profile($this->jsonData->profile->id, $this->jsonData->profile->name, $this->jsonData->profile->lastName1, $this->jsonData->profile->lastName2, $this->jsonData->profile->birthDate, $this->jsonData->profile->email, $this->jsonData->profile->idCountry);
+            case 107:
                 $user = new User($this->jsonData->userName);
-                if ($this->jsonData->password != 0)
+                $friend = new User($this->jsonData->friend);
+                if ($this->ado->addFriend($user, $friend))
                 {
-                    //do 2 operations
-                    //operation 1-> change password.
-                    $user->setPassword(md5($this->jsonData->password));
-                    $result = $this->ado->updateResetPassword($user->getUserName(), $user->getPassword());
-                    //iof success: operation 2-> change data profile.
-                    if ($result)
-                    {
-                        $outputData[0] = $this->ado->updateProfile($profile);
-                    }
-                }
-                else
-                //only do 1 operation, change data profile.
-                {
-                    $outputData[0] = $this->ado->updateProfile($profile);
-                }
-                if ($outputData[0] == true)
-                {
-                    $outputData[1] = "Modified successfully!";
+                    $outputData[0] = true;
                 }
                 else
                 {
-                    $outputData[1] = "Modified failed, try again";
+                    $outputData[1] = false;
+                }
+                break;
+            case 108:
+                $user = new User($this->jsonData->userName);
+                $friend = new User($this->jsonData->friend);
+                if ($this->ado->checkFriendShip($user, $friend))
+                {
+                    $outputData[0] = true;
+                }
+                else
+                {
+                    $outputData[1] = false;
+                }
+                break;
+            case 109:
+                $user = new User($this->jsonData->userName);
+                $friend = new User($this->jsonData->friend);
+                if ($this->ado->removeFriendShip($user, $friend))
+                {
+                    $outputData[0] = true;
+                }
+                else
+                {
+                    $outputData[1] = false;
+                }
+                break;
+            case 110:
+                $user = new User($this->jsonData->userName);
+                $friend = new User($this->jsonData->friend);
+                if ($this->ado->blockUser($user, $friend))
+                {
+                    $outputData[0] = true;
+                }
+                else
+                {
+                    $outputData[1] = false;
+                }
+                break;
+            case 111:
+                $user = new User($this->jsonData->userName);
+                $friend = new User($this->jsonData->friend);
+                if ($this->ado->removeBlock($user, $friend))
+                {
+                    $outputData[0] = true;
+                }
+                else
+                {
+                    $outputData[1] = false;
                 }
                 break;
             default:
                 $outPutData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";
-                error_log("FAIL: action not correct in UserController, value: " . $this->getAction(), 3, "log/my-errors.log");
                 break;
         }
         return $outputData;
     }
 
 }
+
+?>

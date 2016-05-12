@@ -1,5 +1,4 @@
 <?php
-
 require_once "../model/persist/DBConnect.php";
 require_once "../model/persist/ADOinterface.php";
 
@@ -74,7 +73,7 @@ class UserADO implements ADOinterface
     {
         
     }
-    
+
     /**
      * @name updateProfile()
      * @author Franc
@@ -106,7 +105,6 @@ class UserADO implements ADOinterface
             {
                 $result = true;
             }
-            
         }
         catch (Exception $e)
         {
@@ -303,6 +301,81 @@ class UserADO implements ADOinterface
             error_log($e->getMessage());
             return null;
         }
+    }
+
+    public function removeBlock($user, $friend)
+    {
+        $sql = "DELETE FROM bloqued WHERE iduserName = ? AND idUserNameBloqued = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query == null || $query->rowCount() == 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public function blockUser($user, $friend)
+    {
+        $sql = "INSERT INTO bloqued (iduserName, idUserNameBloqued) VALUES (?, ?)";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function removeFriendShip($user, $friend)
+    {
+        $sql = "DELETE FROM friend WHERE iduserName = ? AND idUserNameFriend = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query->rowCount() != 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function addFriend($user, $friend)
+    {
+        $sql = "INSERT INTO friend (iduserName, idUserNameFriend) VALUES (?, ?)";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function checkFriendShip($user, $friend)
+    {
+        $sql = "SELECT * FROM friend WHERE iduserName = ? AND idUserNameFriend = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName(), $friend->getUserName()]);
+        if ($query->rowCount() == 0 || $query == null)
+            return false;
+        return true;
+    }
+
+    public function getFriends($user)
+    {
+        $sql = "SELECT * FROM friend WHERE iduserName = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        if ($query != null)
+        {
+            return $query->fetchAll();
+        }
+        return null;
+    }
+
+    public function getBlocked($user)
+    {
+        $sql = "SELECT * FROM bloqued WHERE iduserName = ?";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        if ($query != null)
+        {
+            return $query->fetchAll();
+        }
+        return null;
     }
 
 }

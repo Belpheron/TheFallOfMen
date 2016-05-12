@@ -1,30 +1,37 @@
 //global variables
-var userTimer;
+var userLoadTimer;
+var chatMessageLoadTimer;
+var duelRequestTimer;
+var responseTimer;
+var checkRequestResponseTimer;
+
+//jQuery code
 
 //angular code
 (function ()
 {
     var fallOfMenApp = angular.module("fallOfMenApp", []);
-    fallOfMenApp.controller("controller", function ($scope, $window, $http, accessService)
+
+    fallOfMenApp.controller("controller", function ($scope, $window, $http, $compile, accessService)
     {
         //profile variables
         $scope.profile = new ProfileWindow(accessService, $scope);
         $scope.showDisclaimerDropOut = 0;
-       
+
         //shop variables
         $scope.shop = new Shop(accessService, $scope);
-        
+
         //home variables
         $scope.home = new Home(accessService, $scope);
         $scope.currentUser = new User();
-        $scope.onlineUserList = [];
-        $scope.onlineFriendList = [];
-        $scope.onlineBlockedList = [];
+        $scope.loginDateTime = getNowSQLDatetime();
 
         //interface variables
         $scope.currentWindow = "profile";
+        $scope.showBlocker = false;
 
-        //methods
+        //methods         
+
         /**
          * @name loadUserDetails()
          * @author Juan/franc
@@ -83,7 +90,7 @@ var userTimer;
                 }
             });
         };
-        
+
         /**
          * @name logout()
          * @author Juan
@@ -92,6 +99,7 @@ var userTimer;
          * @description removes userName from onlineusers table
          * @returns {n/a}
          */
+
         $scope.logout = function ()
         {
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 104, jsonData: {userName: $scope.currentUser.getUserName()}});
@@ -107,9 +115,6 @@ var userTimer;
                 }
             });
         };
-
-        //event to fire on tab closing
-        //$window.onunload =  $scope.logout;
 
         /**
          * @name showHome()
@@ -129,6 +134,32 @@ var userTimer;
 
 
     //directives
+
+    fallOfMenApp.directive('compileData', function ($compile)
+    {
+        return {
+            scope: true,
+            link: function (scope, element, attrs)
+            {
+
+                var elmnt;
+
+                attrs.$observe('template', function (myTemplate)
+                {
+                    if (angular.isDefined(myTemplate))
+                    {
+                        // compile the provided template against the current scope
+                        elmnt = $compile(myTemplate)(scope);
+
+                        element.html(""); // dummy "clear"
+
+                        element.append(elmnt);
+                    }
+                });
+            }
+        };
+    });
+
     fallOfMenApp.factory('accessService', function ($http, $log, $q)
     {
         return {

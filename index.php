@@ -74,7 +74,7 @@ $controller->run();
                             echo "Found errors during register. Please fill the formulary again.";
                             break;
                         case 4:
-                            echo "Entered user already online. Please try later.";
+                            echo "Entered user already online. Please try later or contact administrator.";
                             break;
                         case 5:
                             echo "Loged out with problems. Please contact administrator.";

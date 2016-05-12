@@ -4,6 +4,9 @@ require_once "CountryController.php";
 require_once "UserController.php";
 require_once "RobotController.php";
 require_once "ShopController.php";
+require_once "ChatController.php";
+require_once "FightController.php";
+
 
 $outputData = [];
 
@@ -24,9 +27,18 @@ if (isset($_REQUEST['controllerType']))
             $robotController = new RobotController($_REQUEST['action'], $_REQUEST['jsonData']);
             $outputData = $robotController->run();
             break;
+
         case 6:
             $shopController = new ShopController($_REQUEST['action'], $_REQUEST['jsonData']);
             $outputData = $shopController->run();
+
+        case 4:
+            $chatController = new ChatController($_REQUEST['action'], $_REQUEST['jsonData']);
+            $outputData = $chatController->run();
+            break;
+        case 5:
+            $fightController = new FightController($_REQUEST['action'], $_REQUEST['jsonData']);
+            $outputData = $fightController->run();
             break;
         default:
             $outputData[0] = false;

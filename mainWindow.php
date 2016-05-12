@@ -46,7 +46,8 @@ if (isset($_GET["logOut"]))
         <!--CONTROL-->
         <script src="js/control/MainWindow.js" type="text/javascript"></script>
         <script src="js/control/ProfileWindow.js" type="text/javascript"></script>
-        
+        <script src="js/control/generalFunctions.js" type="text/javascript"></script>
+
         <!--MODEL-->
         <script src="js/model/Home.js" type="text/javascript"></script>
         <script src="js/model/Profile.js" type="text/javascript"></script>
@@ -57,9 +58,15 @@ if (isset($_GET["logOut"]))
         <script src="js/model/Country.js" type="text/javascript"></script>
         <script src="js/model/Shop.js" type="text/javascript"></script>
         <script src="js/model/Skill.js" type="text/javascript"></script>
-        
+        <script src="js/model/Home.js" type="text/javascript"></script>
+        <script src="js/model/Profile.js" type="text/javascript"></script>
+        <script src="js/model/RobotStatistic.js" type="text/javascript"></script>
+        <script src="js/model/User.js" type="text/javascript"></script>
+        <script src="js/model/UserStatistic.js" type="text/javascript"></script>   
+        <script src="js/model/ChatMessage.js" type="text/javascript"></script>
+
     </head>
-    <body ng-controller="controller as ctrl" class="background" ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName()?>')">
+    <body ng-controller="controller as ctrl" class="background" ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName() ?>')">
         <header class="menuBar row">
             <a href="mainWindow.php?logOut=1" class="menuButton btn btn-danger">LOGOUT</a>
             <button class="menuButton btn btn-primary" ng-click="showHome()">HOME</button>

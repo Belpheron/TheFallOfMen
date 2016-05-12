@@ -38,6 +38,7 @@ FAIL: UserController, action 101.
 FAIL: UserController, action 100.
 FAIL: UserController, action 101.
 FAIL: UserController, action 100.
+<<<<<<< HEAD
 FAIL: UserController, action 100.
 FAIL: UserController, action 100.
 FAIL: UserController, action 100.
@@ -63,3 +64,7 @@ FAIL: UserController, action 100.
 FAIL: UserController, action 100.
 FAIL: UserController, action 100.
 FAIL: UserController, action 100.
+=======
+>>>>>>> 46c29f2f5a2796d99c6fac5c2d1f306a10683aba
+[//][::] FAIL: UserController, action 100.
+>>>>>>> 28fbf8bc20a250016076840a618b89e3fc54a400

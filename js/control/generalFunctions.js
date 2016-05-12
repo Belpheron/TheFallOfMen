@@ -1,4 +1,48 @@
 /**
+ * @name getNowSQLDatetime()
+ * @author Juan
+ * @version 1.0
+ * @date 25/03/2016
+ * @description gets the current date and time and transforms it to the SQL
+ *      datetime format
+ * @returns : a string containing the current date and time in SQL datetime format
+ */
+function getNowSQLDatetime() {
+    var currentDate = new Date();
+    var now = "";
+    now += currentDate.getFullYear() + "-";
+    now += currentDate.getMonth()+1 + "-";
+    now += currentDate.getDate() + " ";
+    now += currentDate.getHours() + ":";
+    now += currentDate.getMinutes() + ":";
+    now += currentDate.getSeconds();
+    return now;
+}
+
+/**
+ * @name cleanText()
+ * @author Juan
+ * @version 1.0
+ * @date 10/05/2016
+ * @description cleans text from html special chars
+ * @param text : the text to be cleaned
+ * @returns : the cleaned text
+ */
+function cleanText(text) {
+    var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+
+    return text.replace(/[&<>"']/g, function(m) {
+        return map[m];
+    });
+}
+
+/**
  * @name isDate()
  * @author Juan
  * @date 02/02/2016
