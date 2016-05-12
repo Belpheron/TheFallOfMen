@@ -5,6 +5,9 @@ require_once "php/controllers/LoginController.php";
 
 //session control
 session_start();
+if (isset($_SESSION["user"])) {
+    header("Location: mainWindow.php");
+}
 
 //controller start
 $controller = new LoginController();
@@ -49,20 +52,18 @@ $controller->run();
         <section class="loginBox" ng-show="show == 0">
             <form class="loginForm" action="" method="post">
                 <label>User name</label>
-                <input type="text" name="userNameBox" class="form-control" ng-pattern="/^[aA-zZ0-9_]{4,}$/"/>
+                <input type="text" name="userNameBox" class="form-control" ng-pattern="/^[A-Za-z]$/"/>
                 <label>Password</label>
-                <input type="password" name="passBox" class="form-control" ng-pattern="/^[aA-zZ0-9_]{4,}$/"/>
+                <input type="password" name="passBox" class="form-control"/>
                 <hr/>
                 <button type="submit" name="loginButton" 
                         class="form-control btn btn-success">Login</button>
             </form>
             <span class="text-danger">
                 <?php
-                if (isset($_GET["error"]))
-                {
+                if (isset($_GET["error"])) {
                     $error = $_GET["error"];
-                    switch ($error)
-                    {
+                    switch ($error) {
                         case 1:
                             echo "Username and/or password not found. <a class='text-primary' ng-click='show = 1'>Register</a> for free!!";
                             break;
@@ -73,7 +74,10 @@ $controller->run();
                             echo "Found errors during register. Please fill the formulary again.";
                             break;
                         case 4:
-                            echo "The user alredy connected!.";
+                            echo "Entered user already online. Please try later.";
+                            break;
+                        case 5:
+                            echo "Loged out with problems. Please contact administrator.";
                             break;
                         default:
                             break;
@@ -82,11 +86,9 @@ $controller->run();
                 ?>
             </span>
             <?php
-            if (isset($_GET["send"]))
-            {
+            if (isset($_GET["send"])) {
                 $action = $_GET["send"];
-                switch ($action)
-                {
+                switch ($action) {
                     case 0:
                         echo "<span class='text-success'>";
                         echo "Email send successfully!";
@@ -107,19 +109,17 @@ $controller->run();
             ?>
             <span class="text-success">
                 <?php
-                if (isset($_GET["register"]))
-                {
+                if (isset($_GET["register"])) {
                     echo "Register succesfull. You can now login.";
                 }
                 ?>
             </span>
             <span class="text-success">
-<?php
-if (isset($_GET["recovery"]))
-{
-    echo "Succes to reset password, Try to login.";
-}
-?>
+                <?php
+                if (isset($_GET["recovery"])) {
+                    echo "Succes to reset password, Try to login.";
+                }
+                ?>
             </span>
         </section>
         <section><a class="text-primary" ng-click="show = 1">Register</a></section>

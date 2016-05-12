@@ -1,55 +1,70 @@
-this.ProfileWindow = function (accessService, scope)
+this.Shop = function (accessService, scope)
 {
-    scope.message = "";
-    scope.countryList = [];
-    scope.countryId;
-    scope.show = 0;
-    scope.newPassword;
-    scope.repeatNewPassword;
+    scope.messageShop;
+    scope.skills = new Array();
+    this.invalid=0;
+
+    this.showShop = function ()
+    {
+        scope.currentWindow = "shop";
+        this.loadSkills();
+    }
+
+
     /**
-     * dropOutUser()
+     * loadSkills()
+     * @author Franc
+     * @date 12/05/2016
      * @description send information (user object) to server and ask to inactive a user.
      * @param none
-     * @returns {undefined}
+     * @returns none
      */
-    this.dropOutUser = function ()
+    this.loadSkills = function ()
     {
-        var user = new RegisterObj();
-        user.setPassword(scope.pass);
-        user.setUserName(scope.currentUser.getUserName());
-        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 200, jsonData: JSON.stringify(user)});
+        scope.skills = new Array();
+        var skill = new Skill();
+        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 200, jsonData: ""});
         promise.then(function (outputData)
         {
             if (outputData[0] === true)
             {
-                window.open("mainWindow.php?logOut=1", "_self");
+                for (var i = 0; i < outputData[1].length; i++)
+                {
+                    skill = new Skill(outputData[1][i].id,
+                            outputData[1][i].name,
+                            outputData[1][i].description,
+                            outputData[1][i].requiredLevel,
+                            parseInt(outputData[1][i].buyPrice),
+                            outputData[1][i].multiplier);
+                    scope.skills.push(skill);
+                }
+                console.log(scope.skills);
             }
             else
             {
-                scope.message = outputData[1];
+                scope.messageShop = outputData[1];
             }
         });
     };
 
     /**
-     * loadCountries()
-     * @description ask for information for all countries in BD and put in a select.
-     * @param none
-     * @returns {undefined}
+     * purchaseSkill()
+    * @author Franc
+     * @date 12/05/2016
+     * @description send a request to purchase a skill.
+     * @param skill:  object skill to be purchased.
+     * @returns none
      */
-    scope.loadCountries = function ()
+    this.purchaseSkill = function (skill)
     {
-        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 1, action: 100, jsonData: ""});
+        skill = angular.copy(skill);
+        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 201, jsonData: JSON.stringify(skill)});
         promise.then(function (outputData)
         {
             if (outputData[0] === true)
             {
-                scope.countryList = [];
-                for (var i = 0; i < outputData[1].length; i++)
-                {
-                    var c = new Country(outputData[1][i].id, outputData[1][i].iso, outputData[1][i].name);
-                    scope.countryList.push(c);
-                }
+              alert("si");
+              scope.messageShop = outputData[1];
             }
             else
             {
@@ -88,8 +103,8 @@ this.ProfileWindow = function (accessService, scope)
         {
             if (outputData[0] === true)
             {
-               //changes saved
-               alert("Changes saved succesfuckly!");
+                //changes saved
+                alert("Changes saved succesfuckly!");
             }
             else
             {

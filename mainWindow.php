@@ -54,13 +54,17 @@ if (isset($_GET["logOut"]))
         <script src="js/model/User.js" type="text/javascript"></script>
         <script src="js/model/UserStatistic.js" type="text/javascript"></script>
         <script src="js/model/RegisterObj.js" type="text/javascript"></script>
+        <script src="js/model/Country.js" type="text/javascript"></script>
+        <script src="js/model/Shop.js" type="text/javascript"></script>
+        <script src="js/model/Skill.js" type="text/javascript"></script>
+        
     </head>
-    <body ng-controller="controller as ctrl" class="background">
+    <body ng-controller="controller as ctrl" class="background" ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName()?>')">
         <header class="menuBar row">
             <a href="mainWindow.php?logOut=1" class="menuButton btn btn-danger">LOGOUT</a>
             <button class="menuButton btn btn-primary" ng-click="showHome()">HOME</button>
             <button class="menuButton btn btn-primary" ng-click="currentWindow = 'hangar'">HANGAR</button>
-            <button class="menuButton btn btn-primary" ng-click="currentWindow = 'shop'">SHOP</button>
+            <button class="menuButton btn btn-primary" ng-click="shop.showShop()">SHOP</button>
             <button class="menuButton btn btn-primary" ng-click="currentWindow = 'profile'">PROFILE</button>
         </header>
         <!--para mayor rapidez hacemos todos los menus en una misma pagina, asi mismo podremos hacer un efecto slider-->

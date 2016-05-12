@@ -25,7 +25,7 @@ class Profile {
         $this->lastName2 = $lastName2;
         $this->birthDate = $birthDate;
         $this->email = $email;
-        $this->$idCountry = $idCountry;
+        $this->idCountry = $idCountry;
     }
     
     //accessors

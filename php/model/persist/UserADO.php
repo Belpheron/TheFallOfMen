@@ -2,7 +2,6 @@
 
 require_once "../model/persist/DBConnect.php";
 require_once "../model/persist/ADOinterface.php";
-require_once "../model/Register.php";
 
 class UserADO implements ADOinterface
 {
@@ -75,6 +74,47 @@ class UserADO implements ADOinterface
     {
         
     }
+    
+    /**
+     * @name updateProfile()
+     * @author Franc
+     * @version 1.0
+     * @date 11/05/2016
+     * @description do a update sentence of user table.
+     * @param $entity: user object.
+     * @return number of affected files, 1 ok; 0 error.
+     */
+    public function updateProfile($entity)
+    {
+        $sql = "UPDATE `profile` SET `name`=?, `lastName1`=? ,`lastName2`=? ,`birthDate`=? ,`email`=? ,`idCountry`=? WHERE id = ?";
+        $array = [$entity->getName(),
+            $entity->getLastName1(),
+            $entity->getLastName2(),
+            $entity->getBirthDate(),
+            $entity->getEmail(),
+            $entity->getIdCountry(),
+            $entity->getId()];
+        try
+        {
+            $query = $this->dbConnection->execute($sql, $array);
+            $rowAffected = $query->rowCount();
+            if ($rowAffected != 1)
+            {
+                $result = false;
+            }
+            else
+            {
+                $result = true;
+            }
+            
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            $result = false;
+        }
+        return $result;
+    }
 
     /**
      * @name updateResetPassword()
@@ -88,9 +128,8 @@ class UserADO implements ADOinterface
      */
     public function updateResetPassword($user, $password)
     {
-        $ePassword = md5($password);
         $sql = "UPDATE `user` SET password = ? WHERE userName =?";
-        $array = [$ePassword, $user];
+        $array = [$password, $user];
         try
         {
             $query = $this->dbConnection->execute($sql, $array);
@@ -175,8 +214,94 @@ class UserADO implements ADOinterface
         catch (Exception $e)
         {
             error_log($e->getMessage());
-            echo $e->getMessage();
             return 0;
+        }
+    }
+
+    /**
+     * @name getUserStatistic()
+     * @author Franc
+     * @version 1.0
+     * @date 10/05/2016
+     * @description do a select and retrive all data from userStatistic table.
+     * @param : $id id for search
+     * @return : a data retrived in json. | null.
+     */
+    public function getUserStatistic($id)
+    {
+        try
+        {
+            $sql = "SELECT * FROM userstatistic WHERE `id` = ?";
+            $array = [$id];
+            $query = $this->dbConnection->execute($sql, $array);
+            if ($query != null)
+            {
+                $result = $query->fetch();
+                return $result;
+            }
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @name getRobotStatistic()
+     * @author Franc
+     * @version 1.0
+     * @date 10/05/2016
+     * @description do a select and retrive all data from getRobotStatistic table.
+     * @param : $id id for search
+     * @return : a data retrived in json. | null.
+     */
+    public function getRobotStatistic($id)
+    {
+        try
+        {
+            $sql = "SELECT * FROM robotstatistic WHERE `id` = ?";
+            $array = [$id];
+            $query = $this->dbConnection->execute($sql, $array);
+            if ($query != null)
+            {
+                $result = $query->fetch();
+                return $result;
+            }
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @name getProfile()
+     * @author Franc
+     * @version 1.0
+     * @date 10/05/2016
+     * @description do a select and retrive all data from getProfile table.
+     * @param : $id id for search
+     * @return : a data retrived in json.
+     */
+    public function getProfile($id)
+    {
+        try
+        {
+            $sql = "SELECT * FROM profile WHERE `id` = ?";
+            $array = [$id];
+            $query = $this->dbConnection->execute($sql, $array);
+            if ($query != null)
+            {
+                $result = $query->fetch();
+                return $result;
+            }
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            return null;
         }
     }
 

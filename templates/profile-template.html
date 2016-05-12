@@ -1,26 +1,23 @@
 <div class="col-md-5 profilePersonalDataWindow">
-    <form name="profileForm" class="form-group" novalidate="">
+    <form name="profileForm" class="form-group" novalidate="" ng-submit="profileForm.$valid && saveChanges()">
         <label>Name *</label>
-        <input type="text" class="form-control" value="Lorem ipsum" required=""/>
+        <input type="text" class="form-control" ng-model="currentUser.profile.name" required=""/>
         <label>Surname 1 *</label>
-        <input type="text" class="form-control" value="Lorem ipsum" required=""/>
+        <input type="text" class="form-control"ng-model="currentUser.profile.lastName1" required=""/>
         <label>Surname 2</label>
-        <input type="text" class="form-control" value="Lorem ipsum"/>
-        <label>Phone</label>
-        <input type="text" class="form-control" value="123456789"/>
+        <input type="text" class="form-control" ng-model="currentUser.profile.lastName2"/>
         <label>Email *</label>
-        <input type="text" class="form-control" value="asdf@adsf.com" required=""/>
+        <input type="text" class="form-control" ng-model="currentUser.profile.email" required=""/>
         <label>Country *</label>
-        <select class="form-control">
-            <option selected>1</option>
-            <option>2</option>
-            <option>3</option>
+        <select class="form-control" name="countrySelect" ng-options="item.id as item.name+'  ('+item.iso+')' for item in countryList" ng-model="currentUser.profile.idCountry" ng-init="loadCountries()">
         </select>
         <label>Password</label>
-        <input type="password" class="form-control"/>
+        <input type="password" id="newPassword" ng-model="newPassword" ng-change="match()" class="form-control" ng-pattern="/^[a-zA-Z0-9_]{4,}$/"/>
         <label>Repeat password</label>
-        <input type="password" class="form-control"/>
-        <button  type="submit" class="btn btn-success">Save changes</button>
+        <input type="password" id="repeatNewPassword" ng-model="repeatNewPassword" ng-change="match()" class="form-control" ng-pattern="/^[a-zA-Z0-9_]{4,}$/"/>
+        <span ng-show="show==1" class="text-danger">The field not match with 'password'</span>
+        <hr>
+        <button  type="submit" class="btn btn-success" ng-disabled="profileForm.$invalid || show==1">Save changes</button>
         <button class="btn btn-danger pull-right" ng-click="showDisclaimerDropOut = 1">Request drop out</button>
     </form>
 </div>

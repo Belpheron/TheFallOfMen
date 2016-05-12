@@ -1,3 +1,18 @@
 <div class="col-md-5 profileStatisticsWindow">
-    Window for player statistic 
+    <fieldset>
+        <legend>User statistics</legend>
+        <label class="text-capitalize">defeats: {{currentUser.userStatistic.defeats}}</label><br>
+        <label class="text-capitalize">wins: {{currentUser.userStatistic.wins}}</label><br>
+        <label class="text-capitalize">total inflicted damage: {{currentUser.userStatistic.totalInflictedDamage}}</label><br>
+        <label class="text-capitalize">total recived damage: {{currentUser.userStatistic.totalRecivedDamage}}</label><br>
+        <label class="text-capitalize">total money earned: {{currentUser.userStatistic.totalWinCoins}}</label><br>
+        <label class="text-capitalize">total money espent: {{currentUser.userStatistic.totalExpendCoins}}</label><br>
+    </fieldset>
+    <fieldset>
+        <legend>Robot statistics</legend>
+        <label class="text-capitalize">name: {{currentUser.robotStatistic.name}}</label><br>
+        <label class="text-capitalize">level: {{currentUser.robotStatistic.level}}</label><br>
+        <label class="text-capitalize">experience: {{currentUser.robotStatistic.experience}}</label><br>
+        <label class="text-capitalize">experience to next level: {{currentUser.robotStatistic.expToNextLevel - currentUser.robotStatistic.experience}}</label><br>
+    </fieldset>
 </div>
