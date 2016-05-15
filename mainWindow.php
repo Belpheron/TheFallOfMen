@@ -64,9 +64,10 @@ if (isset($_GET["logOut"]))
         <script src="js/model/User.js" type="text/javascript"></script>
         <script src="js/model/UserStatistic.js" type="text/javascript"></script>   
         <script src="js/model/ChatMessage.js" type="text/javascript"></script>
-
+        <script src="js/model/FightDetails.js" type="text/javascript"></script>
     </head>
     <body ng-controller="controller as ctrl" class="background" ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName() ?>')">
+        <div class="blocker" ng-show="showBlocker"></div>
         <header class="menuBar row">
             <a href="mainWindow.php?logOut=1" class="menuButton btn btn-danger">LOGOUT</a>
             <button class="menuButton btn btn-primary" ng-click="showHome()">HOME</button>
@@ -88,5 +89,6 @@ if (isset($_GET["logOut"]))
             <statistic-template></statistic-template>
         </div>
     </main>
+    <span class="text-primary">Connected as <strong>{{currentUser.getUserName()}}</strong></span>
 </body>
 </html>

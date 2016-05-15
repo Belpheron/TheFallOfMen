@@ -1,4 +1,4 @@
-this.Home = function(accessService, scope) {
+this.Home = function (accessService, scope) {
     //properties  
     this.currentTab = "all";
     this.textMessage = "";
@@ -24,15 +24,27 @@ this.Home = function(accessService, scope) {
      * @description accepts the requested duel
      * @returns {n/a}
      */
-    this.acceptDuel = function() {
+    this.acceptDuel = function () {
         clearInterval(duelRequestTimer);
         clearInterval(responseTimer);
         clearInterval(checkRequestResponseTimer);
+        //sets the duel request as accepted
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 5, action: 103, jsonData: {idReceiver: scope.currentUser.getUserName(), idSender: scope.duelRequester}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             if (outputData[0] === true) {
-                window.open("fightWindow.php", "_self");
+                var timer = setInterval(function () {
+                    //waits for the fight to be loaded and ready
+                    var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                            {controllerType: 5, action: 107, jsonData: {idReceiver: scope.currentUser.getUserName(), idSender: scope.duelRequester}});
+                    promise.then(function (outputData) {
+                        if (outputData[0] === true) {
+                            if (outputData[1].fight_is_ready == "1") {
+                                window.open("fightWindow.php", "_self");
+                            }                            
+                        }
+                    });
+                }, 500);
             }
         });
 
@@ -46,7 +58,7 @@ this.Home = function(accessService, scope) {
      * @description rejects the requested duel
      * @returns {n/a}
      */
-    this.rejectDuel = function() {
+    this.rejectDuel = function () {
         scope.showBlocker = false;
         scope.showDuelConfirmPopUp = false;
         clearInterval(duelRequestTimer);
@@ -54,16 +66,18 @@ this.Home = function(accessService, scope) {
         clearInterval(checkRequestResponseTimer);
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 5, action: 106, jsonData: {idReceiver: scope.currentUser.getUserName(), idSender: scope.duelRequester}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             if (outputData[0] !== true) {
                 alert("Server error. Try later.");
             }
             scope.startRequestTimer();
         });
     }
-    
-    scope.configureAndStartFight = function() {
-        
+
+    scope.configureAndStartFight = function (requestId) {
+        clearInterval(checkRequestResponseTimer);
+        var fd = new FightDetails(accessService, scope);
+        fd.loadPlayer1("_local");
     }
 
     /**
@@ -74,35 +88,36 @@ this.Home = function(accessService, scope) {
      * @description sends a duel request to the selected player
      * @returns {n/a}
      */
-    this.requestDuel = function() {
+    this.requestDuel = function () {
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 5, action: 104, jsonData: {idReceiver: scope.playerTarget}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             if (outputData[0] === false) {
                 var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                         {controllerType: 5, action: 100, jsonData: {idSender: scope.currentUser.getUserName(), idReceiver: scope.playerTarget}});
-                promise.then(function(outputData) {
+                promise.then(function (outputData) {
                     if (outputData[0] !== true) {
                         alert("Error while sending duel request. Please try later.");
                     } else {
                         scope.showBlocker = true;
                         scope.showRequestWaitPopUp = true;
                         scope.duelAcceptCoolDown = 11;
-                        checkRequestResponseTimer = setInterval(function() {
+                        checkRequestResponseTimer = setInterval(function () {
                             //checks request response
                             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                                     {controllerType: 5, action: 105, jsonData: {idSender: scope.currentUser.getUserName(), idReceiver: scope.playerTarget}});
-                            promise.then(function(outputData) {
+                            promise.then(function (outputData) {
                                 if (outputData[1].answer == "1") {
+                                    var requestId = outputData[1].id;
                                     var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                                             {controllerType: 5, action: 102, jsonData: {requestId: outputData[1].id}});
-                                    promise.then(function(outputData) {
-                                        scope.configureAndStartFight();
+                                    promise.then(function (outputData) {
+                                        scope.configureAndStartFight(requestId);
                                     });
                                 } else if (outputData[1].answer == "2") {
                                     var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                                             {controllerType: 5, action: 102, jsonData: {requestId: outputData[1].id}});
-                                    promise.then(function(outputData) {
+                                    promise.then(function (outputData) {
                                         clearInterval(duelRequestTimer);
                                         scope.showBlocker = false;
                                         scope.showRequestWaitPopUp = false;
@@ -140,10 +155,10 @@ this.Home = function(accessService, scope) {
      * @description removes selected user from block table
      * @returns {n/a}
      */
-    this.removeBlock = function() {
+    this.removeBlock = function () {
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 2, action: 111, jsonData: {userName: scope.currentUser.getUserName(), friend: scope.playerTarget}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             if (outputData[0] === true) {
                 alert(scope.playerTarget + " has been removed from the block list.");
             } else {
@@ -161,10 +176,10 @@ this.Home = function(accessService, scope) {
      * @description adds selected user to the block list
      * @returns {n/a}
      */
-    this.blockUser = function() {
+    this.blockUser = function () {
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 2, action: 110, jsonData: {userName: scope.currentUser.getUserName(), friend: scope.playerTarget}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             if (outputData[0] === true) {
                 alert(scope.playerTarget + " has been added to the block list.");
             } else {
@@ -182,10 +197,10 @@ this.Home = function(accessService, scope) {
      * @description removes user from friend list
      * @returns {n/a}
      */
-    this.removeFriend = function() {
+    this.removeFriend = function () {
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 2, action: 109, jsonData: {userName: scope.currentUser.getUserName(), friend: scope.playerTarget}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             if (outputData[0] === true) {
                 alert(scope.playerTarget + " has been removed from your friend list.");
             } else {
@@ -203,16 +218,16 @@ this.Home = function(accessService, scope) {
      * @description adds selected user to friend list, if dont exists already
      * @returns {n/a}
      */
-    this.addAsFriend = function() {
+    this.addAsFriend = function () {
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 2, action: 108, jsonData: {userName: scope.currentUser.getUserName(), friend: scope.playerTarget}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             if (outputData[0] === true) {
                 alert(scope.playerTarget + " is already in your friend list.");
             } else {
                 var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                         {controllerType: 2, action: 107, jsonData: {userName: scope.currentUser.getUserName(), friend: scope.playerTarget}});
-                promise.then(function(outputData) {
+                promise.then(function (outputData) {
                     if (outputData[0] === true) {
                         alert(scope.playerTarget + " has been added as friend.");
                     } else {
@@ -232,7 +247,7 @@ this.Home = function(accessService, scope) {
      * @description closes the player tooltip window
      * @returns {n/a}
      */
-    this.closeTooltipPopUp = function() {
+    this.closeTooltipPopUp = function () {
         $("#playerTooltip").css("display", "none");
         scope.showBlocker = false;
     }
@@ -247,7 +262,7 @@ this.Home = function(accessService, scope) {
      * @param userName : the name of the selected user
      * @returns {n/a}
      */
-    this.sendPrivateMessage = function(userName) {
+    this.sendPrivateMessage = function (userName) {
         this.textMessage = "/" + scope.playerTarget + " ";
         $("#textEntryBox").focus();
         this.closeTooltipPopUp();
@@ -263,7 +278,7 @@ this.Home = function(accessService, scope) {
      * @param event : the mouse click event
      * @returns {n/a}
      */
-    this.showUserPopUpMenu = function(user, event) {
+    this.showUserPopUpMenu = function (user, event) {
         var xpos;
         var ypos;
         scope.playerTarget = user.getUserName();
@@ -317,7 +332,7 @@ this.Home = function(accessService, scope) {
      * @param keycode : the keycode for entre press
      * @returns {n/a}
      */
-    this.sendMessage = function(keycode) {
+    this.sendMessage = function (keycode) {
         if (keycode == 13) {
             var text = (cleanText(this.textMessage)).trim();
             var receiver = "all";
@@ -327,14 +342,14 @@ this.Home = function(accessService, scope) {
                 receiver = (receiverAux.substring(1, receiverAux.length)).trim();
                 var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                         {controllerType: 2, action: 100, jsonData: {userName: receiver}});
-                promise.then(function(outputData) {
+                promise.then(function (outputData) {
                     if (outputData[0] === false) {
                         receiver = "all";
                     }
                     var chatMessage = new ChatMessage(getNowSQLDatetime(), message, scope.currentUser.getUserName(), receiver);
                     var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                             {controllerType: 4, action: 101, jsonData: JSON.stringify(chatMessage)});
-                    promise.then(function(outputData) {
+                    promise.then(function (outputData) {
                         if (outputData[0] === false) {
                             alert("Problem found while sending message to chat. Please try later.");
                         }
@@ -344,7 +359,7 @@ this.Home = function(accessService, scope) {
                 var chatMessage = new ChatMessage(getNowSQLDatetime(), text, scope.currentUser.getUserName(), receiver);
                 var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                         {controllerType: 4, action: 101, jsonData: JSON.stringify(chatMessage)});
-                promise.then(function(outputData) {
+                promise.then(function (outputData) {
                     if (outputData[0] === false) {
                         alert("Problem found while sending message to chat. Please try later.");
                     }
@@ -362,11 +377,11 @@ this.Home = function(accessService, scope) {
      * @description starts a timer that will search for fight requests in the database
      * @returns {n/a}
      */
-    scope.startRequestTimer = function() {
-        duelRequestTimer = setInterval(function() {
+    scope.startRequestTimer = function () {
+        duelRequestTimer = setInterval(function () {
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                     {controllerType: 5, action: 101, jsonData: {userName: scope.currentUser.getUserName()}});
-            promise.then(function(outputData) {
+            promise.then(function (outputData) {
                 if (outputData[0] === true) {
                     scope.requestReceived(outputData[1]);
                 }
@@ -384,13 +399,13 @@ this.Home = function(accessService, scope) {
      * @param requestData : the request data
      * @returns {n/a}
      */
-    scope.requestReceived = function(requestData) {
+    scope.requestReceived = function (requestData) {
         clearInterval(duelRequestTimer);
         scope.showBlocker = true;
         scope.duelRequester = requestData.idSender;
         scope.showDuelConfirmPopUp = true;
         scope.duelAcceptCoolDown = 10;
-        responseTimer = setInterval(function() {
+        responseTimer = setInterval(function () {
             scope.duelAcceptCoolDown--;
             //response time out
             if (scope.duelAcceptCoolDown < 0) {
@@ -398,7 +413,7 @@ this.Home = function(accessService, scope) {
                 scope.showDuelConfirmPopUp = false;
                 var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                         {controllerType: 5, action: 102, jsonData: {requestId: requestData.id}});
-                promise.then(function(outputData) {
+                promise.then(function (outputData) {
                     if (outputData[0] !== true) {
                         alert("Server error. Try later.");
                     }
@@ -417,12 +432,12 @@ this.Home = function(accessService, scope) {
      * @description starts the chat, loading online users and chat messages
      * @returns {n/a}
      */
-    this.start = function() {
+    this.start = function () {
         scope.startRequestTimer();
-        chatMessageLoadTimer = setInterval(function() {
+        chatMessageLoadTimer = setInterval(function () {
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                     {controllerType: 4, action: 100, jsonData: {datetime: scope.loginDateTime}});
-            promise.then(function(outputData) {
+            promise.then(function (outputData) {
                 if (outputData[0] === true) {
                     if (scope.messageList.length != outputData[1].length) {
                         scope.messageList = [];
@@ -439,10 +454,10 @@ this.Home = function(accessService, scope) {
                 }
             });
         }, 10000);
-        userLoadTimer = setInterval(function() {
+        userLoadTimer = setInterval(function () {
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                     {controllerType: 2, action: 103, jsonData: {userName: scope.currentUser.getUserName()}});
-            promise.then(function(outputData) {
+            promise.then(function (outputData) {
                 if (outputData[0] === true) {
                     if (outputData[1].length != scope.onlineUserList.length ||
                             outputData[3].length != scope.onlineBlockedList.length ||
@@ -494,7 +509,7 @@ this.Home = function(accessService, scope) {
      * @description shows all online users tab
      * @returns {n/a}
      */
-    this.showAllTab = function() {
+    this.showAllTab = function () {
         this.currentTab = "all";
         $("#friendsTab").removeClass("active");
         $("#blockedTab").removeClass("active");
@@ -509,7 +524,7 @@ this.Home = function(accessService, scope) {
      * @description shows all friend users tab
      * @returns {n/a}
      */
-    this.showFriendsTab = function() {
+    this.showFriendsTab = function () {
         this.currentTab = "friends";
         $("#friendsTab").addClass("active");
         $("#blockedTab").removeClass("active");
@@ -524,7 +539,7 @@ this.Home = function(accessService, scope) {
      * @description shows blocked online users tab
      * @returns {n/a}
      */
-    this.showBlockedTab = function() {
+    this.showBlockedTab = function () {
         this.currentTab = "blocked";
         $("#friendsTab").removeClass("active");
         $("#blockedTab").addClass("active");
@@ -539,7 +554,7 @@ this.Home = function(accessService, scope) {
      * @description stops the online user load
      * @returns {n/a}
      */
-    this.stop = function() {
+    this.stop = function () {
         clearInterval(chatMessageLoadTimer);
         clearInterval(userLoadTimer);
         clearInterval(duelRequestTimer);

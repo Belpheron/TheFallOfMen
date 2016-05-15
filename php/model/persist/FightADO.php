@@ -68,8 +68,8 @@ class FightADO implements ADOinterface {
     }
     
     public function createRequest($sender, $receiver) {
-        $sql = "INSERT INTO duel_requests (idSender,idReceiver) VALUES (?,?)";
-        $query = $this->dbConnection->execute($sql, [$sender->getUserName(), $receiver->getUserName()]);
+        $sql = "INSERT INTO duel_requests (idSender,idReceiver,answer,fight_is_ready) VALUES (?,?,?,?)";
+        $query = $this->dbConnection->execute($sql, [$sender->getUserName(), $receiver->getUserName(), 0, 0]);
         if ($query->rowCount() != 0) {
             return true;
         }

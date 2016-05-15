@@ -102,6 +102,17 @@ class FightController implements ControllerInterface {
                     $outputData[0] = false;
                 }
                 break;
+            case 107:
+                $sender = new User($this->jsonData->idSender);   
+                $receiver = new User($this->jsonData->idReceiver);
+                $result = $this->ado->checkFightIsReady($sender, $receiver);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
             default:
                 $outputData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";
