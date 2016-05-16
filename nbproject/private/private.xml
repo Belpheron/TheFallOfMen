@@ -3,14 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/UserController.php</file>
             <file>file:/E:/XAMPP/htdocs/Alpha/php/model/persist/RobotADO.php</file>
-            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/Implant.php</file>
             <file>file:/E:/XAMPP/htdocs/Alpha/js/control/MainWindow.js</file>
             <file>file:/E:/XAMPP/htdocs/Alpha/js/model/Home.js</file>
             <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/FightController.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/Attack.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/Fight.php</file>
             <file>file:/E:/XAMPP/htdocs/Alpha/js/model/FightDetails.js</file>
             <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/RobotController.php</file>
-            <file>file:/E:/XAMPP/htdocs/Alpha/mainWindow.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/persist/UserADO.php</file>
             <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/MainController.php</file>
             <file>file:/E:/XAMPP/htdocs/Alpha/php/model/persist/FightADO.php</file>
         </group>

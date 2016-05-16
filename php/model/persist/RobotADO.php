@@ -4,6 +4,7 @@ require_once "../model/persist/DBConnect.php";
 require_once "../model/persist/ADOinterface.php";
 require_once "../model/Implant.php";
 require_once "../model/Attribute.php";
+require_once "../model/Attack.php";
 
 class RobotADO implements ADOinterface {
 
@@ -60,6 +61,79 @@ class RobotADO implements ADOinterface {
             $result = null;
         }
         return $result;
+    }
+    
+    public function getAllAttacks($user) {
+        $result = [];
+        //attack1
+        $sql = "SELECT * FROM skill WHERE id = (SELECT attack1_id FROM robotstoreskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        $temp = $query->fetch();
+        $attack = new Attack();
+        $attack->setName($temp["name"]);
+        $attack->setDescription($temp["description"]);
+        $attack->setMultiplier($temp["multiplier"]);
+        $skillId = $temp["id"];
+        $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
+        $query = $this->dbConnection->execute($sql, [$skillId]);
+        $temp = $query->fetch();
+        $attack->setAttribute($temp["iso"]);
+        $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
+        $query = $this->dbConnection->execute($sql, [$skillId]);
+        $temp = $query->fetch();
+        $attack->setValue($temp["value"]);
+        $attack->setTarget($temp["target"]);
+        $result[] = $attack->toArray();
+        //attack2
+        $sql = "SELECT * FROM skill WHERE id = (SELECT attack2_id FROM robotstoreskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        $temp = $query->fetch();
+        $attack = new Attack();
+        $attack->setName($temp["name"]);
+        $attack->setDescription($temp["description"]);
+        $attack->setMultiplier($temp["multiplier"]);
+        $skillId = $temp["id"];
+        $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
+        $query = $this->dbConnection->execute($sql, [$skillId]);
+        $temp = $query->fetch();
+        $attack->setAttribute($temp["iso"]);
+        $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
+        $query = $this->dbConnection->execute($sql, [$skillId]);
+        $temp = $query->fetch();
+        $attack->setValue($temp["value"]);
+        $attack->setTarget($temp["target"]);
+        $result[] = $attack->toArray();
+        //attack3
+        $sql = "SELECT * FROM skill WHERE id = (SELECT attack3_id FROM robotstoreskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        $temp = $query->fetch();
+        $attack = new Attack();
+        $attack->setName($temp["name"]);
+        $attack->setDescription($temp["description"]);
+        $attack->setMultiplier($temp["multiplier"]);
+        $skillId = $temp["id"];
+        $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
+        $query = $this->dbConnection->execute($sql, [$skillId]);
+        $temp = $query->fetch();
+        $attack->setAttribute($temp["iso"]);
+        $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
+        $query = $this->dbConnection->execute($sql, [$skillId]);
+        $temp = $query->fetch();
+        $attack->setValue($temp["value"]);
+        $attack->setTarget($temp["target"]);
+        $result[] = $attack->toArray();
+        
+        //returns result
+        return $result;
+    }
+    
+    public function getSkin($skinId) {
+        $sql = "SELECT * FROM robotskin WHERE id = ?";
+        $query = $this->dbConnection->execute($sql, [$skinId]);
+        if ($query != null) {
+            return $query->fetch();
+        }
+        return null;
     }
 
     public function getAllImplants($user) {

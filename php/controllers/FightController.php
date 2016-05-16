@@ -3,6 +3,7 @@
 require_once "ControllerInterface.php";
 require_once "../model/persist/FightADO.php";
 require_once "../model/User.php";
+require_once "../model/Fight.php";
 
 class FightController implements ControllerInterface {
 
@@ -109,6 +110,70 @@ class FightController implements ControllerInterface {
                 if ($result != null) {
                     $outputData[0] = true;
                     $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
+            case 108:
+                if ($this->ado->setFightIsReady($this->jsonData->requestId)) {
+                    $outputData[0] = true;
+                } else {
+                    $outputData[0] = true;
+                }
+                break;
+            case 109:
+                var_dump($this->jsonData->p1_dp);
+                $fight = new Fight(
+                        0, 
+                        $this->jsonData->p1_id, 
+                        $this->jsonData->p1_ap, 
+                        $this->jsonData->p1_dp, 
+                        $this->jsonData->p1_hp, 
+                        $this->jsonData->p1_cp, 
+                        $this->jsonData->p1_xp, 
+                        $this->jsonData->p1_money,
+                        $this->jsonData->p1_skin, 
+                        $this->jsonData->p1_attack1_dmg, 
+                        $this->jsonData->p1_attack1_attribute, 
+                        $this->jsonData->p1_attack1_value, 
+                        $this->jsonData->p1_attack1_name, 
+                        $this->jsonData->p1_attack1_description, 
+                        $this->jsonData->p1_attack2_dmg, 
+                        $this->jsonData->p1_attack2_attribute, 
+                        $this->jsonData->p1_attack2_value, 
+                        $this->jsonData->p1_attack2_name,
+                        $this->jsonData->p1_attack2_description, 
+                        $this->jsonData->p1_attack3_dmg, 
+                        $this->jsonData->p1_attack3_attribute, 
+                        $this->jsonData->p1_attack3_value, 
+                        $this->jsonData->p1_attack3_name, 
+                        $this->jsonData->p1_attack3_description, 
+                        $this->jsonData->p2_id, 
+                        $this->jsonData->p2_ap, 
+                        $this->jsonData->p2_dp, 
+                        $this->jsonData->p2_hp, 
+                        $this->jsonData->p2_cp, 
+                        $this->jsonData->p2_xp,
+                        $this->jsonData->p2_money, 
+                        $this->jsonData->p2_skin, 
+                        $this->jsonData->p2_attack1_dmg,
+                        $this->jsonData->p2_attack1_attribute, 
+                        $this->jsonData->p2_attack1_value, 
+                        $this->jsonData->p2_attack1_name, 
+                        $this->jsonData->p2_attack1_description, 
+                        $this->jsonData->p2_attack2_dmg,
+                        $this->jsonData->p2_attack2_attribute, 
+                        $this->jsonData->p2_attack2_value, 
+                        $this->jsonData->p2_attack2_name, 
+                        $this->jsonData->p2_attack2_description, 
+                        $this->jsonData->p2_attack3_dmg, 
+                        $this->jsonData->p2_attack3_attribute, 
+                        $this->jsonData->p2_attack3_value, 
+                        $this->jsonData->p2_attack3_name, 
+                        $this->jsonData->p2_attack3_description, 
+                        0);
+                if ($this->ado->createFight($fight)) {
+                    $outputData[0] = true;
                 } else {
                     $outputData[0] = false;
                 }

@@ -12,6 +12,7 @@ this.Home = function (accessService, scope) {
     scope.showDuelConfirmPopUp = false;
     scope.showRequestWaitPopUp = false;
     scope.duelRequester = "";
+    scope.requestId = "";
 
     //accessors    
 
@@ -40,8 +41,12 @@ this.Home = function (accessService, scope) {
                     promise.then(function (outputData) {
                         if (outputData[0] === true) {
                             if (outputData[1].fight_is_ready == "1") {
-                                window.open("fightWindow.php", "_self");
-                            }                            
+                                var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                                        {controllerType: 5, action: 102, jsonData: {requestId: scope.requestId}});
+                                promise.then(function (outputData) {
+                                    window.open("fightWindow.php", "_self");
+                                });
+                            }
                         }
                     });
                 }, 500);
@@ -77,7 +82,30 @@ this.Home = function (accessService, scope) {
     scope.configureAndStartFight = function (requestId) {
         clearInterval(checkRequestResponseTimer);
         var fd = new FightDetails(accessService, scope);
-        fd.loadPlayer1("_local");
+        fd.loadPlayer1("_local", fd);
+        fd.loadPlayer2(scope.playerTarget, fd);
+        var timer = setInterval(function () {
+            if (fd.p1IsReady && fd.p2IsReady) {
+                clearInterval(timer);
+                var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                        {controllerType: 5, action: 109, jsonData: JSON.stringify(fd)});
+                promise.then(function (outputData) {
+                    if (outputData[0] === true) {
+                        var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                                {controllerType: 5, action: 108, jsonData: {requestId: requestId}});
+                        promise.then(function (outputData) {
+                            if (outputData[0] === true) {
+                                window.open("fightWindow.php", "_self");
+                            } else {
+                                alert("Error starting fight.");
+                            }
+                        });
+                    } else {
+                        alert("Error creating fight.");
+                    }
+                });
+            }
+        }, 2000);
     }
 
     /**
@@ -401,6 +429,7 @@ this.Home = function (accessService, scope) {
      */
     scope.requestReceived = function (requestData) {
         clearInterval(duelRequestTimer);
+        scope.requestId = requestData.id;
         scope.showBlocker = true;
         scope.duelRequester = requestData.idSender;
         scope.showDuelConfirmPopUp = true;
