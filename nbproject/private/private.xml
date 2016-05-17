@@ -2,6 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/ChatController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/CountryController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/MainController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/ShopController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/model/Skill.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/FightController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/LoginController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/templates/shop-template.html</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/model/Skill.js</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/model/Shop.js</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/ControllerInterface.php</file>
+        </group>
     </open-files>
 </project-private>

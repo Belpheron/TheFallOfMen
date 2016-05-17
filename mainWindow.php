@@ -64,7 +64,7 @@ if (isset($_GET["logOut"]))
         <script src="js/model/User.js" type="text/javascript"></script>
         <script src="js/model/UserStatistic.js" type="text/javascript"></script>   
         <script src="js/model/ChatMessage.js" type="text/javascript"></script>
-
+        <script src="js/model/Implant.js" type="text/javascript"></script>
     </head>
     <body ng-controller="controller as ctrl" class="background" ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName() ?>')">
         <header class="menuBar row">

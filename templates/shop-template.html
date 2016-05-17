@@ -4,14 +4,13 @@
     </div>
     <div class="row">
 
-        <div class="col-md-7 shopShopWindow">
+        <div class="col-md-6 shopShopWindow">
             <label>Shop</label>   
             <ul class="nav nav-tabs">
-                <li class="active"><a><span>Skills</span></a></li>
-
-                <li><a><span>Implants</span></a></li>
+                <li id="shopSkillTab" class="active" ng-click="shop.active('skill')"><a><span>Skills</span></a></li>
+                <li id="shopImplantTab" ng-click="shop.active('implant')"><a><span>Implants</span></a></li>
             </ul>
-            <div id="shopSkills">
+            <div id="shopSkills" ng-if="shop.show == 'skill'">
                 <table border="0" class="table table-striped">
                     <thead>
                         <tr>
@@ -26,24 +25,90 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="skill in skills">
-                            <td>{{$index + 1}}</td>
-                            <td class="small">{{skill.name}}</td>
-                            <td class="small">{{skill.description}}</td>
-                            <td class="small">{{skill.requiredLevel}}&nbsp;&nbsp;<span class="glyphicon glyphicon-alert" ng-if="currentUser.robotStatistic.level < skill.requiredLevel" ng-init="skill.invalid = 1"></span></td>
-                            <td class="small">{{skill.buyPrice}}&nbsp;&nbsp;<span class="glyphicon glyphicon-alert" ng-if="currentUser.coins < skill.buyPrice" ng-init="skill.invalid = 1"></span></td>
-                            <td class="small">{{skill.multiplier}}</td>
-                            <td><button class="btn btn-info" ng-disabled="skill.invalid == 1" ng-click="shop.purchaseSkill(skill)">Buy</button></td>
+                    <div>
+                        <td>{{$index + 1}}</td>
+                        <td class="small">{{skill.name}}</td>
+                        <td class="small">{{skill.description}}</td>
+                        <td class="small">{{skill.requiredLevel}}&nbsp;&nbsp;<span class="glyphicon glyphicon-alert" ng-if="currentUser.robotStatistic.level < skill.requiredLevel" ng-init="skill.invalid = 1"></span></td>
+                        <td class="small">{{skill.buyPrice}}&nbsp;&nbsp;<span class="glyphicon glyphicon-alert" ng-if="currentUser.coins < skill.buyPrice" ng-init="skill.invalid = 1"></span></td>
+                        <td class="small">{{skill.multiplier}}</td>
+                        <td><button class="btn btn-info" ng-disabled="skill.invalid == 1" ng-click="shop.purchaseSkill(skill)">Buy</button></td>
+                    </div>    
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="shopImplants" ng-if="shop.show == 'implant'">
+                <table border="0" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Action</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="implant in implants">
+                    <div>
+                        <td>{{$index + 1}}</td>
+                        <td class="small">{{implant.name}}</td>
+                        <td class="small">{{implant.description}}</td>
+                        <td class="small">{{implant.buyPrice}}&nbsp;&nbsp;<span class="glyphicon glyphicon-alert" ng-if="currentUser.coins < implant.buyPrice" ng-init="implant.invalid = 1"></span></td>
+                        <td><button class="btn btn-info" ng-disabled="implant.invalid == 1" ng-click="shop.purchaseImplant(implant)">Buy</button></td>
+                    </div>    
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="col-md-3 shopInventoryWindow">
+        <div class="col-md-5 shopInventoryWindow">
             <label>Inventory</label>   
             <ul class="nav nav-tabs">
-                <li class="active"><a><span>Skills</span></a></li>
-                <li><a><span>Implants</span></a></li>
+                <li class="active" id="skillInventoryTab" ng-click="shop.active('skillInventory')"><a><span>Skills</span></a></li>
+                <li id="implantInventoryTab" ng-click="shop.active('implantInventory')"><a><span>Implants</span></a></li>
             </ul>
+            <div id="inventorySkills" ng-if="shop.showInventory == 'skill'">
+                <table border="0" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Sell price</th>
+                            <th>Boost</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pSkill in purchasedSkills">
+                            <td class="small">{{pSkill.name}}</td>
+                            <td class="small">{{pSkill.sellPrice}}</td>
+                            <td class="small">{{pSkill.multiplier}}</td>
+                            <td><button class="btn btn-info" ng-click="shop.sellSkill(pSkill)">Sell</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="inventoryImplants" ng-if="shop.showInventory == 'implant'">
+                <table border="0" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Sell price</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pImplant in purchasedImplants">
+                            <td class="small">{{pImplant.name}}</td>
+                            <td class="small">{{pImplant.sellPrice}}</td>
+                            <td class="small">{{pImplant.description}}</td>
+                            <td><button class="btn btn-info" ng-click="shop.sellImplant(pImplant)">Sell</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     {{messageShop}}
