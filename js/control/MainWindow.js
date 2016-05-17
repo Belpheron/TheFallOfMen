@@ -82,13 +82,18 @@ var checkRequestResponseTimer;
                     $scope.currentUser.setUserStatistic(userStatisticData);
                     $scope.currentUser.setRobotStatistic(robotStatisticData);
                     console.log($scope.currentUser);
-                }
-                else
+                } else
                 {
                     alert("Can't load all information about user, Try again please.");
                     window.open("mainWindow.php?logOut=1", "_self");
                 }
             });
+            ///////////////////////////////////////
+            /*var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                    {controllerType: 2, action: 100, jsonData: {userName: "alumne"}});
+            promise.then(function (outputData) {
+                console.log(outputData[1]);
+            });*/
         };
 
         /**
@@ -108,8 +113,7 @@ var checkRequestResponseTimer;
                 if (outputData[0] === true)
                 {
                     window.open("mainWindow.php?logOut=1", "_self");
-                }
-                else
+                } else
                 {
                     window.open("mainWindow.php?logOut=2", "_self");
                 }

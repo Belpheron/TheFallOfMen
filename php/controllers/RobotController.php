@@ -2,6 +2,7 @@
 
 require_once "ControllerInterface.php";
 require_once "../model/persist/RobotADO.php";
+require_once "../model/User.php";
 
 class RobotController implements ControllerInterface {
 
@@ -46,6 +47,49 @@ class RobotController implements ControllerInterface {
                 } else {
                     $outputData[0] = false;
                     $outputData[1] = "No skins robots found.";
+                }
+                break;
+            //gets all attributes for given username                
+            case 101:
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->getAllImplants($user);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                    $outputData[1] = "Error loading implants.";
+                }
+                break;
+            //gets all attributes from username
+            case 102:
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->getAllAttributes($user);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                    $outputData[1] = "Error loading attributes";
+                }
+                break;
+            case 103:
+                $result = $this->ado->getSkin($this->jsonData->idSkin);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
+            case 104:
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->getAllAttacks($user);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
                 }
                 break;
             default:

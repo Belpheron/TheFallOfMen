@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/ChatController.php</file>
             <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/CountryController.php</file>
             <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/MainController.php</file>
@@ -14,6 +15,20 @@
             <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/model/Skill.js</file>
             <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/model/Shop.js</file>
             <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/ControllerInterface.php</file>
+=======
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/UserController.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/persist/RobotADO.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/js/control/MainWindow.js</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/js/model/Home.js</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/FightController.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/Attack.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/Fight.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/js/model/FightDetails.js</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/RobotController.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/persist/UserADO.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/MainController.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/persist/FightADO.php</file>
+>>>>>>> c891a4a7e000647b538ecc3050aea324c80712bb
         </group>
     </open-files>
 </project-private>
