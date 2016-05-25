@@ -15,7 +15,7 @@ var checkRequestResponseTimer;
     fallOfMenApp.controller("controller", function ($scope, $window, $http, $compile, accessService)
     {
         //profile variables
-        $scope.profile = new ProfileWindow(accessService, $scope);
+        $scope.profileWindow = new ProfileWindow(accessService, $scope);
         $scope.showDisclaimerDropOut = 0;
 
         //shop variables
@@ -30,8 +30,11 @@ var checkRequestResponseTimer;
         $scope.currentWindow = "home";
         $scope.showBlocker = false;
         $scope.showFightBlocker = false;
+        
+        //Hangar variables
+        $scope.hangar = new Hangar(accessService, $scope);
 
-        //methods         
+        //methods        
 
         /**
          * @name loadUserDetails()
@@ -134,6 +137,7 @@ var checkRequestResponseTimer;
         {
             $scope.home.start();
             $scope.currentWindow = "home";
+             clearInterval($scope.tempo);
         };
     });
 
@@ -208,7 +212,7 @@ var checkRequestResponseTimer;
     {
         return {
             restrict: 'E',
-            templateUrl: "templates/hangar-template.html",
+            templateUrl: "templates/hangar-template_1.html",
             controller: function ()
             {
 

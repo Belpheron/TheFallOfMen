@@ -22,6 +22,7 @@ this.Skill = function (id, name, description, requiredLevel, buyPrice, multiplie
     this.buyPrice = buyPrice;
     this.multiplier = multiplier;
     this.invalid = 0;
+    this.sellPrice = Math.round((this.buyPrice/3));
 
     //accessors
     //getters

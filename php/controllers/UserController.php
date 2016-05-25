@@ -50,7 +50,7 @@ class UserController implements ControllerInterface
         switch ($this->getAction())
         {
             case 100:
-                //comprobe if nick alredy exist and load all details data.
+                //load initial data.
                 $user = new User($this->jsonData->userName);
                 $result = $this->ado->get($user);
                 if ($result != null)
@@ -243,5 +243,3 @@ class UserController implements ControllerInterface
     }
 
 }
-
-?>

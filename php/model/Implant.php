@@ -1,5 +1,13 @@
 <?php
 
+
+/**
+ * @name Skill()
+ * @author Franc
+ * @version 1.0
+ * @date 15/05/2016
+ * @description encapsulates a implant object
+ */
 class Implant {
 
     //attributes
@@ -7,6 +15,7 @@ class Implant {
     private $name;
     private $description;
     private $buyPrice;
+    private $sellPrice;
     private $attribute;
     private $value;
     private $turns;
@@ -47,7 +56,6 @@ class Implant {
     function setTurns($turns) {
         $this->turns = $turns;
     }
-
     
     function getName() {
         return $this->name;
@@ -60,6 +68,8 @@ class Implant {
     function getBuyPrice() {
         return $this->buyPrice;
     }
+
+    //setters
 
     function getAttribute() {
         return $this->attribute;
@@ -85,7 +95,14 @@ class Implant {
         $this->buyPrice = $buyPrice;
     }
 
-    function setAttribute($attribute) {
+    function getSellPrice() {
+        return $this->sellPrice;
+    }
+
+    function setSellPrice($sellPrice) {
+        $this->sellPrice = $sellPrice;
+    }
+        function setAttribute($attribute) {
         $this->attribute = $attribute;
     }
 
