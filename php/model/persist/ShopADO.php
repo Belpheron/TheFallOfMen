@@ -3,18 +3,86 @@
 require_once "../model/persist/DBConnect.php";
 require_once "../model/persist/ADOinterface.php";
 
-class ShopADO implements ADOinterface {
+class ShopADO implements ADOinterface
+{
 
     //properties
     private $dbConnection;
 
     //constructor
-    public function __construct() {
+    public function __construct()
+    {
         $this->dbConnection = DBConnect::getInstance();
     }
 
     //methods
     
+    /**
+     * @name getAllInfoImplant()
+     * @author Franc
+     * @version 1.0
+     * @date 17/05/2016
+     * @description give all information about a implant selected.
+     * @param skill: object skill wants info.
+     * @return : boolean.
+     */
+    public function getAllInfoImplant($implant)
+    {
+        try
+        {
+            $sqlEffect = "SELECT * FROM effect WHERE `id` = (SELECT `idEffect` FROM implanteffect  WHERE `idImplant` = ?)";
+            $array = [$implant->getId()];
+            $infoEffect = $this->dbConnection->execute($sqlEffect, $array);
+            $infoEffect = $infoEffect->fetch();
+            $sqlAttribute = "SELECT * FROM attribute WHERE `id` = (SELECT `idAttribute` FROM effectattribute  WHERE `idEffect` = ?)";
+            $array = [$infoEffect["id"]];
+            $infoAttribute = $this->dbConnection->execute($sqlAttribute, $array);
+            $infoAttribute = $infoAttribute->fetch();
+            $result = [];
+            array_push($result, $infoEffect);
+            array_push($result, $infoAttribute);
+            return $result;
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+             return null;
+        }
+    }
+    
+    /**
+     * @name getAllInfoSkill()
+     * @author Franc
+     * @version 1.0
+     * @date 17/05/2016
+     * @description give all information about a skill selected.
+     * @param skill: object skill wants info.
+     * @return : boolean.
+     */
+    public function getAllInfoSkill($skill)
+    {
+        try
+        {
+            $sqlEffect = "SELECT * FROM effect WHERE `id` = (SELECT `idEffect` FROM skilleffect  WHERE `idSkill` = ?)";
+            $array = [$skill->getId()];
+            $infoEffect = $this->dbConnection->execute($sqlEffect, $array);
+            $infoEffect = $infoEffect->fetch();
+            $sqlAttribute = "SELECT * FROM attribute WHERE `id` = (SELECT `idAttribute` FROM effectattribute  WHERE `idEffect` = ?)";
+            $array = [$infoEffect["id"]];
+            $infoAttribute = $this->dbConnection->execute($sqlAttribute, $array);
+            $infoAttribute = $infoAttribute->fetch();
+            $result = [];
+            array_push($result, $infoEffect);
+            array_push($result, $infoAttribute);
+            return $result;
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+             return null;
+        }
+    }
+
     /**
      * @name sellImplant()
      * @author Franc
@@ -24,13 +92,16 @@ class ShopADO implements ADOinterface {
      * @param none.
      * @return : boolean.
      */
-    public function sellImplant($implant, $user) {
-        try {
+    public function sellImplant($implant, $user)
+    {
+        try
+        {
             //1 take user coins.
             $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
             $array = [$user->getUserName()];
             $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null) {
+            if ($query1 != null)
+            {
                 $result = $query1->fetch();
                 //2 update coins user.
                 $sql2 = "UPDATE `user` SET `coins`= ? WHERE `userName` = ?";
@@ -41,18 +112,21 @@ class ShopADO implements ADOinterface {
                 $array = [$user->getIdRobotStatistic(), $implant->getId()];
                 $query3 = $this->dbConnection->execute($sql3, $array);
                 return true;
-            } else {
+            }
+            else
+            {
                 //problem coins// ¿hack?
                 return null;
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             return null;
             error_log($e->getMessage());
         }
     }
 
-    
-     /**
+    /**
      * @name purchaseImplant()
      * @author Franc
      * @version 1.0
@@ -61,15 +135,19 @@ class ShopADO implements ADOinterface {
      * @param none.
      * @return : boolean.
      */
-    public function purchaseImplant($imaplant, $user) {
-        try {
+    public function purchaseImplant($imaplant, $user)
+    {
+        try
+        {
             //1 comprobe user have enough coins.
             $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
             $array = [$user->getUserName()];
             $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null) {
+            if ($query1 != null)
+            {
                 $result = $query1->fetch();
-                if ($result[0] >= $imaplant->getBuyPrice()) {
+                if ($result[0] >= $imaplant->getBuyPrice())
+                {
                     //2 update coins user.
                     $sql2 = "UPDATE `user` SET `coins`= ? WHERE `userName` = ?";
                     $array = [$result[0] - $imaplant->getBuyPrice(), $user->getUserName()];
@@ -80,11 +158,15 @@ class ShopADO implements ADOinterface {
                     $query3 = $this->dbConnection->execute($sql3, $array);
                     return true;
                 }
-            } else {
+            }
+            else
+            {
                 //not enough coins// ¿hack?
                 return null;
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             return null;
             error_log($e->getMessage());
         }
@@ -99,20 +181,26 @@ class ShopADO implements ADOinterface {
      * @param id array of implants.
      * @return : data of implants purchased. (purchased)
      */
-    public function getInfoImplant($arrayId) {
+    public function getInfoImplant($arrayId)
+    {
         $arrayResult = [];
-        try {
-            for ($i = 0; $i < count($arrayId); $i++) {
+        try
+        {
+            for ($i = 0; $i < count($arrayId); $i++)
+            {
                 $sql = "SELECT * FROM implant WHERE id = ?";
                 $array = [$arrayId[$i][0]];
                 $query = $this->dbConnection->execute($sql, $array);
-                if ($query != null) {
+                if ($query != null)
+                {
                     $result = $query->fetch();
                     array_push($arrayResult, $result);
                 }
             }
             return $arrayResult;
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             error_log($ex->getMessage());
         }
 
@@ -128,15 +216,20 @@ class ShopADO implements ADOinterface {
      * @param none.
      * @return : data of implants purchased. (purchased)
      */
-    public function getAllPurchasedImplant($user) {
-        try {
+    public function getAllPurchasedImplant($user)
+    {
+        try
+        {
             $sql = "SELECT idImplant FROM robotstoreimplant WHERE idRobotStatistic = ?";
             $array = [$user->getIdRobotStatistic()];
             $query = $this->dbConnection->execute($sql, $array);
-            if ($query != null) {
+            if ($query != null)
+            {
                 return $query->fetchAll();
             }
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             error_log($ex->getMessage());
         }
 
@@ -152,15 +245,20 @@ class ShopADO implements ADOinterface {
      * @param none.
      * @return : data of implants. (all)
      */
-    public function getAllImplants() {
-        try {
+    public function getAllImplants()
+    {
+        try
+        {
             $sql = "SELECT * FROM implant";
             $array = [];
             $query = $this->dbConnection->execute($sql, $array);
-            if ($query != null) {
+            if ($query != null)
+            {
                 return $query->fetchAll();
             }
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             error_log($ex->getMessage());
         }
 
@@ -176,15 +274,20 @@ class ShopADO implements ADOinterface {
      * @param user object.
      * @return : data of coins.
      */
-    public function getCoins($user) {
-        try {
+    public function getCoins($user)
+    {
+        try
+        {
             $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
             $array = [$user->getUserName()];
             $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null) {
+            if ($query1 != null)
+            {
                 return $query1->fetchAll();
             }
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             error_log($ex->getMessage());
         }
 
@@ -200,15 +303,20 @@ class ShopADO implements ADOinterface {
      * @param none.
      * @return : data of skill purchased. (all)
      */
-    public function getAllPurchasedSkill($user) {
-        try {
+    public function getAllPurchasedSkill($user)
+    {
+        try
+        {
             $sql = "SELECT idSkill FROM robotstoreskill WHERE idRobotStatistic = ?";
             $array = [$user->getIdRobotStatistic()];
             $query = $this->dbConnection->execute($sql, $array);
-            if ($query != null) {
+            if ($query != null)
+            {
                 return $query->fetchAll();
             }
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             error_log($ex->getMessage());
         }
 
@@ -224,20 +332,26 @@ class ShopADO implements ADOinterface {
      * @param id array of skills.
      * @return : data of skill purchased. (selected)
      */
-    public function getInfoSkill($arrayId) {
+    public function getInfoSkill($arrayId)
+    {
         $arrayResult = [];
-        try {
-            for ($i = 0; $i < count($arrayId); $i++) {
+        try
+        {
+            for ($i = 0; $i < count($arrayId); $i++)
+            {
                 $sql = "SELECT * FROM skill WHERE id = ?";
                 $array = [$arrayId[$i][0]];
                 $query = $this->dbConnection->execute($sql, $array);
-                if ($query != null) {
+                if ($query != null)
+                {
                     $result = $query->fetch();
                     array_push($arrayResult, $result);
                 }
             }
             return $arrayResult;
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             error_log($ex->getMessage());
         }
 
@@ -253,15 +367,20 @@ class ShopADO implements ADOinterface {
      * @param none.
      * @return : data of skill. (all)
      */
-    public function getAllSkills() {
-        try {
+    public function getAllSkills()
+    {
+        try
+        {
             $sql = "SELECT * FROM skill";
             $array = [];
             $query = $this->dbConnection->execute($sql, $array);
-            if ($query != null) {
+            if ($query != null)
+            {
                 return $query->fetchAll();
             }
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             error_log($ex->getMessage());
         }
         return null;
@@ -276,13 +395,16 @@ class ShopADO implements ADOinterface {
      * @param none.
      * @return : boolean.
      */
-    public function sellSkill($skill, $user) {
-        try {
+    public function sellSkill($skill, $user)
+    {
+        try
+        {
             //1 take user coins.
             $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
             $array = [$user->getUserName()];
             $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null) {
+            if ($query1 != null)
+            {
                 $result = $query1->fetch();
                 //2 update coins user.
                 $sql2 = "UPDATE `user` SET `coins`= ? WHERE `userName` = ?";
@@ -293,11 +415,15 @@ class ShopADO implements ADOinterface {
                 $array = [$user->getIdRobotStatistic(), $skill->getId()];
                 $query3 = $this->dbConnection->execute($sql3, $array);
                 return true;
-            } else {
+            }
+            else
+            {
                 //problem coins// ¿hack?
                 return null;
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             return null;
             error_log($e->getMessage());
         }
@@ -312,15 +438,19 @@ class ShopADO implements ADOinterface {
      * @param none.
      * @return : boolean.
      */
-    public function purchaseSkill($skill, $user) {
-        try {
+    public function purchaseSkill($skill, $user)
+    {
+        try
+        {
             //1 comprobe user have enough coins.
             $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
             $array = [$user->getUserName()];
             $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null) {
+            if ($query1 != null)
+            {
                 $result = $query1->fetch();
-                if ($result[0] >= $skill->getBuyPrice()) {
+                if ($result[0] >= $skill->getBuyPrice())
+                {
                     //2 update coins user.
                     $sql2 = "UPDATE `user` SET `coins`= ? WHERE `userName` = ?";
                     $array = [$result[0] - $skill->getBuyPrice(), $user->getUserName()];
@@ -331,33 +461,42 @@ class ShopADO implements ADOinterface {
                     $query3 = $this->dbConnection->execute($sql3, $array);
                     return true;
                 }
-            } else {
+            }
+            else
+            {
                 //not enough coins// ¿hack?
                 return null;
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             return null;
             error_log($e->getMessage());
         }
     }
 
-    public function delete($entity) {
+    public function delete($entity)
+    {
         
     }
 
-    public function get($entity) {
+    public function get($entity)
+    {
         
     }
 
-    public function insert($entity) {
+    public function insert($entity)
+    {
         
     }
 
-    public function update($entity) {
+    public function update($entity)
+    {
         
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         
     }
 

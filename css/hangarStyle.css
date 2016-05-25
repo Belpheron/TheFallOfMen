@@ -29,3 +29,68 @@
     border: 1px solid silver;
     height: 81vh;
 }
+
+#progressbar{
+    position: absolute;
+    background-color: silver;
+    height: 200%;
+    width: 90%;
+    border: 1px solid;
+    margin-top: 10%;
+}
+
+#sectionProgressBar{
+    position: absolute;
+    margin-top:  17%;
+}
+
+#percent{
+    position: absolute;
+    left: 185px;
+}
+
+#bar{
+    position: relative;
+    background-color: yellow;
+    width: 1%;
+    height: 99%;
+}
+
+#robotImage
+{
+    position: absolute;
+    top: -30px;
+}
+
+.implant 
+{
+    border: 1px solid;
+    height: 19.5vh;
+    width: 19vw;
+}
+.skill
+{
+    border: 1px solid;
+    height: 19.5vh;
+    width: 19vw;
+}
+
+.blur{
+    position: relative;;
+    margin: 21%;
+    top: 35%;
+    color: silver;
+    font-size: 3em;
+}
+
+.draggable
+{
+    border: 1px dotted blue;
+}
+
+.fixed
+{
+      height: 81%;
+    overflow-y: scroll;
+ 
+}

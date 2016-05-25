@@ -1,9 +1,13 @@
 this.Shop = function (accessService, scope)
 {
     scope.loadingPurchasedSkill = 0;
-    scope.loadingImplant = 0;   
+    scope.loadingImplant = 0;
     scope.loadingSkill = 0;
     scope.messageShop;
+    scope.infoSkill;
+    scope.infoImplant;
+    scope.showToolTipSkill = false;
+    scope.showToolTipImplant = false;
     scope.skills = new Array();
     scope.purchasedSkills = new Array();
     scope.implants = new Array();
@@ -13,7 +17,8 @@ this.Shop = function (accessService, scope)
     this.showInventory = "skill";
 
     //watch for any change in array was occured.
-    scope.$watch('loadingSkill', function () {
+    scope.$watch('loadingSkill', function ()
+    {
         for (var i = 0; i < scope.purchasedSkills.length; i++)
         {
             for (var j = 0; j < scope.skills.length; j++)
@@ -27,7 +32,8 @@ this.Shop = function (accessService, scope)
     }, true);
 
     //watch for any change in array was occured.
-    scope.$watch('loadingImplant', function () {
+    scope.$watch('loadingImplant', function ()
+    {
         for (var i = 0; i < scope.purchasedImplants.length; i++)
         {
             for (var j = 0; j < scope.implants.length; j++)
@@ -49,9 +55,112 @@ this.Shop = function (accessService, scope)
         scope.loadPurchasedSkills();
         scope.loadImplants();
         scope.loadPurchasedImplants();
+        clearInterval(scope.tempo);
     };
-    
-     /**
+
+    /**
+     * hideInfoSkill()
+     * @author Franc
+     * @date 17/05/2016
+     * @description reset a tooltip and hide it.
+     * @param none
+     * @returns none
+     */
+    this.hideInfoSkill = function ()
+    {
+        scope.showToolTipSkill = false;
+        scope.showToolTipImplant = false;
+        $("#tooltipMessage").css("opacity", "0");
+        $("#tooltipMessage").css("z-index", "-1");
+        //$("#tooltipMessage").css("top", "25%");
+    };
+
+    /**
+     * getInfoImplant()
+     * @author Franc
+     * @date 17/05/2016
+     * @description get all info for a selected implant.
+     * @param implant:  object.
+     * @returns none
+     */
+    this.getInfoImplant = function (implant, index, mode)
+    {
+        scope.showToolTipImplant = true;
+        if (mode == "shop")
+        {
+            $("#tooltipMessageImplant").css("top", "25%");
+            $("#tooltipMessageImplant").css("left", "12%");
+        }
+        else
+        {
+            $("#tooltipMessageImplant").css("top", "25%");
+            $("#tooltipMessageImplant").css("left", "65%");
+        }
+        implant = angular.copy(implant);
+        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 210, jsonData: JSON.stringify(implant)});
+        promise.then(function (outputData)
+        {
+            if (outputData[0] === true)
+            {
+
+                scope.infoImplant = outputData[1];
+                var currentTop = $("#tooltipMessageImplant").css("top");
+                var top = Math.round(currentTop.substring(0, currentTop.length - 2));
+                $("#tooltipMessageImplant").css("top", (top + (45 * index + 1)) + 'px');
+                $("#tooltipMessageImplant").css("opacity", "1");
+                $("#tooltipMessageImplant").css("z-index", "1000");
+            }
+            else
+            {
+                scope.messageShop = outputData[1];
+            }
+        });
+    };
+
+    /**
+     * getInfoSkill()
+     * @author Franc
+     * @date 17/05/2016
+     * @description get all info for a selected skill.
+     * @param skill:  object.
+     * @returns none
+     */
+    this.getInfoSkill = function (skill, index, mode)
+    {
+        scope.showToolTipSkill = true;
+        if (mode == "shop")
+        {
+            $("#tooltipMessageSkill").css("top", "25%");
+            $("#tooltipMessageSkill").css("left", "12%");
+        }
+        else
+        {
+            $("#tooltipMessageSkill").css("top", "25%");
+            $("#tooltipMessageSkill").css("left", "65%");
+        }
+        skill = angular.copy(skill);
+        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 209, jsonData: JSON.stringify(skill)});
+        promise.then(function (outputData)
+        {
+            if (outputData[0] === true)
+            {
+
+                scope.infoSkill = outputData[1];
+                var currentTop = $("#tooltipMessageSkill").css("top");
+                var top = Math.round(currentTop.substring(0, currentTop.length - 2));
+                $("#tooltipMessageSkill").css("top", (top + (45 * index + 1)) + 'px');
+                $("#tooltipMessageSkill").css("opacity", "1");
+                $("#tooltipMessageSkill").css("z-index", "1000");
+            }
+            else
+            {
+                scope.messageShop = outputData[1];
+            }
+        });
+    };
+
+
+    /**
      * sellImplant()
      * @author Franc
      * @date 16/05/2016
@@ -72,7 +181,8 @@ this.Shop = function (accessService, scope)
                 scope.messageShop = outputData[1];
                 scope.updateImplants();
 
-            } else
+            }
+            else
             {
                 scope.messageShop = outputData[1];
             }
@@ -97,7 +207,8 @@ this.Shop = function (accessService, scope)
             if (outputData[0] === true)
             {
                 scope.currentUser.setCoins(outputData[1][0]["coins"]);
-            } else
+            }
+            else
             {
                 scope.currentUser.setCoins(0);
             }
@@ -134,7 +245,8 @@ this.Shop = function (accessService, scope)
             {
                 scope.messageShop = outputData[1];
                 scope.updateImplants();
-            } else
+            }
+            else
             {
                 scope.messageShop = outputData[1];
             }
@@ -168,7 +280,8 @@ this.Shop = function (accessService, scope)
                     scope.purchasedImplants.push(implant);
                 }
                 scope.loadingImplant++;
-            } else
+            }
+            else
             {
                 scope.messageShop = outputData[1];
             }
@@ -201,7 +314,8 @@ this.Shop = function (accessService, scope)
                     scope.implants.push(implant);
                 }
                 scope.loadingImplant++;
-            } else
+            }
+            else
             {
                 scope.messageShop = outputData[1];
             }
@@ -226,7 +340,8 @@ this.Shop = function (accessService, scope)
             if (outputData[0] === true)
             {
                 scope.currentUser.setCoins(outputData[1][0]["coins"]);
-            } else
+            }
+            else
             {
                 scope.currentUser.setCoins(0);
             }
@@ -264,7 +379,8 @@ this.Shop = function (accessService, scope)
                 scope.messageShop = outputData[1];
                 scope.updateSkills();
 
-            } else
+            }
+            else
             {
                 scope.messageShop = outputData[1];
             }
@@ -299,7 +415,8 @@ this.Shop = function (accessService, scope)
                     scope.skills.push(skill);
                 }
                 scope.loadingSkill++;
-            } else
+            }
+            else
             {
                 scope.messageShop = outputData[1];
             }
@@ -335,7 +452,8 @@ this.Shop = function (accessService, scope)
                     scope.purchasedSkills.push(skill);
                 }
                 scope.loadingSkill++;
-            } else
+            }
+            else
             {
                 scope.messageShop = outputData[1];
             }
@@ -362,7 +480,8 @@ this.Shop = function (accessService, scope)
             {
                 scope.messageShop = outputData[1];
                 scope.updateSkills();
-            } else
+            }
+            else
             {
                 scope.messageShop = outputData[1];
             }
@@ -371,7 +490,8 @@ this.Shop = function (accessService, scope)
 
     this.active = function (id)
     {
-        switch (id) {
+        switch (id)
+        {
             case 'implant':
                 $("#shopImplantTab").addClass("active");
                 $("#shopSkillTab").removeClass("active");

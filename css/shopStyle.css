@@ -13,3 +13,24 @@
     height: 60vh;
 }
 
+.tooltipmessage{
+    display: block;
+    line-height: 1.42857;
+    opacity: 1;
+    position: absolute;
+    text-align: start;
+    z-index: 1070;
+    top: 25%;
+    left: 12%;
+    border-radius: 15px;
+    padding: 10px;
+    background-color: yellowgreen;
+    /*transition: 0.4s opacity;*/
+}
+
+.invisible
+{
+    opacity:0;
+    display: inline;
+}
+

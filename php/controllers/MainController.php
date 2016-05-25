@@ -6,6 +6,7 @@ require_once "RobotController.php";
 require_once "ShopController.php";
 require_once "ChatController.php";
 require_once "FightController.php";
+require_once "HangarController.php";
 
 
 $outputData = [];
@@ -27,12 +28,7 @@ if (isset($_REQUEST['controllerType']))
             $robotController = new RobotController($_REQUEST['action'], $_REQUEST['jsonData']);
             $outputData = $robotController->run();
             break;
-
-        case 6:
-            $shopController = new ShopController($_REQUEST['action'], $_REQUEST['jsonData']);
-            $outputData = $shopController->run();
-            break;
-        case 4:
+         case 4:
             $chatController = new ChatController($_REQUEST['action'], $_REQUEST['jsonData']);
             $outputData = $chatController->run();
             break;
@@ -40,6 +36,16 @@ if (isset($_REQUEST['controllerType']))
             $fightController = new FightController($_REQUEST['action'], $_REQUEST['jsonData']);
             $outputData = $fightController->run();
             break;
+        case 6:
+            $shopController = new ShopController($_REQUEST['action'], $_REQUEST['jsonData']);
+            $outputData = $shopController->run();
+            break; 
+        case 7:
+            $hangarController = new HangarController($_REQUEST['action'], $_REQUEST['jsonData']);
+            $outputData = $hangarController->run();
+            break;
+       
+       
         default:
             $outputData[0] = false;
             $outputData[1] = "Sorry, there has been an error. Try later";

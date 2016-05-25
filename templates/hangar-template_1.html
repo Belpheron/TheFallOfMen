@@ -1,0 +1,104 @@
+<main ng-show="currentWindow == 'hangar'">
+    <div class="row">
+        <div class="col-md-3 hangarLeftWindow">
+            <div class="row hangarRobotWindow">
+                <img id="robotImage" src={{image}} width="315" height="430" alt="image robot loading..."/>
+            </div>
+            <div class="row hangarExperienceWindow">
+                <div class="col-md-3" style="display: block">
+                    <h1>{{currentUser.robotStatistic.level}}</h1>Lvl
+                </div>
+                <div  class="col-md-9">
+                    <div id="progressbar"><div id="bar">&nbsp;</div></div><br>
+                    <div id="sectionProgressBar">
+                        <label>{{currentUser.robotStatistic.experience}}/{{currentUser.robotStatistic.expToNextLevel}}</label> 
+                        <label id="percent">{{(currentUser.robotStatistic.experience / currentUser.robotStatistic.expToNextLevel)*100|number:2}}%</label>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div id="areaDroppable">
+                <div class="row hangarImplantSlotsWindow">
+                    <table border="0">
+                        <tbody>
+                            <tr>
+                                <td class= "skill"><span class="blur">Slot 1</span></td>
+                                <td class="skill"><span class="blur">Slot 2</span></td>
+                                <td class="skill"><span class="blur">Slot 3</span></td>
+                            </tr>
+                        </tbody>
+                    </table>         
+                </div>
+                <div class="row hangarInventoryWindow">
+                    <ul class="nav nav-tabs">
+                        <li id="tabSkill" class="active" ng-click="setActive('skill', hangar)"><a><span>Skills</span></a></li>
+                        <li id="tabImplant" ng-click="setActive('implant', hangar)"><a><span>Implants</span></a></li>
+                        <li id="tabAttribute" ng-click="setActive('attribute', hangar)"><a><span>Attributes</span></a></li>
+                    </ul>
+                    <div ng-if="show == 'skill'" class="fixed">
+                        <table  class="table table-striped">
+                            <tr>
+                                <td><label>Name</label></td>
+                                <td><label>Level</label></td>
+                                <td><label>Boost</label></td>
+                                <td><label>Attribute</label></td>
+                                <td><label>Value</label></td>
+                                <td colspan="4"><label>Assign</label></td>
+                            </tr>
+                            <tr ng-repeat="skill in purchasedSkills">
+                                <input type="hidden" name="valueId{{$index}}" value="{{skill.id}}"/>
+                                <td>{{skill.name}}</td>
+                                <td>{{skill.requiredLevel}}</td>
+                                <td>{{skill.multiplier}}</td>
+                                <td>{{attrSkill[$index][0]}}</td>
+                                <td>{{attrSkill[$index][1]}}</td>
+                                <td><input type="radio" name="assign{{$index}}" value="undefined">nada</td>
+                                <td><input type="radio" name="assign{{$index}}" value="rock">piedra</td>
+                                <td><input type="radio" name="assign{{$index}}" value="paper">papel</td>
+                                <td><input type="radio" name="assign{{$index}}" value="scissor">tijeras</td>
+                                
+                            </tr>
+                        </table>
+                    </div>
+                    <div  ng-if="show == 'implant'" class="fixed">
+                        <div class="draggable ui-widget-content elementImplant" ng-repeat="implant in purchasedImplants">
+                            <ul ng-init="hangar.getInfoImplant(implant)">
+                                <input type="hidden" name="valueId{{$index}}" value="{{implant.id}}"/>
+                                <li><label>Name: </label>{{implant.name}}</li>
+                                <li><label>Description: </label>{{implant.description}}</li>
+                                <li><label>Attribute: </label>{{attrImplant[$index][0]}}</li>
+                                <li><label>Value: </label>{{attrImplant[$index][1]}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-if="show == 'attribute'">
+                        <ul ng-init="hangar.loadAttributes(hangar)" >
+                            <li><label class="top">Health points:</label> {{hangar.attributes[3]["value"]}}</li>
+                            <li><label class="top">Attack points:</label> {{hangar.attributes[0]["value"]}}</li>
+                            <li><label>Defense points:</label> {{hangar.attributes[1]["value"]}}</li>
+                            <li><label>Critical points:</label> {{hangar.attributes[2]["value"]}}</li>
+                        </ul>
+                    </div> 
+                    <div class="row hangarSkillsWindow">
+                        <table border="0" id="destinySkill" class="list">
+                            <tbody>
+                                <tr>
+                                    <td class= "skill droppableSkill" id="skillRock"><span class="blur">Rock</span></td>
+                                    <td class="skill droppableSkill" id="skillPaper"><span class="blur">Paper</span></td>
+                                    <td class="skill droppableSkill" id="skillScissor"><span class="blur">Scissor</span></td>
+                                </tr>
+                            </tbody>
+                        </table>       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1 hangarInformationColumn">
+            <div class="row">
+                <label>{{currentUser.coins}} Human/s</label>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,11 +1,20 @@
 this.ProfileWindow = function (accessService, scope)
 {
+
     scope.message = "";
     scope.countryList = [];
     scope.countryId;
     scope.show = 0;
     scope.newPassword;
     scope.repeatNewPassword;
+
+    this.showProfile = function ()
+    {
+        
+        scope.currentWindow = "profile";
+        clearInterval(scope.tempo);
+    };
+
     /**
      * dropOutUser()
      * @description send information (user object) to server and ask to inactive a user.
@@ -88,8 +97,8 @@ this.ProfileWindow = function (accessService, scope)
         {
             if (outputData[0] === true)
             {
-               //changes saved
-               alert("Changes saved succesfuckly!");
+                //changes saved
+                alert("Changes saved succesfuckly!");
             }
             else
             {

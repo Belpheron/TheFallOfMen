@@ -31,7 +31,7 @@ if (isset($_GET["logOut"]))
         <script src="js/frameWorks/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
         <script src="js/frameWorks/angular/angular.min.js" type="text/javascript"></script>
         <script src="js/frameWorks/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/frameWorks/jquery-ui-1.12.0-rc.2/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
         <!--STYLE-->
         <link href="css/LoginStyle.css" rel="stylesheet" type="text/css"/>
@@ -41,7 +41,7 @@ if (isset($_GET["logOut"]))
         <link href="css/hangarStyle.css" rel="stylesheet" type="text/css"/>
         <link href="css/shopStyle.css" rel="stylesheet" type="text/css"/>
         <link href="css/profileStyle.css" rel="stylesheet" type="text/css"/>
-        <link href="js/frameWorks/jquery-ui-1.12.0-rc.2/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
         <!--CONTROL-->
         <script src="js/control/MainWindow.js" type="text/javascript"></script>
@@ -66,15 +66,16 @@ if (isset($_GET["logOut"]))
         <script src="js/model/ChatMessage.js" type="text/javascript"></script>
         <script src="js/model/Implant.js" type="text/javascript"></script>
         <script src="js/model/FightDetails.js" type="text/javascript"></script>
+        <script src="js/model/Hangar.js" type="text/javascript"></script>
     </head>
     <body ng-controller="controller as ctrl" class="background" ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName() ?>')">
         <div class="blocker" ng-show="showBlocker"></div>
         <header class="menuBar row">
             <a href="mainWindow.php?logOut=1" class="menuButton btn btn-danger">LOGOUT</a>
             <button class="menuButton btn btn-primary" ng-click="showHome()">HOME</button>
-            <button class="menuButton btn btn-primary" ng-click="currentWindow = 'hangar'">HANGAR</button>
+            <button class="menuButton btn btn-primary" ng-click="hangar.hangarShow()">HANGAR</button>
             <button class="menuButton btn btn-primary" ng-click="shop.showShop()">SHOP</button>
-            <button class="menuButton btn btn-primary" ng-click="currentWindow = 'profile'">PROFILE</button>
+            <button class="menuButton btn btn-primary" ng-click="profileWindow.showProfile()">PROFILE</button>
         </header>
         <!--para mayor rapidez hacemos todos los menus en una misma pagina, asi mismo podremos hacer un efecto slider-->
         <!--esto sera la pestaña de home -->
