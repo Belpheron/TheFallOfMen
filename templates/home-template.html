@@ -10,7 +10,7 @@
 <article class="popUpWindow" ng-show="showRequestWaitPopUp">
     Waiting a response from <strong class="text-info">{{playerTarget}}</strong> ({{duelAcceptCoolDown}}s) ...
 </article>
-<main class="classgeneralMainWindow" ng-show="currentWindow == 'home'">
+<main class="classGeneralMainWindow" ng-show="currentWindow == 'home'">
     <div class="row">
         <button class="btn btn-warning row pull-right">
             <span class="glyphicon glyphicon-volume-off pull-right"></span>
@@ -19,15 +19,17 @@
     <section class="row">
         <div class="friendsContainer col-md-2">
             <ul class="nav nav-tabs">
-                <li id="allTab" class="active"><a href="#" ng-click="home.showAllTab()"><span class="glyphicon glyphicon-user"></span></a></li>
-                <li id="friendsTab"><a href="#" ng-click="home.showFriendsTab()"><span class="glyphicon glyphicon-heart"></span></a></li>
-                <li id="blockedTab"><a href="#" ng-click="home.showBlockedTab()"><span class="glyphicon glyphicon-remove"></span></a></li>
+                <li id="allTab" class="active"><a class="usersTab" href="#" ng-click="home.showAllTab()"><span class="glyphicon glyphicon-user"></span></a></li>
+                <li id="friendsTab"><a class="usersTab" href="#" ng-click="home.showFriendsTab()"><span class="glyphicon glyphicon-heart"></span></a></li>
+                <li id="blockedTab"><a class="usersTab" href="#" ng-click="home.showBlockedTab()"><span class="glyphicon glyphicon-remove"></span></a></li>
             </ul>
             <!--tab for all users online -->
             <article ng-show="home.currentTab == 'all'">
+                <small class="userStatusInfo" ng-show="onlineUserList.length == 0">
+                    You don't have any friends online.</small>
                 <span class="userTooltip" id="{{user.getUserName()}}Tooltip" ng-repeat="user in onlineUserList" 
                       ng-click="home.showUserPopUpMenu(user, $event)">
-                    {{user.getUserName()}}
+                    <span style="color:lime" class="glyphicon glyphicon-user"></span>  &nbsp&nbsp{{user.getUserName()}}
                 </span>
             </article>
             <!-- pop up window for user click -->
@@ -35,7 +37,7 @@
             </article>
             <!-- tab for friends online -->
             <article ng-show="home.currentTab == 'friends'">
-                <small class="text-primary" ng-show="onlineFriendList.length == 0">
+                <small class="userStatusInfo" ng-show="onlineFriendList.length == 0">
                     You don't have any friends online.</small>
                 <span class="userTooltip" ng-repeat="friend in onlineFriendList" 
                       id="{{user.getUserName()}}Tooltip" ng-click="home.showUserPopUpMenu(friend, $event)">
@@ -44,7 +46,7 @@
             </article>
             <!-- tab for blocked user -->
             <article ng-show="home.currentTab == 'blocked'">
-                <small class="text-primary" ng-show="onlineBlockedList.length == 0">
+                <small class="userStatusInfo" ng-show="onlineBlockedList.length == 0">
                     You don't have any blocked user.</small>
                 <span class="userTooltip" ng-repeat="blocked in onlineBlockedList" 
                       id="{{blocked.getUserName()}}Tooltip" ng-click="home.showUserPopUpMenu(blocked, $event)">
@@ -52,22 +54,22 @@
                 </span>
             </article>
         </div>
-        <div class="col-md-8 chatWindow">
+        <div class="col-md-8 chatWindow" id="chatBody">
             <p ng-repeat="msg in messageList">
-                <span class="text-primary">{{msg.getDatetime()}} {{msg.getIdUserNameSender()}} </span>
-                <strong class="text-success" ng-if="msg.getIdUserNameReceiver() == currentUser.getUserName()">(to You)</strong> 
-                <strong class="text-success" ng-if="msg.getIdUserNameSender() == currentUser.getUserName() && msg.getIdUserNameReceiver() != 'all'">(to {{msg.getIdUserNameReceiver()}})</strong>
-                =>
-                {{msg.getContent()}}
+                <span class="chatMsgInfo">{{msg.getDatetime()}} {{msg.getIdUserNameSender()}} </span>
+                <strong class="chatMsgTarget" ng-if="msg.getIdUserNameReceiver() == currentUser.getUserName()">(to You)</strong> 
+                <strong class="chatMsgTarget" ng-if="msg.getIdUserNameSender() == currentUser.getUserName() && msg.getIdUserNameReceiver() != 'all'">(to {{msg.getIdUserNameReceiver()}})</strong>
+                <span class="chatMsgInfo">=></span>
+                <span class="chatMsgContent">{{msg.getContent()}}</span>
             </p>
         </div> 
     </section>
     <section class="row textEntry">
-        <div class="col-lg-offset-2 col-md-6">
-            <input class="form-control" id="textEntryBox" ng-keyup="home.sendMessage($event.keyCode)" type="text" ng-model="home.textMessage"/>
+        <div class="col-md-8">
+            <input class="form-control textEntryInput" id="textEntryBox" ng-keyup="home.sendMessage($event.keyCode)" type="text" ng-model="home.textMessage"/>
         </div>
-        <div class="col-md-6">
-            <button class="btn btn-success" ng-click="home.sendMessage(13)">Send</button>
+        <div class="col-md-2">
+            <button class="chatSendButton form-control" ng-click="home.sendMessage(13)">Send</button>
         </div>
     </section>
 </main>

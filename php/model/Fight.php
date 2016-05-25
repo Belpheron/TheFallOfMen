@@ -55,14 +55,14 @@ class Fight {
     private $id_winner;
     
     //constructor
-    function __construct($id = "", $p1_id, $p1_ap, $p1_dp, $p1_hp, $p1_cp, $p1_xp, $p1_money, 
-            $p1_skin, $p1_attack1_dmg, $p1_attack1_attribute, $p1_attack1_value, $p1_attack1_name, 
-            $p1_attack1_description, $p1_attack2_dmg, $p1_attack2_attribute, $p1_attack2_value, $p1_attack2_name, 
-            $p1_attack2_description, $p1_attack3_dmg, $p1_attack3_attribute, $p1_attack3_value, $p1_attack3_name, 
-            $p1_attack3_description, $p2_id, $p2_ap, $p2_dp, $p2_hp, $p2_cp, $p2_xp, $p2_money, $p2_skin, $p2_attack1_dmg, 
-            $p2_attack1_attribute, $p2_attack1_value, $p2_attack1_name, $p2_attack1_description, $p2_attack2_dmg, 
-            $p2_attack2_attribute, $p2_attack2_value, $p2_attack2_name, $p2_attack2_description, $p2_attack3_dmg, 
-            $p2_attack3_attribute, $p2_attack3_value, $p2_attack3_name, $p2_attack3_description, $id_winner = 0) {
+    function __construct($id = "", $p1_id= "", $p1_ap= "", $p1_dp="", $p1_hp="", $p1_cp="", $p1_xp="", $p1_money="", 
+            $p1_skin="", $p1_attack1_dmg="", $p1_attack1_attribute="", $p1_attack1_value="", $p1_attack1_name="", 
+            $p1_attack1_description="", $p1_attack2_dmg="", $p1_attack2_attribute="", $p1_attack2_value="", $p1_attack2_name="", 
+            $p1_attack2_description="", $p1_attack3_dmg="", $p1_attack3_attribute="", $p1_attack3_value="", $p1_attack3_name="", 
+            $p1_attack3_description="", $p2_id="", $p2_ap="", $p2_dp="", $p2_hp="", $p2_cp="", $p2_xp="", $p2_money="", $p2_skin="", $p2_attack1_dmg="", 
+            $p2_attack1_attribute="", $p2_attack1_value="", $p2_attack1_name="", $p2_attack1_description="", $p2_attack2_dmg="", 
+            $p2_attack2_attribute="", $p2_attack2_value="", $p2_attack2_name="", $p2_attack2_description="", $p2_attack3_dmg="", 
+            $p2_attack3_attribute="", $p2_attack3_value="", $p2_attack3_name="", $p2_attack3_description="", $id_winner = 0) {
         $this->id = $id;
         $this->p1_id = $p1_id;
         $this->p1_ap = $p1_ap;

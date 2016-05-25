@@ -1,7 +1,18 @@
 body, html{
     height: 100%;
     width: 100%;
-    padding: 2vh;
+    margin: 0px;
+    padding: 0px;
+    min-height: 720px;
+    min-width: 1280px;
+}
+@font-face{
+    font-family: "Space";
+    src: url(../fonts/aspace_demo.otf) format("truetype");
+}
+@font-face{
+    font-family: "Komtita";
+    src: url(../fonts/KOMTITA_.ttf) format("truetype");
 }
 @font-face {
     font-family: 'Glyphicons Halflings';
@@ -11,11 +22,34 @@ body, html{
         url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
         url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
+body{
+    background: url(../images/background/general_bg_5.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 .ng-invalid.ng-dirty {
   border-color:red;
 }
 .ng-valid.ng-dirty {
   border-color:green;
+}
+.menuBar{
+    height: 7%;
+    width: 100%;
+    background-color: darkslateblue;
+    border-bottom: 3px solid lightslategray;
+    padding: 5px;
+    margin: 0px;    
+}
+.gameTitle{
+    font-family: "Batman";
+    color: yellow;
+    font-size: 2em;
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
 }
 .generalMainWindow{
     height: 100%;
@@ -27,8 +61,39 @@ body, html{
     height: 10vh;
 }
 .menuButton{
-    margin-left: 1px;
-    margin-right: 1px;
+    height: 100%;
+    width: 10%;
+    border-radius: 10px;
+    border: 3px solid darkslategray;
+    font-family: "Space";
+    font-size: 1.2em;
+    background-color: #DFDEFA;
+    font-weight: bold;
+}
+.fightBlocker{
+    position: absolute;
+    z-index: 9999;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(255, 255, 255, 0);
+}
+.menuButton:active {
+    background-color: blue;
+    color: white;
+}
+.logoutButton{
+    background-color: red;
+    color: white;
+}
+.menuButton:hover{
+    background-color: blue;
+    color: white;
+}
+.logoutButton:hover{
+    background-color: orange;
+    color: darkred;
 }
 .menuBar{
     margin-bottom: 20px;
@@ -41,4 +106,16 @@ body, html{
     left: 0px;
     height: 100vw;
     width: 100vw;
+}
+.connectedAs{
+    font-family: "Space";
+    color: lightcyan;
+    padding-left: 10%;
+    margin-top: 15px;
+    clear: both;
+}
+.byJuanFra{
+    font-family: "Komtita";
+    font-size: 0.5em;
+    color: lightskyblue;
 }

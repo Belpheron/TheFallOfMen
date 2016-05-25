@@ -1,4 +1,46 @@
 /**
+ * @name getCritical()
+ * @author Juan
+ * @version 1.0
+ * @date 19/05/2016
+ * @description given a damage number and critical points, finds a random number
+ *      between 0 and 100. If that number is between 0 and criticalPoints, returns 
+ *      true
+ * @param criticalPoints : chance to do a critical attack
+ * @returns {Boolean}
+ */
+function getCritical(criticalPoints) {
+    var result = Math.floor(Math.random() * 101);
+    if (result > 0 && result < criticalPoints) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @name putFoutDigits()
+ * @author Juan
+ * @version 1.0
+ * @date 18/05/2016
+ * @description converts a number to a four digit number
+ * @param number : the number to be converted
+ * @returns : the converted number
+ */
+function putFourDigits(number) {
+    var result;
+    if (number.toString().length == 1) {
+        result = "000" + number;
+    } else if (number.toString().length == 2) {
+        result = "00" + number;
+    } else if (number.toString().length == 3) {
+        result = "0" + number;
+    } else {
+        result = number;
+    }
+    return result;
+}
+
+/**
  * @name getNowSQLDatetime()
  * @author Juan
  * @version 1.0

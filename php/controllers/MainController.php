@@ -31,7 +31,7 @@ if (isset($_REQUEST['controllerType']))
         case 6:
             $shopController = new ShopController($_REQUEST['action'], $_REQUEST['jsonData']);
             $outputData = $shopController->run();
-
+            break;
         case 4:
             $chatController = new ChatController($_REQUEST['action'], $_REQUEST['jsonData']);
             $outputData = $chatController->run();

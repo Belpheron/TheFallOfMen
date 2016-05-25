@@ -4,6 +4,8 @@ require_once "ControllerInterface.php";
 require_once "../model/persist/FightADO.php";
 require_once "../model/User.php";
 require_once "../model/Fight.php";
+require_once "../model/FightEvents.php";
+require_once "../model/FightResult.php";
 
 class FightController implements ControllerInterface {
 
@@ -41,7 +43,7 @@ class FightController implements ControllerInterface {
         $outputData = [];
         switch ($this->getAction()) {
             case 100:
-                $sender = new User($this->jsonData->idSender);   
+                $sender = new User($this->jsonData->idSender);
                 $receiver = new User($this->jsonData->idReceiver);
                 if ($this->ado->createRequest($sender, $receiver)) {
                     $outputData[0] = true;
@@ -60,14 +62,14 @@ class FightController implements ControllerInterface {
                 }
                 break;
             case 102:
-                if($this->ado->removeRequest($this->jsonData->requestId)) {
+                if ($this->ado->removeRequest($this->jsonData->requestId)) {
                     $outputData[0] = true;
                 } else {
                     $outputData[0] = false;
                 }
                 break;
             case 103:
-                $sender = new User($this->jsonData->idSender);   
+                $sender = new User($this->jsonData->idSender);
                 $receiver = new User($this->jsonData->idReceiver);
                 if ($this->ado->answerRequestYes($sender, $receiver)) {
                     $outputData[0] = true;
@@ -84,7 +86,7 @@ class FightController implements ControllerInterface {
                 }
                 break;
             case 105:
-                $sender = new User($this->jsonData->idSender);   
+                $sender = new User($this->jsonData->idSender);
                 $receiver = new User($this->jsonData->idReceiver);
                 $result = $this->ado->checkRequestAnswer($sender, $receiver);
                 if ($result != null) {
@@ -95,7 +97,7 @@ class FightController implements ControllerInterface {
                 }
                 break;
             case 106:
-                $sender = new User($this->jsonData->idSender);   
+                $sender = new User($this->jsonData->idSender);
                 $receiver = new User($this->jsonData->idReceiver);
                 if ($this->ado->rejectRequest($sender, $receiver)) {
                     $outputData[0] = true;
@@ -104,7 +106,7 @@ class FightController implements ControllerInterface {
                 }
                 break;
             case 107:
-                $sender = new User($this->jsonData->idSender);   
+                $sender = new User($this->jsonData->idSender);
                 $receiver = new User($this->jsonData->idReceiver);
                 $result = $this->ado->checkFightIsReady($sender, $receiver);
                 if ($result != null) {
@@ -122,7 +124,6 @@ class FightController implements ControllerInterface {
                 }
                 break;
             case 109:
-                var_dump($this->jsonData->p1_dp);
                 $fight = new Fight(
                         0, 
                         $this->jsonData->p1_id, 
@@ -131,7 +132,7 @@ class FightController implements ControllerInterface {
                         $this->jsonData->p1_hp, 
                         $this->jsonData->p1_cp, 
                         $this->jsonData->p1_xp, 
-                        $this->jsonData->p1_money,
+                        $this->jsonData->p1_money, 
                         $this->jsonData->p1_skin, 
                         $this->jsonData->p1_attack1_dmg, 
                         $this->jsonData->p1_attack1_attribute, 
@@ -141,7 +142,7 @@ class FightController implements ControllerInterface {
                         $this->jsonData->p1_attack2_dmg, 
                         $this->jsonData->p1_attack2_attribute, 
                         $this->jsonData->p1_attack2_value, 
-                        $this->jsonData->p1_attack2_name,
+                        $this->jsonData->p1_attack2_name, 
                         $this->jsonData->p1_attack2_description, 
                         $this->jsonData->p1_attack3_dmg, 
                         $this->jsonData->p1_attack3_attribute, 
@@ -153,15 +154,15 @@ class FightController implements ControllerInterface {
                         $this->jsonData->p2_dp, 
                         $this->jsonData->p2_hp, 
                         $this->jsonData->p2_cp, 
-                        $this->jsonData->p2_xp,
+                        $this->jsonData->p2_xp, 
                         $this->jsonData->p2_money, 
                         $this->jsonData->p2_skin, 
-                        $this->jsonData->p2_attack1_dmg,
+                        $this->jsonData->p2_attack1_dmg, 
                         $this->jsonData->p2_attack1_attribute, 
                         $this->jsonData->p2_attack1_value, 
                         $this->jsonData->p2_attack1_name, 
                         $this->jsonData->p2_attack1_description, 
-                        $this->jsonData->p2_attack2_dmg,
+                        $this->jsonData->p2_attack2_dmg, 
                         $this->jsonData->p2_attack2_attribute, 
                         $this->jsonData->p2_attack2_value, 
                         $this->jsonData->p2_attack2_name, 
@@ -178,6 +179,84 @@ class FightController implements ControllerInterface {
                     $outputData[0] = false;
                 }
                 break;
+            case 110:
+                $p1 = new User($this->jsonData->p1);
+                $p2 = new User($this->jsonData->p2);
+                $result = $this->ado->loadFightDetails($p1, $p2);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
+            case 111:
+                $p1 = new User($this->jsonData->player1);
+                $p2 = new User($this->jsonData->player2);
+                $result = $this->ado->createFightEvent($p1, $p2);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[1] = false;
+                }
+                break;
+            case 112:
+                $this->ado->setPlayerIsReady($this->jsonData->id, $this->jsonData->player);
+                $outputData[1] = true;
+                break;
+            case 113:
+                $result = $this->ado->checkBothPlayersAreReady($this->jsonData->id);
+                $outputData = $result;
+                break;  
+            case 114:
+                $p1 = new User($this->jsonData->player1);
+                $p2 = new User($this->jsonData->player2);
+                $result = $this->ado->checkFightEventIsCreated($p1, $p2);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
+            case 115:
+                $fe = new FightEvents($this->jsonData->id, $this->jsonData->p1IsReady, 
+                        $this->jsonData->p2IsReady, $this->jsonData->winner, $this->jsonData->player1Action, 
+                        $this->jsonData->player2Action, $this->jsonData->roundIsEnded, 
+                        $this->jsonData->roundNumber, $this->jsonData->p1Health, $this->jsonData->p2Health);
+                $result = $this->ado->updateFightEvent($fe, $this->jsonData->currentPlayer);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
+            case 116:
+                $fightResult = new FightResult(
+                        $this->jsonData->p1_id, 
+                        $this->jsonData->p2_id, 
+                        $this->jsonData->p1_xp, 
+                        $this->jsonData->p2_xp, 
+                        $this->jsonData->p1_money, 
+                        $this->jsonData->p2_money, 
+                        $this->jsonData->id_winner, 
+                        $this->jsonData->id_defeated, 
+                        $this->jsonData->p1_total_damage, 
+                        $this->jsonData->p1_received_damage, 
+                        $this->jsonData->p2_total_damage, 
+                        $this->jsonData->p2_received_damage);
+                $this->ado->setFightResult($fightResult);
+                $outputData[0] = true;
+                break;
+            case 117:
+                if ($this->ado->deleteFightData($this->jsonData->eventId, $this->jsonData->fightId)) {
+                    $outputData[0] = true;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
             default:
                 $outputData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";
@@ -187,7 +266,7 @@ class FightController implements ControllerInterface {
 
         return $outputData;
     }
-}
 
+}
 ?>
 

@@ -27,8 +27,9 @@ var checkRequestResponseTimer;
         $scope.loginDateTime = getNowSQLDatetime();
 
         //interface variables
-        $scope.currentWindow = "profile";
+        $scope.currentWindow = "home";
         $scope.showBlocker = false;
+        $scope.showFightBlocker = false;
 
         //methods         
 

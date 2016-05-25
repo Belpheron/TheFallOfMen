@@ -11,6 +11,7 @@
         $scope.countryList = [];
         $scope.robotSkinList = [];
         $scope.skinDescription = "";
+        $scope.registerRobotImage = "images/tooltips/MOBOT_TOOLTIP.jpg";
 
         //methods
         /**
@@ -25,6 +26,8 @@
             for (var i=0; i<$scope.robotSkinList.length; i++) {
                 if ($scope.robotSkinList[i].getId() == $scope.register.getRobotSkinId()) {
                     $scope.skinDescription = $scope.robotSkinList[i].getDescription();
+                    $scope.registerRobotImage = "images/tooltips/"+
+                            ($scope.robotSkinList[i].getName()).toUpperCase()+"_TOOLTIP.jpg";
                 }
             }
         }

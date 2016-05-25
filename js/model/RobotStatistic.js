@@ -100,6 +100,16 @@ this.RobotStatistic = function (id, name, level, experience, idRobotSkin)
         this.level = this.level + 1;
         this.setExpToNextLevel(this.arrayLevels[this.getLevel()]);
     };
+    
+    this.getPhotoSource = function() {
+        var robotName;
+        if (this.idRobotSkin == 1) {
+            robotName = "MOBOT";
+        } else if (this.idRobotSkin == 2) {
+            robotName == "PRIME";
+        }
+        return "images/tooltips/"+robotName+"_TOOLTIP.jpg";
+    }
 
 };
 

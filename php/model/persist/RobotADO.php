@@ -17,6 +17,15 @@ class RobotADO implements ADOinterface {
     }
 
     //methods
+    public function getImages($skinName) {
+        $sql = "SELECT * FROM infoanimations WHERE idskin = (SELECT id FROM robotskin WHERE name = ?)";
+        $query = $this->dbConnection->execute($sql, [$skinName]);
+        if ($query != null) {
+            return $query->fetchAll();
+        }
+        return null;
+    }
+    
     public function getAllSkins() {
         $sql = "SELECT * FROM robotskin";
         $query = $this->dbConnection->execute($sql, []);
@@ -66,7 +75,7 @@ class RobotADO implements ADOinterface {
     public function getAllAttacks($user) {
         $result = [];
         //attack1
-        $sql = "SELECT * FROM skill WHERE id = (SELECT attack1_id FROM robotstoreskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
+        $sql = "SELECT * FROM skill WHERE id = (SELECT attack1_id FROM robotskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
         $attack = new Attack();
@@ -85,7 +94,7 @@ class RobotADO implements ADOinterface {
         $attack->setTarget($temp["target"]);
         $result[] = $attack->toArray();
         //attack2
-        $sql = "SELECT * FROM skill WHERE id = (SELECT attack2_id FROM robotstoreskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
+        $sql = "SELECT * FROM skill WHERE id = (SELECT attack2_id FROM robotskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
         $attack = new Attack();
@@ -104,7 +113,7 @@ class RobotADO implements ADOinterface {
         $attack->setTarget($temp["target"]);
         $result[] = $attack->toArray();
         //attack3
-        $sql = "SELECT * FROM skill WHERE id = (SELECT attack3_id FROM robotstoreskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
+        $sql = "SELECT * FROM skill WHERE id = (SELECT attack3_id FROM robotskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
         $attack = new Attack();

@@ -10,25 +10,67 @@
     border-radius: 5px;
     height: 70vh;
     margin-left: 5vh;
+    overflow: auto;
+    line-height: 0.5;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgba(89,34,240,0.5);
 }
 .textEntry{
     margin-top: 2vh;
-    margin-left: 5vh;
+    height: 30px;
+    width: 100%;
+    border-radius: 5px;
+    margin-left: 5%;
+}
+.textEntryInput{
+    font-family: Verdana, Geneva, sans-serif;
+}
+.usersTab{
+    background-color: rgba(89,34,240,0.5);
+    color: white;
+}
+.chatSendButton{
+    font-family: "Space";
+    font-size: 1.2em;
+    background-color: #6B21EB;
+    color: white;
+}
+.chatSendButton:hover{
+    background-color: blue;
+    color: white;
 }
 .userTooltip{
-    border: 1px solid silver;
     padding: 15px;
-    border-radius: 5px;
+    font-family: "Space";
+    font-size: 1.2em;
+    text-align: center;
+    color: white;
     position:relative;
     width: 97%;
     height: 50px;
-    background-color: beige;
+    background: rgba(89,34,240,0.8);
     margin-top: 5px;
     display: flex;
     cursor: pointer;    
 }
+.userStatusInfo{
+    color: white;
+}
 .userTooltip:hover {
-    background-color: yellowgreen;
+    background: rgba(210,199,242,0.8);
+}
+.chatMsgInfo{
+    color: lime;
+    font-family: "Space";
+}
+.chatMsgContent{
+    color: white;
+    font-family: Verdana, Geneva, sans-serif;
+}
+.chatMsgTarget{
+    color: lightskyblue;
+    font-family: "Space";
 }
 .playerTooltip{
     display: none;

@@ -34,7 +34,6 @@ if (isset($_GET["logOut"]))
         <script src="js/frameWorks/jquery-ui-1.12.0-rc.2/jquery-ui.min.js" type="text/javascript"></script>
 
         <!--STYLE-->
-        <link href="css/LoginStyle.css" rel="stylesheet" type="text/css"/>
         <link href="js/frameWorks/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="css/homeStyle.css" rel="stylesheet" type="text/css"/>
         <link href="css/generalStyle.css" rel="stylesheet" type="text/css"/>
@@ -68,16 +67,18 @@ if (isset($_GET["logOut"]))
     </head>
     <body ng-controller="controller as ctrl" class="background" ng-init="loadUserDetails('<?php echo $_SESSION["user"]->getUserName() ?>')">
         <div class="blocker" ng-show="showBlocker"></div>
+        <div class="fightBlocker" ng-show="showFightBlocker"></div>
         <header class="menuBar row">
-            <a href="mainWindow.php?logOut=1" class="menuButton btn btn-danger">LOGOUT</a>
-            <button class="menuButton btn btn-primary" ng-click="showHome()">HOME</button>
-            <button class="menuButton btn btn-primary" ng-click="currentWindow = 'hangar'">HANGAR</button>
-            <button class="menuButton btn btn-primary" ng-click="shop.showShop()">SHOP</button>
-            <button class="menuButton btn btn-primary" ng-click="currentWindow = 'profile'">PROFILE</button>
+            <a href="mainWindow.php?logOut=1" class="menuButton logoutButton btn">LOGOUT</a>
+            <button class="menuButton btn" ng-click="showHome()">HOME</button>
+            <button class="menuButton btn" ng-click="currentWindow = 'hangar'">HANGAR</button>
+            <button class="menuButton btn" ng-click="shop.showShop()">SHOP</button>
+            <button class="menuButton btn" ng-click="currentWindow = 'profile'">PROFILE</button>
+            <span class="gameTitle">The fall of men<small class="byJuanFra">  by JuanFra</small></span>
         </header>
         <!--para mayor rapidez hacemos todos los menus en una misma pagina, asi mismo podremos hacer un efecto slider-->
         <!--esto sera la pestaña de home -->
-    <home-template></home-template>
+    <home-template ng-init="showHome()"></home-template>
     <!--esto sera la pestaña de  hangar-->
     <hangar-template></hangar-template>
     <!--esto sera la pestaña de home -->
@@ -89,6 +90,6 @@ if (isset($_GET["logOut"]))
             <statistic-template></statistic-template>
         </div>
     </main>
-    <span class="text-primary">Connected as <strong>{{currentUser.getUserName()}}</strong></span>
+    <span class="text-primary row connectedAs">Connected as <span style="color: lime">{{currentUser.getUserName()}}</span></span>
 </body>
 </html>

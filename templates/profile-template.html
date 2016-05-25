@@ -17,8 +17,8 @@
         <input type="password" id="repeatNewPassword" ng-model="repeatNewPassword" ng-change="match()" class="form-control" ng-pattern="/^[a-zA-Z0-9_]{4,}$/"/>
         <span ng-show="show==1" class="text-danger">The field not match with 'password'</span>
         <hr>
-        <button  type="submit" class="btn btn-success" ng-disabled="profileForm.$invalid || show==1">Save changes</button>
-        <button class="btn btn-danger pull-right" ng-click="showDisclaimerDropOut = 1">Request drop out</button>
+        <button type="submit" class="btn profileButton" ng-disabled="profileForm.$invalid || show==1">Save changes</button>
+        <button class="btn dropOutButton profileButton pull-right" ng-click="showDisclaimerDropOut = 1">Request drop out</button>
     </form>
 </div>
 

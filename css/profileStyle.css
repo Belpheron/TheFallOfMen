@@ -15,3 +15,48 @@
     top: 30vh;
     z-index: 999;
 }
+.profilePersonalDataWindow{
+    background-color: rgba(89,34,240,0.5);
+    margin-left: 5%;
+    border-radius: 10px;
+    padding: 10px;
+}
+.profilePersonalDataWindow label{
+    color: white;
+    font-family: "Space";
+}
+.profileStatisticsWindow{
+    background-color: rgba(89,34,240,0.5);
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    margin-right: 5%;
+}
+.robotPhoto{
+    height: 30%;
+    width: 30%;
+}
+.statInfo{
+    color: lime;
+}
+.profileStatisticsWindow legend {
+    color: white;
+    font-family: "Space";
+}
+.profileButton{
+    font-family: "Space";
+    font-size: 1em;
+    background-color: #DFDEFA;
+}
+.profileButton:hover{
+    background-color: blue;
+    color: white;
+}
+.dropOutButton {
+    background-color: red;
+    color: white;
+}
+.dropOutButton:hover {
+    background-color: orange;
+    color: darkred;
+}

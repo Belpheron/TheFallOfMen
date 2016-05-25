@@ -1,18 +1,22 @@
-<div class="col-md-5 profileStatisticsWindow">
+<div class="col-md-3 profileStatisticsWindow pull-right">
     <fieldset>
         <legend>User statistics</legend>
-        <label class="text-capitalize">defeats: {{currentUser.userStatistic.defeats}}</label><br>
-        <label class="text-capitalize">wins: {{currentUser.userStatistic.wins}}</label><br>
-        <label class="text-capitalize">total inflicted damage: {{currentUser.userStatistic.totalInflictedDamage}}</label><br>
-        <label class="text-capitalize">total recived damage: {{currentUser.userStatistic.totalRecivedDamage}}</label><br>
-        <label class="text-capitalize">total money earned: {{currentUser.userStatistic.totalWinCoins}}</label><br>
-        <label class="text-capitalize">total money espent: {{currentUser.userStatistic.totalExpendCoins}}</label><br>
+        <label class="text-capitalize">defeats: <span class="statInfo">{{currentUser.userStatistic.defeats}}</span></label><br>
+        <label class="text-capitalize">wins: <span class="statInfo">{{currentUser.userStatistic.wins}}</span></label><br>
+        <label class="text-capitalize">total inflicted damage: <span class="statInfo">{{currentUser.userStatistic.totalInflictedDamage}}</span></label><br>
+        <label class="text-capitalize">total recived damage: <span class="statInfo">{{currentUser.userStatistic.totalRecivedDamage}}</span></label><br>
+        <label class="text-capitalize">total money earned: <span class="statInfo">{{currentUser.userStatistic.totalWinCoins}}</span></label><br>
+        <label class="text-capitalize">total money espent: <span class="statInfo">{{currentUser.userStatistic.totalExpendCoins}}</span></label><br>
     </fieldset>
     <fieldset>
         <legend>Robot statistics</legend>
-        <label class="text-capitalize">name: {{currentUser.robotStatistic.name}}</label><br>
-        <label class="text-capitalize">level: {{currentUser.robotStatistic.level}}</label><br>
-        <label class="text-capitalize">experience: {{currentUser.robotStatistic.experience}}</label><br>
-        <label class="text-capitalize">experience to next level: {{currentUser.robotStatistic.expToNextLevel - currentUser.robotStatistic.experience}}</label><br>
+        <label class="text-capitalize">name: <span class="statInfo">{{currentUser.robotStatistic.name}}</span></label><br>
+        <label class="text-capitalize">level: <span class="statInfo">{{currentUser.robotStatistic.level}}</span></label><br>
+        <label class="text-capitalize">experience: <span class="statInfo">{{currentUser.robotStatistic.experience}}</span></label><br>
+        <label class="text-capitalize">experience to next level: <span class="statInfo">{{currentUser.robotStatistic.expToNextLevel - currentUser.robotStatistic.experience}}</span></label><br>
+    </fieldset>
+    <fieldset>
+        <legend>Robot photo</legend>
+        <img class="robotPhoto" src="{{currentUser.robotStatistic.getPhotoSource()}}"/>
     </fieldset>
 </div>

@@ -127,7 +127,7 @@ class UserADO implements ADOinterface
     public function updateResetPassword($user, $password)
     {
         $sql = "UPDATE `user` SET password = ? WHERE userName =?";
-        $array = [$password, $user];
+        $array = [md5($password), $user];
         try
         {
             $query = $this->dbConnection->execute($sql, $array);

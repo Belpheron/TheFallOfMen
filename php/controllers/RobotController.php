@@ -92,6 +92,15 @@ class RobotController implements ControllerInterface {
                     $outputData[0] = false;
                 }
                 break;
+            case 105:
+                $result = $this->ado->getImages($this->jsonData->skinName);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
             default:
                 $outputData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";

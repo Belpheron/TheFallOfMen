@@ -22,11 +22,11 @@ $controller->run();
         <!--FRAMEWORKS-->
         <script src="js/frameWorks/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
         <script src="js/frameWorks/angular/angular.min.js" type="text/javascript"></script>
-        <script src="js/frameWorks/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <!--<script src="js/frameWorks/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
 
         <!--STYLE-->
-        <link href="css/LoginStyle.css" rel="stylesheet" type="text/css"/>
-        <link href="js/frameWorks/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="css/LoginStyle.css" rel="stylesheet" type="text/css"/>        
+        <!--<link href="js/frameWorks/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>-->
 
         <!--DATEPICKER-->
         <script src="js/frameWorks/jquery-ui-1.12.0-rc.2/jquery-ui.min.js" type="text/javascript"></script>
@@ -43,22 +43,24 @@ $controller->run();
     </head>
     <body ng-controller="controller as ctrl" class="background">
         <header class="menuBar">
-            <button class="btn btn-primary menuButton" ng-click="show = 0">LOGIN</button>
-            <button class="btn btn-primary menuButton disabled">HOME</button>
-            <button class="btn btn-primary menuButton disabled">HANGAR</button>
-            <button class="btn btn-primary menuButton disabled">SHOP</button>
-            <button class="btn btn-primary menuButton disabled">PROFILE</button>
+            <button class="menuButton active" ng-click="show = 0">LOGIN</button>
+            <button class="menuButton" disabled>HOME</button>
+            <button class="menuButton" disabled>HANGAR</button>
+            <button class="menuButton" disabled>SHOP</button>
+            <button class="menuButton" disabled>PROFILE</button>
+            <span class="gameTitle">The fall of men</span>
         </header>
         <section class="loginBox" ng-show="show == 0">
             <form class="loginForm" action="" method="post">
-                <label>User name</label>
-                <input type="text" name="userNameBox" class="form-control" ng-pattern="/^[A-Za-z]$/"/>
-                <label>Password</label>
-                <input type="password" name="passBox" class="form-control"/>
+                <label class='loginLabel'>User name</label><br/>
+                <input type="text" name="userNameBox" class="loginInput" ng-pattern="/^[A-Za-z]$/"/><br/>
+                <label class='loginLabel'>Password</label><br/>
+                <input type="password" name="passBox" class="loginInput"/><br/>
                 <hr/>
                 <button type="submit" name="loginButton" 
-                        class="form-control btn btn-success">Login</button>
+                        class="loginButton">Login</button>
             </form>
+            <a class="forgotPasswordLink" ng-click="show = 2">Forgot password?</a>
             <span class="text-danger">
                 <?php
                 if (isset($_GET["error"])) {
@@ -122,8 +124,7 @@ $controller->run();
                 ?>
             </span>
         </section>
-        <section><a class="text-primary" ng-click="show = 1">Register</a></section>
-        <section><a class="text-primary" ng-click="show = 2">Retrieve credentials</a></section>
+        <section ng-show="show == 0" class="registerText">Don't have an account yet?<a class="registerLink" ng-click="show = 1"> Register for free!!</a></section>        
     <register-template></register-template>
     <retrieve-credentials-template></retrieve-credentials-template>
 </body>

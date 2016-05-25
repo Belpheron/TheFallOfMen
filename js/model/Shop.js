@@ -104,11 +104,11 @@ this.Shop = function (accessService, scope)
             if (outputData[0] === true)
             {
                 //changes saved
-                alert("Changes saved succesfuckly!");
+                alert("Changes successfully saved!");
             }
             else
             {
-                alert("Can't posible to change user profile information.\nHint: Change any field to save changes.");
+                alert("No changes to save.");
             }
         });
     };
