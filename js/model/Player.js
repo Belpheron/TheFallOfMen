@@ -300,18 +300,18 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
             $("#roundWatch").hide();
             $("#roundWatchTitle").hide();
             clearInterval(roundWatch);
-            var animationDuration = topFrame * 80;
+            var animationDuration = topFrame * 60;
             var frameCounter = 0;
             scope.game.showBlockScreen = true;
             var blockerTimer = setInterval(function() {
-                frameCounter += 80;
+                frameCounter += 60;
                 if (frameCounter >= animationDuration) {
                     clearInterval(blockerTimer);
                     scope.game.showBlockScreen = false;
                     scope.fightEvents.newRound();
                     scope.processRound();
                 }
-            }, 80);
+            }, 60);
         }
         //starts the animation
         var currentFrame = 1;
@@ -335,7 +335,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                     }
                 }
                 currentFrame++;
-            }, 80);
+            }, 60);
         } else {
             clearInterval(p2AnimationTimer);
             instance.playerContainer = "p2ImagesContainer";
@@ -356,7 +356,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                     }
                 }
                 currentFrame++;
-            }, 80);
+            }, 60);
         }
     }
 
