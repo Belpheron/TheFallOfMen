@@ -234,6 +234,33 @@ class UserController implements ControllerInterface
                     $outputData[1] = false;
                 }
                 break;
+            //set to inactive a user.
+            case 200:
+                $pass = md5($this->jsonData->password);
+                $user = new User($this->jsonData->userName, $pass);
+                if ($this->ado->comprobeValidate($user) == 1)
+                {
+                    $result = $this->ado->setInactive($user);
+                    if ($result != null)
+                    {
+                        //correct
+                        $outputData[0] = true;
+                        $outputData[1] = $result;
+                    }
+                    else
+                    {
+                        //uncontrolled error
+                        $outputData[0] = false;
+                        $outputData[1] = "Imposible to set inactive.";
+                    }
+                }
+                else
+                {
+                    //password incorrect.
+                    $outputData[0] = false;
+                    $outputData[1] = "Password incorrect.";
+                }
+                break;
             default:
                 $outPutData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";
