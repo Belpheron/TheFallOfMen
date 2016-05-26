@@ -212,24 +212,12 @@ var checkRequestResponseTimer;
     {
         return {
             restrict: 'E',
-            templateUrl: "templates/hangar-template_1.html",
+            templateUrl: "templates/hangar-template.html",
             controller: function ()
             {
 
             },
             controllerAs: 'hangarTemplate'
-        };
-    });
-    fallOfMenApp.directive("profileTemplate", function ()
-    {
-        return {
-            restrict: 'E',
-            templateUrl: "templates/profile-template.html",
-            controller: function ()
-            {
-
-            },
-            controllerAs: 'profileTemplate'
         };
     });
     fallOfMenApp.directive("statisticTemplate", function ()

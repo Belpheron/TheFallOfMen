@@ -424,7 +424,7 @@ this.Shop = function (accessService, scope)
     };
 
     /**
-     * loadPurchaseSkills()
+     * loadPurchasedSkills()
      * @author Franc
      * @date 15/05/2016
      * @description load all data of all skills previously purchased.

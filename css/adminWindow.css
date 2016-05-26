@@ -1,0 +1,248 @@
+@font-face{
+    font-family: "Aerospace";
+    src: url(../fonts/Aerospace.ttf) format("truetype");
+}
+@font-face{
+    font-family: "Electra";
+    src: url(../fonts/Elektra.ttf) format("truetype");
+}
+@font-face{
+    font-family: "Batman";
+    src: url(../fonts/batmfa__.ttf) format("truetype");
+}
+@font-face{
+    font-family: "Space";
+    src: url(../fonts/aspace_demo.otf) format("truetype");
+}
+@font-face{
+    font-family: "Komtita";
+    src: url(../fonts/KOMTITA_.ttf) format("truetype");
+}
+body, html{
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    min-height: 720px;
+    min-width: 1280px;
+}
+html{
+    background: url(../images/background/login_background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+:not(form).ng-invalid.ng-dirty {
+    border-color:red;
+}
+:not(form).ng-valid.ng-dirty {
+    border-color:green;
+}
+#formCreateImplant
+{
+    border: 2px solid graytext !important;
+    border-radius: 8px;
+    padding: 10px;
+}
+.semi-color-form
+{
+    background-color:  rgba(89,34,240,0.5);
+}
+.label-form
+{
+    color: white;
+    line-height: 2.05;
+}
+#btnCreate
+{
+    width: 97.6%;
+    left: 7px;
+    top: 7px;
+    position: relative;
+}
+#btnReset
+{
+    margin-top: 3px;
+    width: 97.6%;
+    left: 7px;
+    top: 7px;
+    position: relative;
+    opacity: 1;
+}
+select
+{
+    font-size: 1em;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.col-md-5{
+    width: 48%;
+    float: left;
+    margin-right: 15px;
+}
+.loginBox{
+    width: 20%;
+    position: absolute;
+    top: 30%;
+    left: 5%;
+    border: 1px solid silver;
+    padding: 20px;
+    background-color: #DFDEFA;
+    border-radius: 10px;
+    -webkit-box-shadow: 5px 5px 13px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 13px 0px rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 13px 0px rgba(0,0,0,0.75);
+}
+.loginLabel{
+    font-weight: bold;
+    font-family: "Space";
+}
+.registerLink{
+    cursor: pointer;
+    font-size: 1.2em;
+}
+.registerLink:hover{
+    color: blue;
+    text-decoration: underline
+}
+legend{
+    font-family: "Komtita";
+    margin-bottom: 20px;
+}
+.text-success{
+    color: green;
+    font-weight: bold;
+    clear: left;
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+}
+.text-danger{
+    color: red;
+    font-weight: bold;
+    clear: left;
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+}
+.form-control {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 100%;
+    float: left;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid lightslategrey;
+    font-family: Verdana, Geneva, sans-serif;
+}
+label{
+    float: left;
+    clear: left;
+    font-family: "Space";
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.loginInput{
+    margin-bottom: 10px;
+    margin-top: 5px;
+    width: 90%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid lightslategrey;
+    font-family: Verdana, Geneva, sans-serif;
+    padding-left: 10px;
+}
+.menuButton {
+    height: 90%;
+    width: auto !important;
+    border-radius: 10px;
+    border: 3px solid darkslategray;
+    font-family: "Space";
+    font-size: 1.2em;
+    background-color: #DFDEFA;
+    font-weight: bold;
+}
+.menuButton:hover {
+    background-color: blue;
+    color: white;
+}
+.registerBox{
+    width: 80%;
+    background: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    position: absolute;
+    margin-left: 10vh;
+    padding: 20px;
+    margin-top: 5vh;
+}
+#registerBirthDate{
+    cursor: pointer;
+}
+.loginButton{
+    height: 40px;
+    font-family: "Space";
+    background-color: darkslateblue;
+    color: #DFDEFA;
+    width: 50%;
+    border: 2px solid lightblue;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.loginButton:hover{
+    background-color: blue;
+}
+.menuBar{
+    height: 7%;
+    width: 100%;
+    background-color: darkslateblue;
+    border-bottom: 3px solid lightslategray;
+    padding: 5px;
+}
+.robotImageBox{
+    height: 20%;
+    width: 20%;
+    border-radius: 10px;
+    float: left;
+}
+.robotInfoBox{
+    display: block;
+    font-size: 0.9em;
+    color: darkslateblue;
+    float: left;
+    margin-bottom: 15px;
+    width: 60%;
+    margin-left: 20px;
+}
+.robotInfoContainer{
+    width: 100%;
+    margin-top: 35px;
+}
+.active {
+    background-color: blue;
+    color: white;
+    border: 2px solid lightblue;
+}
+.gameTitle{
+    font-family: "Batman";
+    color: yellow;
+    font-size: 2em;
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.registerButton{
+    height: 40px;
+    width: 15%;
+    background-color: darkslateblue;
+    color: #DFDEFA;
+    border-radius: 10px;
+    font-family: "Space";
+    margin-top: 30px;
+    cursor: pointer;
+}
+.registerButton:hover{
+    background-color: blue;
+}

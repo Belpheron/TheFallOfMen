@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-3 hangarLeftWindow">
             <div class="row hangarRobotWindow">
-                <img id="robotImage" src={{image}} width="315" height="430"/>
+                <img id="robotImage" src={{image}} width="315" height="430" alt="image robot loading..."/>
             </div>
             <div class="row hangarExperienceWindow">
                 <div class="col-md-3" style="display: block">
@@ -20,65 +20,77 @@
         </div>
         <div class="col-md-7">
             <div class="row hangarImplantSlotsWindow">
-                 <table border="0">
+                <table border="0">
                     <tbody>
                         <tr>
-                            <td class= "skill"><span class="blur">Slot 1</span></td>
-                            <td class="skill"><span class="blur">Slot 2</span></td>
-                            <td class="skill"><span class="blur">Slot 3</span></td>
+                            <td><label>Implant slot 1</label></td>
+                            <td><label>Implant slot 2</label></td>
+                            <td><label>Implant slot 3</label></td>
+                        </tr>
+                        <tr>
+                            <td class= "skill"><span class="blur">&nbsp;</span></td>
+                            <td class="skill"><span class="blur">&nbsp;</span></td>
+                            <td class="skill"><span class="blur">&nbsp;</span></td>
                         </tr>
                     </tbody>
                 </table>         
             </div>
             <div class="row hangarInventoryWindow">
                 <ul class="nav nav-tabs">
-                    <li id="tabSkill" class="active" ng-click="hangar.setActive('skill')"><a><span>Skills</span></a></li>
-                    <li id="tabImplant" ng-click="hangar.setActive('implant')"><a><span>Implants</span></a></li>
-                    <li id="tabAttribute" ng-click="hangar.setActive('attribute')"><a><span>Attributes</span></a></li>
+                    <li id="tabSkill" class="active" ng-click="setActive('skill')"><a><span>Skills</span></a></li>
+                    <li id="tabImplant" ng-click="setActive('implant')"><a><span>Implants</span></a></li>
+                    <li id="tabAttribute" ng-click="setActive('attribute')"><a><span>Attributes</span></a></li>
                 </ul>
-                <table border="0" id="origin" class="table table-striped listSkill" ng-if="hangar.show == 'skill'">
+                <table border="0" id="origin" class="table table-striped listSkill" ng-if="showOptionHangar == 'skill'">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Level</th>
-                            <th>Boost</th>
-                            <th>Attribute</th>
-                            <th>Value</th>
+                            <th><label>Name</label></th>
+                            <th><label>Level</label></th>
+                            <th><label>Boost</label></th>
+                            <th><label>Attribute</label></th>
+                            <th><label>Value</label></th>
+                            <th colspan="3">Assign</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <div  class="draggable ui-widget-content" ng-repeat="skill in purchasedSkills">
-                        <tr>
-                            <td class="small" ng-init="hangar.getInfoSkill(skill)">{{skill.name}}</td>
-                            <td class="small">{{skill.description}}</td>
-                            <td class="small">{{skill.requiredLevel}}</td>
-                            <td class="small">{{skill.multiplier}}</td>
-                            <td class="small">{{infoSkill[$index][1]["name"]}}</td>
-                            <td class="small">{{infoSkill[$index][0]["value"]}}</td>
-                        </tr>
-                        </div>
+                        <tr ng-repeat="skill in purchasedSkills">
+                    <div ng-show="skill.hide='0'">
+                        <td class="small">{{skill.name}}</td>
+                        <td class="small">{{skill.requiredLevel}}</td>
+                        <td class="small">{{skill.multiplier}}</td>
+                        <td class="small">{{attrSkill[$index][0]}}</td>
+                        <td class="small">{{attrSkill[$index][1]}}</td>
+                        <td><button class="btn" ng-click="hangar.updateSkillAssign(skill, '1')">Rock</button></td>
+                        <td><button class="btn" ng-click="hangar.updateSkillAssign(skill, '2')">Paper</button></td>
+                        <td><button class="btn" ng-click="hangar.updateSkillAssign(skill, '3')">Scissors</button></td>
+                    </div>    
+                    </tr>
                     </tbody>
                 </table>
-                <table border="0" class="table table-striped" ng-if="hangar.show == 'implant'">
+                <table border="0" class="table table-striped" ng-if="showOptionHangar == 'implant'">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Attribute</th>
                             <th>Value</th>
+                            <th colspan="3">Assign</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="implant in purchasedImplants">
                             <td class="small" ng-init="hangar.getInfoImplant(implant)">{{implant.name}}</td>
                             <td class="small">{{implant.description}}</td>
-                            <td class="small">{{infoImplant[$index][1]["name"]}}</td>
-                            <td class="small">{{infoImplant[$index][0]["value"]}}</td>
+                            <td class="small">{{attrImplant[$index][0]}}</td>
+                            <td class="small">{{attrImplant[$index][1]}}</td>
+                            <td><button class="btn">Slot 1</button></td>
+                            <td><button class="btn">Slot 2</button></td>
+                            <td><button class="btn">Slot 3</button></td>
                         </tr>
                     </tbody>
                 </table>
-                <ul ng-init="hangar.loadAttributes(hangar)" ng-if="hangar.show == 'attribute'" class="list-unstyled list">
+                <ul ng-init="hangar.loadAttributes(hangar)" ng-if="showOptionHangar == 'attribute'" class="list-group-item list-unstyled list">
                     <li>&nbsp;</li>
                     <li><label class="top">Health points:</label> {{hangar.attributes[3]["value"]}}</li>
                     <li>&nbsp;</li>
@@ -91,12 +103,35 @@
                 </ul>
             </div> 
             <div class="row hangarSkillsWindow">
-                <table border="0" id="destinySkill" class="list">
+                <table border="0" class="list">
                     <tbody>
                         <tr>
-                            <td class= "skill"><span class="blur">Rock</span></td>
-                            <td class="skill"><span class="blur">Paper</span></td>
-                            <td class="skill"><span class="blur">Scissor</span></td>
+                            <td class= "skill" id="rock">
+                                <ul class="list-unstyled">
+                                    <li><label>Name:</label>{{arraySkillsAssigned[0].name}}</li>
+                                    <li><label>Description: </label>{{arraySkillsAssigned[0].description}}</li>
+                                    <li><label>Bost: </label>{{arraySkillsAssigned[0].multiplier}}</li>
+                                </ul>
+                            </td>
+                            <td class="skill" id="paper">
+                                <ul class="list-unstyled">
+                                    <li><label>Name:</label>{{arraySkillsAssigned[1].name}}</li>
+                                    <li><label>Description: </label>{{arraySkillsAssigned[1].description}}</li>
+                                    <li><label>Bost: </label>{{arraySkillsAssigned[1].multiplier}}</li>
+                                </ul>
+                            </td>
+                            <td class="skill" id="scissors"> 
+                                <ul class="list-unstyled">
+                                    <li><label>Name:</label>{{arraySkillsAssigned[2].name}}</li>
+                                    <li><label>Description: </label>{{arraySkillsAssigned[2].description}}</li>
+                                    <li><label>Bost: </label>{{arraySkillsAssigned[2].multiplier}}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Rock</label></td>
+                            <td><label>Paper</label></td>
+                            <td><label>Scissors</label></td>
                         </tr>
                     </tbody>
                 </table>       
@@ -108,4 +143,5 @@
             </div>
         </div>
     </div>
+    {{messageHangar}}
 </main>

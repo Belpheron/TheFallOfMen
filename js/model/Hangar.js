@@ -1,49 +1,162 @@
-//global variable.
-var post;
-//jquery
-function refresh(scope)
-{
-    var n = 0;
-    var html;
-    if (n < 2)
-    {
-        n++;
-        $(".draggable").draggable();
-        $(".elementSkill").draggable({
-            contaiment: $("#areaDroppable"),
-            revert: "invalid", 
-            helper: 'clone'
-        });
-        $(".droppableSkill").droppable({
-            drop: function (event, ui)
-            {
-                //if not current skill set.
-                if (!$(this).hasClass("ui-state-highlight"))
-                {
-                    $(this).addClass("ui-state-highlight small");
-                    $(this).find(".blur").remove();
-                    html = $("<span></span>").html(ui.draggable[0]);
-                    html.appendTo(this);
-                }
-                else
-                {
-                    $(this).find("span").remove();
-                    html = $("<span></span>").html(ui.draggable[0]);
-                    html.appendTo(this);
-                }
-                var id = (html.find("input").val());
-                scope.cutSkill(id);
-            }
-        });
-    }
-    else
-    {
-        clearInterval(post);
-    }
-}
-
 this.Hangar = function (accessService, scope)
 {
+//    this.hangarShow = function ()
+//    {
+//        //clearInterval(scope.tempo);
+//        scope.currentWindow = "hangar";
+//        scope.loadPurchasedSkillHangar();
+//        //scope.loadPurchasedImplantHangar();
+//        scope.loadAssignedSkill();
+//        //scopeloadAssignedImpant();
+//        //this.setPercent();
+//        //scope.doAnimation(scope.hangar);
+//    };
+//
+//    //scope
+//    scope.arrayPurchasedSkill = new Array();
+//    scope.arrayAttributesPurchasedSkill = new Array();
+//    scope.arrayAssignedSkill = new Array();
+//    scope.showOptionHangar = "skill";
+//
+//    //methods
+//
+//
+//
+//    /**
+//     * setActive(tab)
+//     * @author Franc
+//     * @date 18/05/2016
+//     * @description allows active a certain tab of form.
+//     * @param tab: selected tab to active.
+//     * @returns none
+//     */
+//    scope.setActive = function (tab)
+//    {
+//        switch (tab)
+//        {
+//            case 'skill':
+//                $("#tabSkill").addClass("active");
+//                $("#tabImplant").removeClass("active");
+//                $("#tabAttribute").removeClass("active");
+//                scope.showOptionHangar = "skill";
+//                break;
+//            case 'implant':
+//                $("#tabSkill").removeClass("active");
+//                $("#tabImplant").addClass("active");
+//                $("#tabAttribute").removeClass("active");
+//                scope.showOptionHangar = "implant";
+//                break;
+//            case 'attribute':
+//                $("#tabSkill").removeClass("active");
+//                $("#tabImplant").removeClass("active");
+//                $("#tabAttribute").addClass("active");
+//                scope.showOptionHangar = "attribute";
+//                break;
+//            default:
+//
+//                break;
+//        }
+//    };
+//
+//    /**
+//     * loadAssignedSkill()
+//     * @author Franc
+//     * @date 18/05/2016
+//     * @description load all assigned skills of robot
+//     * @param none
+//     * @returns none
+//     */
+//    scope.loadAssignedSkill = function ()
+//    {
+//        scope.arrayAssignedSkill = new Array();
+//
+//        //load all skill assigned
+//        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 7, action: 203, jsonData: JSON.stringify(scope.currentUser)});
+//        promise.then(function (outputData)
+//        {
+//            if (outputData[0] === true)
+//            {
+//                var temp = new Array();
+//                temp = new Array(outputData[1].attack1_id, outputData[1].attack2_id, outputData[1].attack3_id);
+//                console.log(temp);
+//                for (var i = 0; i < temp.length; i++)
+//                {
+//                    var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 7, action: 204, jsonData: {id: temp[i]}});
+//                    promise.then(function (outputData)
+//                    {
+//                        if (outputData[0] === true)
+//                        {
+//                            scope.arrayAssignedSkill.push(outputData[1]);
+//                        }
+//                        else
+//                        {
+//                            scope.messageHangar = outputData[1];
+//                        }
+//                       // console.log(scope.arrayAssignedSkill);
+//                    });
+//                }
+//            }
+//            else
+//            {
+//                scope.messageHangar = outputData[1];
+//            }
+//        });
+//    };
+//
+//    /**
+//     * loadPurchaseSkillHangar()
+//     * @author Franc
+//     * @date 15/05/2016
+//     * @description load all data of all skills previously purchased.
+//     * @param none
+//     * @returns none
+//     */
+//    scope.loadPurchasedSkillHangar = function ()
+//    {
+//        scope.arrayPurchasedSkill = new Array();
+//        scope.arrayAttributesPurchasedSkill = new Array();
+//        var user = angular.copy(scope.currentUser);
+//        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 202, jsonData: JSON.stringify(user)});
+//        promise.then(function (outputData)
+//        {
+//            if (outputData[0] === true)
+//            {
+//                for (var i = 0; i < outputData[1].length; i++)
+//                {
+//                    var skill = new Skill(outputData[1][i].id,
+//                            outputData[1][i].name,
+//                            outputData[1][i].description,
+//                            outputData[1][i].requiredLevel,
+//                            parseInt(outputData[1][i].buyPrice),
+//                            outputData[1][i].multiplier);
+//                    scope.arrayPurchasedSkill.push(skill);
+//                }
+//                for (var j = 0; j < scope.arrayPurchasedSkill.length; j++)
+//                {
+//                    var skill = angular.copy(scope.arrayPurchasedSkill[j]); alert(scope.arrayPurchasedSkill[j].id);
+//                    var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 209, jsonData: JSON.stringify(skill)});
+//                    promise.then(function (outputData)
+//                    {
+//                        if (outputData[0] === true)
+//                        {
+//                            scope.arrayAttributesPurchasedSkill.push(new Array(outputData[1][1]['name'], outputData[1][0]['value']));
+//                        }
+//                        else
+//                        {
+//                            scope.messageHangar = outputData[1];
+//                        }
+//                        console.log(scope.arrayAttributesPurchasedSkill);
+//                    });
+//                }
+//                //console.log(scope.arrayPurchasedSkill);
+//            }
+//            else
+//            {
+//                scope.messageHangar = outputData[1];
+//            }
+//        });
+//    };
+//};
     //constructor.
     //load all data from db.
     this.hangarShow = function ()
@@ -52,25 +165,75 @@ this.Hangar = function (accessService, scope)
         scope.currentWindow = "hangar";
         scope.loadPurchasedSkill();
         scope.loadPurchasedImplant();
-        scope.loadAssignedSkill();
         //scopeloadAssignedImpant();
         this.setPercent();
         scope.doAnimation(scope.hangar);
-        post = setInterval(refresh, 100, scope);
+        scope.loadAssignedSkill();
     };
     //scope and properties.
     scope.infoSkill = new Array();
     scope.infoImplant = new Array();
     scope.image;
     scope.tempo;
-    scope.show = "skill";
+    scope.messageHangar;
+    scope.arraySkillsAssigned = new Array();
+    scope.showOptionHangar = "skill";
     scope.assignedSkill = new Array();
     scope.assignedImplant = new Array();
     scope.attrSkill = new Array();
+    scope.attrSkillAssgined = new Array();
     scope.attrImplant = new Array();
+    scope.loadingComplete=0;
     this.images = new Array();
     this.attributes = new Array();
+    
+     scope.$watch('loadingComplete', function ()
+    {
+        console.log(scope.purchasedSkills);
+        for (var i = 0; i < scope.purchasedSkills.length; i++)
+        {
+            for (var j = 0; j < scope.arraySkillsAssigned.length; j++)
+            {
+                if (scope.purchasedSkills[i].id == scope.arraySkillsAssigned[j].id)
+                {
+                    scope.purchasedSkills[i].hide=1;
+                }
+                else
+                {
+                    scope.purchasedSkills[i].hide=0;
+                }
+            }
+        }
+    }, true);
     //methods
+
+    /**
+     * updateSkillAssign()
+     * @author Franc
+     * @date 25/05/2016
+     * @description send a request to update the assignament of attack.
+     * @param skill, objective.
+     * @returns none
+     */
+
+    this.updateSkillAssign = function (skill, objective)
+    {
+        skill.objective = objective;
+        skill.idRobotStatistic = scope.currentUser.robotStatistic.getId();
+        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 7, action: 205, jsonData: JSON.stringify(skill)});
+        promise.then(function (outputData)
+        {
+            if (outputData[0] === true)
+            {
+                scope.arraySkillsAssigned[objective-1]=skill;
+                scope.messageHangar = "Succesfull assigned";
+            }
+            else
+            {
+                scope.messageHangar = outputData[1];
+            }
+        });
+    }
     /**
      * loadPurchaseImplant()
      * @author Franc
@@ -112,7 +275,7 @@ this.Hangar = function (accessService, scope)
             }
             else
             {
-                scope.messageShop = outputData[1];
+                scope.messageHangar = outputData[1];
             }
         });
     };
@@ -128,9 +291,10 @@ this.Hangar = function (accessService, scope)
     scope.loadPurchasedSkill = function ()
     {
         scope.purchasedSkills = new Array();
+        scope.attrSkill = new Array();
         var user = angular.copy(scope.currentUser);
         var skill = new Skill();
-        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 202, jsonData: JSON.stringify(user)});
+        var promise = accessService.getData("php/controllers/MainController.php", false, "POST", {controllerType: 6, action: 202, jsonData: JSON.stringify(user)});
         promise.then(function (outputData)
         {
             if (outputData[0] === true)
@@ -144,12 +308,14 @@ this.Hangar = function (accessService, scope)
                             parseInt(outputData[1][i].buyPrice),
                             outputData[1][i].multiplier);
                     scope.purchasedSkills.push(skill);
-                    var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 209, jsonData: JSON.stringify(skill)});
+                    var promise = accessService.getData("php/controllers/MainController.php", false, "POST", {controllerType: 6, action: 209, jsonData: JSON.stringify(skill)});
                     promise.then(function (outputData)
                     {
                         if (outputData[0] === true)
                         {
-                            scope.attrSkill.push(new Array(outputData[1][1]['name'], outputData[1][0]['value']));
+                            scope.attrSkill.push(new Array(outputData[1][1]['name'], outputData[1][0]['value'], skill.getId()));
+                            console.log(scope.attrSkill);
+                            scope.loadingComplete++;
                         }
                         else
                         {
@@ -157,43 +323,35 @@ this.Hangar = function (accessService, scope)
                         }
                     });
                 }
-
             }
             else
             {
-                scope.messageShop = outputData[1];
+                scope.messageHangar = outputData[1];
             }
         });
+        console.log("loadPurchasedSkill");
+        console.log(scope.purchasedSkills);
+        console.log(scope.attrSkill);
+
     };
 
     /**
-     * loadAttributesAssignedSkill()
+     * loadAttributesAssignedSkill()   ----------------- no se usa.
      * @author Franc
      * @date 23/05/2016
      * @description give attributes of skill
      * @param skillObj
-     * @returns array: attributes and values..
+     * @returns array: attributes and values.
      */
-    scope.loadAttributesAssignedSkill = function (skill,where)
+    scope.loadAttributesAssignedSkill = function (skillObj)
     {
+        var skill = new Skill(skillObj.id, skillObj.name, skillObj.description, skillObj.requiredLevel, skillObj.buyPrice, skillObj.multiplier);
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 6, action: 209, jsonData: JSON.stringify(skill)});
         promise.then(function (outputData)
         {
             if (outputData[0] === true)
             {
-                scope.attrSkill.push(new Array(outputData[1][1]['name'], outputData[1][0]['value']));
-                html = "<span><div class='draggable ui-widget-content elementSkill'>";
-                html += "<ul>";
-                html += "<input type='hidden' value='" + skill.id + "'/>";
-                html += "<li><label>Name: </label>" + skill.name + "</li>";
-                html += "<li><label>Description: </label>" + skill.description + "</li>";
-                html += "<li><label>Level: </label>" + skill.requiredLevel + "</li>";
-                html += "<li><label>Boost: </label>" + skill.multiplier + "</li>";
-                html += "<li><label>Attribute: </label>" + outputData[1][1]['name'] + "</li>";
-                html += "<li><label>Value: </label>" + outputData[1][0]['value'] + "</li>";
-                html += "</ul>";
-                html += "</div></span>";
-                $(where).html(html).addClass("ui-state-highlight small");
+                return (outputData[1][1]['name'], outputData[1][0]['value']);
             }
             else
             {
@@ -212,86 +370,54 @@ this.Hangar = function (accessService, scope)
      */
     scope.loadAssignedSkill = function ()
     {
-        var html;
+        //load all skill assigned
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 7, action: 203, jsonData: JSON.stringify(scope.currentUser)});
         promise.then(function (outputData)
         {
-            //load all skill assigned
             if (outputData[0] === true)
             {
-                var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 7, action: 204, jsonData: {skill: outputData[1].attack1_id}});
-                promise.then(function (outputData)
+                scope.arraySkillsAssigned = new Array();
+                //rock , pos 0;
+                for (var i = 0; i < scope.purchasedSkills.length; i++)
                 {
-                    //load info and put in rock
-                    if (outputData[0] === true)
+                    if (scope.purchasedSkills[i].id == outputData[1].attack1_id)
                     {
-                        var skill = new Skill(outputData[1].id, outputData[1].name, outputData[1].description, outputData[1].requiredLevel, outputData[1].buyPrice, outputData[1].multiplier);
-                        scope.loadAttributesAssignedSkill(skill,"#skillRock");
+                        scope.arraySkillsAssigned.push(scope.purchasedSkills[i]);
+                        for (var j = 0; j < scope.attrSkill.length; j++)
+                        {
+                            if (scope.attrSkill[j][2] == scope.purchasedSkills[i].id)
+                            {
+                                scope.attrSkillAssgined.push(new Array(scope.attrSkill[j][0], scope.attrSkill[j][1], scope.attrSkill[j][2]));
+                            }
+                        }
                     }
-                    else
-                    {
-                        scope.messageShop = outputData[1];
-                    }
-                });
-                var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 7, action: 204, jsonData: {skill: outputData[1].attack2_id}});
-                promise.then(function (outputData)
+                }
+                //paper, pos 1;
+                for (var i = 0; i < scope.purchasedSkills.length; i++)
                 {
-                    //load info and put in paper
-                    if (outputData[0] === true)
+                    if (scope.purchasedSkills[i].id == outputData[1].attack2_id)
                     {
-                        var skill = new Skill(outputData[1].id, outputData[1].name, outputData[1].description, outputData[1].requiredLevel, outputData[1].buyPrice, outputData[1].multiplier);
-                        scope.loadAttributesAssignedSkill(skill,"#skillPaper");
+                        scope.arraySkillsAssigned.push(scope.purchasedSkills[i]);
                     }
-                    else
-                    {
-                        scope.messageShop = outputData[1];
-                    }
-                });
-                var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 7, action: 204, jsonData: {skill: outputData[1].attack3_id}});
-                promise.then(function (outputData)
+                }
+                //scissors, pos 2;
+                for (var i = 0; i < scope.purchasedSkills.length; i++)
                 {
-                    //load info and put in scissor
-                    if (outputData[0] === true)
+                    if (scope.purchasedSkills[i].id == outputData[1].attack3_id)
                     {
-                        var skill = new Skill(outputData[1].id, outputData[1].name, outputData[1].description, outputData[1].requiredLevel, outputData[1].buyPrice, outputData[1].multiplier);
-                        scope.loadAttributesAssignedSkill(skill, "#skillScissor");
+                        scope.arraySkillsAssigned.push(scope.purchasedSkills[i]);
                     }
-                    else
-                    {
-                        scope.messageShop = outputData[1];
-                    }
-                });
+                }
+                console.log(scope.arraySkillsAssigned);
+                scope.loadingComplete++;
             }
             else
             {
-                scope.messageShop = outputData[1];
+                scope.messageHangar = outputData[1];
             }
         });
-
     };
-    /**
-     * cutSkill()
-     * @author Franc
-     * @date 24/05/2016
-     * @description hide a part of skill purchased.
-     * @param id: id to be removed.
-     * @return none
-     */
-    scope.cutSkill = function (id)
-    {
-        for (var i = 0; i < scope.purchasedSkills.length; i++)
-        {
-            if (scope.purchasedSkills[i].getId()==id)
-            {
-                scope.purchasedSkills.slice(i,1);
-                
-            }
-           alert(scope.purchasedSkills.length);
-        }
-        scope.setActive("implant");
-        scope.$apply();
-        scope.setActive("skill");
-    };
+  
     /**
      * format()
      * @author Franc
@@ -400,7 +526,7 @@ this.Hangar = function (accessService, scope)
             }
             else
             {
-                scope.messageShop = outputData[1];
+                scope.messageHangar = outputData[1];
             }
         });
     };
@@ -412,19 +538,20 @@ this.Hangar = function (accessService, scope)
      * @param none
      * @returns none
      */
-    this.getInfoSkill = function (skill)
+    scope.getInfoSkillHangar = function (id)
     {
-        skill = angular.copy(skill);
+        var skill = new Skill(id);
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 7, action: 200, jsonData: JSON.stringify(skill)});
         promise.then(function (outputData)
         {
             if (outputData[0] === true)
             {
                 scope.infoSkill.push(outputData[1]);
+               console.log(scope.infoSkill);
             }
             else
             {
-                scope.messageShop = outputData[1];
+                scope.messageHangar = outputData[1];
             }
         });
     };
@@ -448,7 +575,7 @@ this.Hangar = function (accessService, scope)
             }
             else
             {
-                scope.messageShop = outputData[1];
+                scope.messageHangar = outputData[1];
             }
         });
     };
@@ -468,25 +595,24 @@ this.Hangar = function (accessService, scope)
                 $("#tabSkill").addClass("active");
                 $("#tabImplant").removeClass("active");
                 $("#tabAttribute").removeClass("active");
-                scope.show = "skill";
+                scope.showOptionHangar = "skill";
                 break;
             case 'implant':
                 $("#tabSkill").removeClass("active");
                 $("#tabImplant").addClass("active");
                 $("#tabAttribute").removeClass("active");
-                scope.show = "implant";
+                scope.showOptionHangar = "implant";
                 break;
             case 'attribute':
                 $("#tabSkill").removeClass("active");
                 $("#tabImplant").removeClass("active");
                 $("#tabAttribute").addClass("active");
-                scope.show = "attribute";
+                scope.showOptionHangar = "attribute";
                 break;
             default:
 
                 break;
         }
-        post = setInterval(refresh, 100, scope);
     };
     //end 
 };

@@ -1,11 +1,11 @@
 <?php
 
 require_once "ControllerInterface.php";
-require_once "../model/persist/HangarADO.php";
+require_once "../model/persist/AdminADO.php";
 require_once "../model/Skill.php";
 require_once "../model/Implant.php";
 
-class HangarController implements ControllerInterface
+class AdminController implements ControllerInterface
 {
 
     private $action;
@@ -18,7 +18,7 @@ class HangarController implements ControllerInterface
         $this->setAction($action);
         $this->setJsonData(json_decode($jsonData));
         $this->dbConnection = DBConnect::getInstance();
-        $this->ado = new HangarADO();
+        $this->ado = new AdminADO();
     }
 
     //accessors
@@ -49,10 +49,11 @@ class HangarController implements ControllerInterface
         switch ($this->getAction())
         {
             //get info attributes skill.
-            case 200:
-                $skill = new Skill($this->jsonData->id);
-                $result = $this->ado->getAllInfoSkill($skill);
-                if ($result != null)
+            case 200: 
+                $implant = new Implant(0,  $this->jsonData->name, $this->jsonData->description, $this->jsonData->buyPrice, $this->jsonData->attrName, $this->jsonData->attrValue );
+                $implant->setTarget($this->jsonData->target);
+                $result = $this->ado->insertImplant($implant);
+                if ($result > 0)
                 {
                     $outputData[0] = true;
                     $outputData[1] = $result;
@@ -60,7 +61,7 @@ class HangarController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry can't load extra info.";
+                    $outputData[1] = "Sorry cannot creater implant";
                 }
                 break;
             //get infoattributes implant.

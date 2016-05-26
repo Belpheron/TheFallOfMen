@@ -19,6 +19,7 @@ class Implant {
     private $attribute;
     private $value;
     private $turns;
+    private $target;
 
     //constructor
     function __construct($id = "", $name = "", $description = "", $buyPrice = "", $attribute = "", $value = "", $turns = "") {
@@ -56,8 +57,17 @@ class Implant {
     function setTurns($turns) {
         $this->turns = $turns;
     }
-    
-    function getName() {
+    function getTarget()
+    {
+        return $this->target;
+    }
+
+    function setTarget($target)
+    {
+        $this->target = $target;
+    }
+
+        function getName() {
         return $this->name;
     }
 

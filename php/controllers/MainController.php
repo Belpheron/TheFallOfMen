@@ -7,6 +7,7 @@ require_once "ShopController.php";
 require_once "ChatController.php";
 require_once "FightController.php";
 require_once "HangarController.php";
+require_once "AdminController.php";
 
 
 $outputData = [];
@@ -44,8 +45,10 @@ if (isset($_REQUEST['controllerType']))
             $hangarController = new HangarController($_REQUEST['action'], $_REQUEST['jsonData']);
             $outputData = $hangarController->run();
             break;
-       
-       
+        case 8:
+            $adminController = new AdminController($_REQUEST['action'], $_REQUEST['jsonData']);
+            $outputData = $adminController->run();
+            break;
         default:
             $outputData[0] = false;
             $outputData[1] = "Sorry, there has been an error. Try later";

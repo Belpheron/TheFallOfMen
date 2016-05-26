@@ -19,6 +19,9 @@ this.Implant = function (id, name, description, buyPrice)
     this.buyPrice = buyPrice;
     this.invalid = 0;
     this.sellPrice = Math.round((this.buyPrice/4));
+    this.attrName;
+    this.attrValue;
+    this.target;
 
     //accessors
     //getters
