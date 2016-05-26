@@ -2,23 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-<<<<<<< HEAD
-            <file>file:/E:/XAMPP/htdocs/Alpha/css/fightStyle.css</file>
-            <file>file:/E:/XAMPP/htdocs/Alpha/js/model/Game.js</file>
-            <file>file:/E:/XAMPP/htdocs/Alpha/fightWindow.php</file>
-            <file>file:/E:/XAMPP/htdocs/Alpha/js/model/Player.js</file>
-            <file>file:/E:/XAMPP/htdocs/Alpha/js/control/FightWindow.js</file>
-            <file>file:/E:/XAMPP/htdocs/Alpha/css/generalStyle.css</file>
-=======
-            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/mainWindow.php</file>
-            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/templates/hangar-template.html</file>
-            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/css/hangarStyle.css</file>
-            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/model/Hangar.js</file>
-            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/templates/hangar-template_1.html</file>
-            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/control/MainWindow.js</file>
-            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/model/Shop.js</file>
->>>>>>> 18f87f2c0c539c37b68cb3c000ba78d6dcaeb2a6
-        </group>
+        <group/>
     </open-files>
 </project-private>

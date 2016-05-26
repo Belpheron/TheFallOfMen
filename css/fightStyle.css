@@ -143,7 +143,7 @@ html{
     font-size: 2em;
     color: white;
     position: absolute;
-    top: 17%;
+    top: 20%;
     left: 45%;
     font-weight: bold;
     font-family: "Space";
@@ -154,7 +154,7 @@ html{
     z-index: 900;
     font-size: 5em;
     color: red;
-    top: 21%;
+    top: 24%;
     left: 47.5%;
     font-weight: bolder;
     font-family: "Space";
@@ -165,7 +165,7 @@ html{
     z-index: 900;
     color: yellow;
     font-size: 1.5em;
-    top: 12%;
+    top: 16%;
     left: 46%;
     font-family: "Space";
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -187,34 +187,43 @@ html{
     border-radius: 10px;
     border: 1px solid black;
 }
-.messageWindow{
+.txtMsg{
     position: absolute;
-    z-index: 1;
-}
-.centerMessage{
-    top: 60%;
-    left: 40%;
-    font-size: 3em;
-    color: yellow;
-    text-align: center;
+    z-index: 1000;
     font-family: "Komtita";
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-align: center;
+    font-weight: bold;
 }
-.p1Message{
-    top: 40%;
+.centerMsg{
+    top: 50%;
+    left: 40%;
+    color: yellow;
+    font-size: 3em;
+}
+.p1DmgMsg{
+    top: 30%;
     left: 30%;
-    font-size: 2em;
-    font-weight: bold;
-    color: white;
-    text-align: center;
+    color: red;
+    font-size: 3em;
 }
-.p2Message{
-    top: 40%;
+.p2DmgMsg{
+    top: 30%;
     left: 70%;
-    font-size: 2em;
-    font-weight: bold;
-    color: white;
-    text-align: center;
+    color: red;
+    font-size: 3em;
+}
+.p1HealMsg{
+    top: 30%;
+    left: 30%;
+    color: greenyellow;
+    font-size: 3em;
+}
+.p2HealMsg{
+    top: 30%;
+    left: 70%;
+    color: greenyellow;
+    font-size: 3em;
 }
 .resultsWindow{
     position: absolute;
@@ -225,32 +234,93 @@ html{
     border-radius: 10px;
     padding: 20px;    
 }
-.backToMainMenuButton{
-    
-}
-.ultimateContainer{
-    position: relative;
-    z-index: 3000;
-    clear: both;
-    width: 100%;
-    height: 20px;
-    padding: 2px;
-    border: 1px solid black;
-    background-color: white;
-}
-.ultimateBar {
-    background-color: yellow;
-    position: relative;
-    z-index: 3001;
-    height: 90%;    
-}
 .attackBonusBox{
     position: absolute;
     z-index: 1000;
-    top: 30%;
-    left: 10%;
-    height: 40px;
-    width: 40px;
-    border-radius: 5px;
+    top: 15%;
+    left: 30%;
+    height: 60px;
+    width: 60px;
+    border-radius: 10px;
     background-color: lightblue;
+    background: url(../images/tooltips/bonus.jpg) no-repeat scroll 0 0 transparent; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: "Komtita";
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    vertical-align: middle;
+    -webkit-box-shadow: 0px 0px 78px 23px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 78px 23px rgba(255,255,255,1);
+    box-shadow: 0px 0px 78px 23px rgba(255,255,255,1);
+}
+.gameButton{
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    border-radius: 20px;
+    left: 10%;
+    border: none;
+    cursor: pointer;
+    z-index: 99999;
+    transition: 0.7s all;
+}
+.gameButton:hover{
+    -webkit-box-shadow: 0px 0px 40px 7px rgba(0,161,38,1);
+    -moz-box-shadow: 0px 0px 40px 7px rgba(0,161,38,1);
+    box-shadow: 0px 0px 40px 7px rgba(0,161,38,1);
+}
+.rockButton{
+    top: 45%;
+    background: url(../images/tooltips/rock.jpg) no-repeat scroll 0 0 transparent; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.paperButton{
+    top: 60%;
+    background: url(../images/tooltips/paper.jpg) no-repeat scroll 0 0 transparent; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.scissorsButton{
+    top: 75%;
+    background: url(../images/tooltips/scissors.jpg) no-repeat scroll 0 0 transparent; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.ultimateButton{    
+    top: 30%;
+    background: url(../images/tooltips/ultimate.jpg) no-repeat scroll 0 0 transparent; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: "Komtita";
+    text-align: center;
+    font-size: 1.1em;
+    color: white;
+}
+.ultimateBar {    
+    background-color: yellow;
+    width: 100%;
+    height: 98%;    
+}
+.ultimateContainer{
+    background-color: white;
+    width: 20%;
+    height: 10px;
+    padding: 1px;
+    position: absolute;
+    z-index: 1000; 
+    top: 9%;
+    left: 10%;
 }

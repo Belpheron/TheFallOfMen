@@ -1,16 +1,16 @@
 <main ng-show="currentWindow == 'shop'">
     <div class="row shopInfoWindow">
-        <h2 class="pull-right">{{currentUser.coins}} Human/s</h2>
+        <img class="humanIcon pull-right" src="images/tooltips/human.png"/>
+        <h2 class="pull-right"><span class="wallet">Wallet:</span> {{currentUser.coins}}</h2>
     </div>
     <div class="row">
-
         <div class="col-md-6 shopShopWindow">
-            <label>Shop</label>   
+            <label class="title">Shop</label>   
             <ul class="nav nav-tabs">
-                <li id="shopSkillTab" class="active" ng-click="shop.active('skill')"><a><span>Skills</span></a></li>
-                <li id="shopImplantTab" ng-click="shop.active('implant')"><a><span>Implants</span></a></li>
+                <li id="shopSkillTab" class="active" ng-click="shop.active('skill')"><a class="usersTab"><span>Skills</span></a></li>
+                <li id="shopImplantTab" ng-click="shop.active('implant')"><a class="usersTab"><span>Implants</span></a></li>
             </ul>
-            <div id="shopSkills" ng-if="shop.show == 'skill'">
+            <div id="shopSkills" class="shopSkills" ng-if="shop.show == 'skill'">
                 <table border="0" class="table table-striped">
                     <thead>
                         <tr>
@@ -26,7 +26,7 @@
                     <tbody>
                         <tr ng-repeat="skill in skills">
                     <div >
-                        <td class="text-success" ng-mouseover="shop.getInfoSkill(skill, $index, 'shop')" ng-mouseleave="shop.hideInfoSkill()" >?</td>
+                        <td class="shopInfo" ng-mouseover="shop.getInfoSkill(skill, $index, 'shop')" ng-mouseleave="shop.hideInfoSkill()" >?</td>
                         <td class="small">{{skill.name}}</td>
                         <td class="small">{{skill.description}}</td>
                         <td class="small">{{skill.requiredLevel}}&nbsp;&nbsp;<span class="glyphicon glyphicon-alert" ng-if="currentUser.robotStatistic.level < skill.requiredLevel" ng-init="skill.invalid = 1"></span></td>
@@ -52,7 +52,7 @@
                     <tbody>
                         <tr ng-repeat="implant in implants">
                     <div>
-                        <td class="text-success" ng-mouseover="shop.getInfoImplant(implant, $index, 'shop')" ng-mouseleave="shop.hideInfoSkill()" >?</td>
+                        <td class="text-success shopInfo" ng-mouseover="shop.getInfoImplant(implant, $index, 'shop')" ng-mouseleave="shop.hideInfoSkill()" >?</td>
                         <td class="small">{{implant.name}}</td>
                         <td class="small">{{implant.description}}</td>
                         <td class="small">{{implant.buyPrice}}&nbsp;&nbsp;<span class="glyphicon glyphicon-alert" ng-if="currentUser.coins < implant.buyPrice" ng-init="implant.invalid = 1"></span></td>
@@ -64,10 +64,10 @@
             </div>
         </div>
         <div class="col-md-5 shopInventoryWindow">
-            <label>Inventory</label>   
+            <label class="title">Inventory</label>   
             <ul class="nav nav-tabs">
-                <li class="active" id="skillInventoryTab" ng-click="shop.active('skillInventory')"><a><span>Skills</span></a></li>
-                <li id="implantInventoryTab" ng-click="shop.active('implantInventory')"><a><span>Implants</span></a></li>
+                <li class="active" id="skillInventoryTab" ng-click="shop.active('skillInventory')"><a class="usersTab"><span>Skills</span></a></li>
+                <li id="implantInventoryTab" ng-click="shop.active('implantInventory')"><a class="usersTab"><span>Implants</span></a></li>
             </ul>
             <div id="inventorySkills" ng-if="shop.showInventory == 'skill'">
                 <table border="0" class="table table-striped">
@@ -82,11 +82,11 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="pSkill in purchasedSkills">
-                            <td class="text-success" ng-mouseover="shop.getInfoSkill(pSkill, $index,'inventory')" ng-mouseleave="shop.hideInfoSkill()" >?</td>
+                            <td class="shopInfo" ng-mouseover="shop.getInfoSkill(pSkill, $index,'inventory')" ng-mouseleave="shop.hideInfoSkill()" >?</td>
                             <td class="small">{{pSkill.name}}</td>
                             <td class="small">{{pSkill.sellPrice}}</td>
                             <td class="small">{{pSkill.multiplier}}</td>
-                            <td><button class="btn btn-info" ng-click="shop.sellSkill(pSkill)">Sell</button></td>
+                            <td><button class="btn btn-warning" ng-click="shop.sellSkill(pSkill)">Sell</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -104,23 +104,23 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="pImplant in purchasedImplants">
-                            <td class="text-success" ng-mouseover="shop.getInfoImplant(pImplant, $index, 'inventory')" ng-mouseleave="shop.hideInfoSkill()" >?</td>
+                            <td class="shopInfo" ng-mouseover="shop.getInfoImplant(pImplant, $index, 'inventory')" ng-mouseleave="shop.hideInfoSkill()" >?</td>
                             <td class="small">{{pImplant.name}}</td>
                             <td class="small">{{pImplant.sellPrice}}</td>
                             <td class="small">{{pImplant.description}}</td>
-                            <td><button class="btn btn-info" ng-click="shop.sellImplant(pImplant)">Sell</button></td>
+                            <td><button class="btn btn-warning" ng-click="shop.sellImplant(pImplant)">Sell</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    {{messageShop}}
+    <span class="messageShop">{{messageShop}}</span>
     <div id="tooltipMessageSkill" class="tooltipmessage" ng-show="showToolTipSkill">
         <span>{{infoSkill[0].description}}</span>
         <br><label>Produces:</label>
         <br><span>{{infoSkill[1].name}}: +{{infoSkill[0].value}}</span>
-        <br><span>for: {{infoSkill[0].turns}} turns</span>
+        <br><span>for 1 round</span>
     </div>
      <div id="tooltipMessageImplant" class="tooltipmessage" ng-show="showToolTipImplant">
         <span>{{infoImplant[0].description}}</span>

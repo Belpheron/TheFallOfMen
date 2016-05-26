@@ -11,12 +11,10 @@ class LoginController implements ControllerInterface
 {
 
     //properties  
-    private
-            $ado;
+    private $ado;
 
     //constructor 
-    public
-            function __construct()
+    public function __construct()
     {
         $this->ado = new LoginADO();
     }
@@ -78,7 +76,7 @@ class LoginController implements ControllerInterface
             $robotSkinId = $_POST["robotSkinId"];
 
             $user = new Register($name, $surname1, $surname2, $email, $birthDate, $countryId, $userName, $password, $robotSkinId);
-
+            var_dump($user);
             $result = $this->ado->saveRegister($user);
             if ($result)
             {

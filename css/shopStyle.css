@@ -1,18 +1,64 @@
 .shopInfoWindow{
     height: 10vh;
-    margin-right: 25vh;
+    margin-right: 5%;
+    color: lime;
+    font-family: "Space";
+    font-weight: bolder;
+}
+.wallet{
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-weight: normal;
+}
+.messageShop{
+    font-family: "Space";
+    font-size: 1.5em;
+    color: lime;
+    margin-left: 5%;
+    margin-top: 20px;
+}
+.humanIcon{
+    height: 50px;
+    width: 50px;
 }
 .shopShopWindow{
-    border: 1px solid silver;
     height: 60vh;
     margin-left: 30px;
+    border-radius: 10px;
+    background: rgba(89,34,240,0.2);
+    border: 1px solid #FF73E3;
+    overflow: auto;
+}
+.glyphicon-alert{
+    color: red;
+}
+.shopInfo{
+    font-weight: bolder;
+    color: lime;
+    cursor: help;
+}
+.shopShopWindow th{
+    color: white;
+    font-family: "Space";    
+}
+tr:nth-child(odd){
+    font-family: Verdana, Geneva, sans-serif;
+    background: rgba(4,47,41,0.7) !important;
+    color: white;
+}
+tr:nth-child(even) {
+    font-family: Verdana, Geneva, sans-serif;
+    background-color: transparent;
+    color: white;
 }
 .shopInventoryWindow{
-    border: 1px solid silver;
+    border-radius: 10px;
+    background: rgba(89,34,240,0.2);
+    border: 1px solid #FF73E3;
     margin-left: 30px;
     height: 60vh;
+    overflow: auto;
 }
-
 .tooltipmessage{
     display: block;
     line-height: 1.42857;
@@ -27,10 +73,19 @@
     background-color: yellowgreen;
     /*transition: 0.4s opacity;*/
 }
-
 .invisible
 {
     opacity:0;
     display: inline;
+}
+.title{
+    font-family: "Space";
+    color: yellow;
+    font-size: 1.4em;
+}
+.titleLitle{
+    font-family: "Space";
+    color: yellow;
+    font-size: 1em;
 }
 

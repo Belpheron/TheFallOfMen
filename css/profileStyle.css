@@ -55,6 +55,7 @@
 .dropOutButton {
     background-color: red;
     color: white;
+    margin-top: -45px;
 }
 .dropOutButton:hover {
     background-color: orange;

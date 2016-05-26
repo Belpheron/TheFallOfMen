@@ -7,7 +7,7 @@ this.Game = function(accessService, scope) {
     scope.loadWindow = new LoadWindow(scope);
     scope.fightEvents = new FightEvents();
     scope.playerContainer;
-    scope.roundNumber = 200000;
+    scope.roundNumber = 20;
     scope.roundTimer;
     this.showBlockScreen = false;
     this.msg = new MessageTool();
@@ -82,14 +82,14 @@ this.Game = function(accessService, scope) {
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                     {controllerType: 5, action: 116, jsonData: JSON.stringify(scope.game.fightResults)});
             promise.then(function(outputData) {
-                /*var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                         {controllerType: 5, action: 117, jsonData: {eventId:scope.fightEvents.id, fightId:scope.fightDetails.id}});
                 promise.then(function(outputData) {
                     if (outputData[0] === false) {
                         alert("Error saving fight data. Redirecting...");
                         window.open("mainWindow.php?error=3", "_self");
                     }
-                });*/
+                });
             });
         } else {
             scope.game.showPlayer2ResultWindow = true;
@@ -172,10 +172,11 @@ this.Game = function(accessService, scope) {
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                     {controllerType: 5, action: 115, jsonData: JSON.stringify(scope.fightEvents)});
             promise.then(function(outputData) {
-                if (outputData[0] === true) {
+                if (outputData[0] === true) {                    
+                    console.log(outputData[1]);
                     if ((outputData[1].player1Action != "null" && outputData[1].player2Action != "null") ||
-                            scope.roundTimer == 0 || scope.roundNumber < 0 || scope.fightEvents.p1Health <= 0 ||
-                            scope.fightEvents.p2Health <= 0 || outputData[1].player1Action == "ultimate" || 
+                            scope.roundTimer == 0 || scope.roundNumber < 0 || outputData[1].p1Health <= 0 ||
+                            outputData[1].p2Health <= 0 || outputData[1].player1Action == "ultimate" || 
                             outputData[1].player2Action == "ultimate") {
                         clearInterval(roundIntervalTimer);
                         clearInterval(roundWatch);
@@ -184,7 +185,7 @@ this.Game = function(accessService, scope) {
                         scope.fightEvents.player2Action = outputData[1].player2Action;
                         scope.checkRoundResult();
                     }
-                }
+                } 
             });
         }, 500);
         scope.roundNumber--;
@@ -311,12 +312,11 @@ this.Game = function(accessService, scope) {
                 damage = (parseInt(scope.fightDetails.p1_ap) * 8 + parseInt(scope.player1.apBonus)) - 
                         parseInt(scope.fightDetails.p2_dp) - parseInt(scope.player2.dpBonus);
             } 
-            /*if (getCritical(scope.fightDetails.p1_cp)) {
-             damage = parseInt(damage * 1.5);
-             setTimeout(function () {
-             scope.game.msg.showMessage("CRITICAL", "player2");
-             }, 800);
-             }*/
+            if (scope.player1.hpBonus != 0) {
+                scope.fightEvents.p1Health += parseInt(scope.player1.hpBonus);
+                scope.game.msg.showMessage("+" + scope.player1.hpBonus, "player1", "green");
+                scope.player1.calculateHealthPercent(scope.fightEvents.p1Health, scope.player1);
+            }
             scope.fightEvents.p2Health = scope.fightEvents.p2Health - damage;
             scope.player1.totalDamage += damage;
             scope.player2.setUltimate(damage, scope.player2);
@@ -355,12 +355,11 @@ this.Game = function(accessService, scope) {
                 damage = (parseInt(scope.fightDetails.p2_ap) * 8 + parseInt(scope.player2.apBonus)) - 
                         parseInt(scope.fightDetails.p1_dp) - parseInt(scope.player1.dpBonus);
             }
-            /*if (getCritical(scope.fightDetails.p2_cp)) {
-             damage = parseInt(damage * 1.5);
-             setTimeout(function () {
-             scope.game.msg.showMessage("CRITICAL", "player1");
-             }, 800);
-             }*/
+            if (scope.player2.hpBonus != 0) {
+                scope.fightEvents.p2Health += scope.player2.hpBonus;
+                scope.game.msg.showMessage("+" + scope.player2.hpBonus, "player2", "green");
+                scope.player2.calculateHealthPercent(scope.fightEvents.p2Health, scope.player2);
+            }
             scope.fightEvents.p1Health = scope.fightEvents.p1Health - damage;
             scope.player2.totalDamage += damage;
             scope.player1.setUltimate(damage, scope.player1);
@@ -403,8 +402,8 @@ this.Game = function(accessService, scope) {
                 var timer = setInterval(function() {
                     if (scope.fightDetails.dataLoaded) {
                         //sets players health
-                        scope.fightEvents.p1Health = parseInt(scope.fightDetails.p1_hp * 20);
-                        scope.fightEvents.p2Health = parseInt(scope.fightDetails.p2_hp * 20);
+                        scope.fightEvents.p1Health = parseInt(scope.fightDetails.p1_hp * 12);
+                        scope.fightEvents.p2Health = parseInt(scope.fightDetails.p2_hp * 12);
                         //creates players and loads animations
                         clearInterval(timer);
                         scope.player1 = new Player(scope.fightDetails.p1_id, 1, accessService, scope);
@@ -453,8 +452,8 @@ this.Game = function(accessService, scope) {
                         var timerLoad = setInterval(function() {
                             if (scope.fightDetails.dataLoaded) {
                                 //sets players health
-                                scope.fightEvents.p1Health = parseInt(scope.fightDetails.p1_hp * 20);
-                                scope.fightEvents.p2Health = parseInt(scope.fightDetails.p2_hp * 20);
+                                scope.fightEvents.p1Health = parseInt(scope.fightDetails.p1_hp * 12);
+                                scope.fightEvents.p2Health = parseInt(scope.fightDetails.p2_hp * 12);
                                 //creates players and loads animations
                                 clearInterval(timerLoad);
                                 scope.player1 = new Player(scope.fightDetails.p1_id, 1, accessService, scope);

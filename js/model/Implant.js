@@ -13,12 +13,15 @@
 this.Implant = function (id, name, description, buyPrice)
 {
     //properties
+    this.type = "implant";
     this.id = id;
     this.name = name;
     this.description = description;
     this.buyPrice = buyPrice;
     this.invalid = 0;
     this.sellPrice = Math.round((this.buyPrice/4));
+    this.attribute;
+    this.value;
 
     //accessors
     //getters

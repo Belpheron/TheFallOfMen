@@ -26,7 +26,7 @@
             <!--tab for all users online -->
             <article ng-show="home.currentTab == 'all'">
                 <small class="userStatusInfo" ng-show="onlineUserList.length == 0">
-                    You don't have any friends online.</small>
+                    There are no more users online.</small>
                 <span class="userTooltip" id="{{user.getUserName()}}Tooltip" ng-repeat="user in onlineUserList" 
                       ng-click="home.showUserPopUpMenu(user, $event)">
                     <span style="color:lime" class="glyphicon glyphicon-user"></span>  &nbsp&nbsp{{user.getUserName()}}

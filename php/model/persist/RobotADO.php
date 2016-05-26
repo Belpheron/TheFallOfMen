@@ -25,7 +25,7 @@ class RobotADO implements ADOinterface {
         }
         return null;
     }
-    
+
     public function getAllSkins() {
         $sql = "SELECT * FROM robotskin";
         $query = $this->dbConnection->execute($sql, []);
@@ -34,14 +34,14 @@ class RobotADO implements ADOinterface {
         }
         return null;
     }
-    
+
     public function getAllAttributes($user) {
         $result = [];
         $sql = "SELECT * FROM robotattribute WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?)";
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         if ($query != null) {
             $attList = $query->fetchAll();
-            for ($i=0; $i<count($attList); $i++) {
+            for ($i = 0; $i < count($attList); $i++) {
                 $att = new Attribute();
                 $att->setValue($attList[$i]["value"]);
                 switch ($attList[$i]["idAttribute"]) {
@@ -71,7 +71,43 @@ class RobotADO implements ADOinterface {
         }
         return $result;
     }
-    
+
+    public function getAllStoredAttacks($user) {
+        $result = [];
+        $sql = "SELECT * FROM skill WHERE id IN (SELECT idSkill FROM robotstoreskill WHERE idRobotStatistic IN (SELECT idRobotStatistic FROM user WHERE userName = ?))";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        if ($query != null) {
+            $temp = $query->fetchAll();
+            if (count($temp) > 0) {
+                for ($i = 0; $i < count($temp); $i++) {
+                    $attack = new Attack();
+                    $attack->setId($temp[$i]["id"]);
+                    $attack->setName($temp[$i]["name"]);
+                    $attack->setDescription($temp[$i]["description"]);
+                    $attack->setMultiplier($temp[$i]["multiplier"]);
+                    $attack->setRequiredLevel($temp[$i]["requiredLevel"]);
+                    $attack->setBuyPrice($temp[$i]["buyPrice"]);
+                    $skillId = $temp[$i]["id"];
+                    $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
+                    $query = $this->dbConnection->execute($sql, [$skillId]);
+                    $temp2 = $query->fetch();
+                    $attack->setAttribute($temp2["iso"]);
+                    $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
+                    $query = $this->dbConnection->execute($sql, [$skillId]);
+                    $temp3 = $query->fetch();
+                    $attack->setValue($temp3["value"]);
+                    $attack->setTarget($temp3["target"]);
+                    $result[] = $attack->toArray();
+                }
+            } else {
+                $result = [];
+            }
+        } else {
+            $result = [];
+        }
+        return $result;
+    }
+
     public function getAllAttacks($user) {
         $result = [];
         //attack1
@@ -79,9 +115,12 @@ class RobotADO implements ADOinterface {
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
         $attack = new Attack();
+        $attack->setId($temp["id"]);
         $attack->setName($temp["name"]);
         $attack->setDescription($temp["description"]);
         $attack->setMultiplier($temp["multiplier"]);
+        $attack->setRequiredLevel($temp["requiredLevel"]);
+        $attack->setBuyPrice($temp["buyPrice"]);
         $skillId = $temp["id"];
         $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
         $query = $this->dbConnection->execute($sql, [$skillId]);
@@ -98,9 +137,12 @@ class RobotADO implements ADOinterface {
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
         $attack = new Attack();
+        $attack->setId($temp["id"]);
         $attack->setName($temp["name"]);
         $attack->setDescription($temp["description"]);
         $attack->setMultiplier($temp["multiplier"]);
+        $attack->setRequiredLevel($temp["requiredLevel"]);
+        $attack->setBuyPrice($temp["buyPrice"]);
         $skillId = $temp["id"];
         $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
         $query = $this->dbConnection->execute($sql, [$skillId]);
@@ -117,9 +159,12 @@ class RobotADO implements ADOinterface {
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
         $attack = new Attack();
+        $attack->setId($temp["id"]);
         $attack->setName($temp["name"]);
         $attack->setDescription($temp["description"]);
         $attack->setMultiplier($temp["multiplier"]);
+        $attack->setRequiredLevel($temp["requiredLevel"]);
+        $attack->setBuyPrice($temp["buyPrice"]);
         $skillId = $temp["id"];
         $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
         $query = $this->dbConnection->execute($sql, [$skillId]);
@@ -131,11 +176,11 @@ class RobotADO implements ADOinterface {
         $attack->setValue($temp["value"]);
         $attack->setTarget($temp["target"]);
         $result[] = $attack->toArray();
-        
+
         //returns result
         return $result;
     }
-    
+
     public function getSkin($skinId) {
         $sql = "SELECT * FROM robotskin WHERE id = ?";
         $query = $this->dbConnection->execute($sql, [$skinId]);
@@ -145,7 +190,7 @@ class RobotADO implements ADOinterface {
         return null;
     }
 
-    public function getAllImplants($user) {
+    public function getAllStoredImplants($user) {
         $result = [];
         $sql = "SELECT * FROM implant WHERE id IN (SELECT idImplant FROM robotstoreimplant WHERE idRobotStatistic IN (SELECT idRobotStatistic FROM user WHERE userName = ?))";
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
@@ -174,7 +219,40 @@ class RobotADO implements ADOinterface {
             }
         } else {
             $result = [];
-        }       
+        }
+        return $result;
+    }
+
+    public function getAllImplants($user) {
+        $result = [];
+        $sql = "SELECT * FROM implant WHERE id IN (SELECT idImplant FROM robotimplant WHERE idRobotStatistic IN (SELECT idRobotStatistic FROM user WHERE userName = ?))";
+        $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
+        if ($query != null) {
+            $implantList = $query->fetchAll();
+            if (count($implantList) > 0) {
+                for ($i = 0; $i < count($implantList); $i++) {
+                    $implant = new Implant();
+                    $implant->setId($implantList[$i]["id"]);
+                    $implant->setName($implantList[$i]["name"]);
+                    $implant->setDescription($implantList[$i]["description"]);
+                    $implant->setBuyPrice($implantList[$i]["buyPrice"]);
+                    $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM implanteffect WHERE idImplant = ?)";
+                    $query2 = $this->dbConnection->execute($sql, [$implantList[$i]["id"]]);
+                    $effect = $query2->fetch();
+                    $implant->setTurns($effect["turns"]);
+                    $implant->setValue($effect["value"]);
+                    $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = ?)";
+                    $query3 = $this->dbConnection->execute($sql, [$effect["id"]]);
+                    $att = $query3->fetch();
+                    $implant->setAttribute($att["iso"]);
+                    $result[] = $implant->toArray();
+                }
+            } else {
+                $result = [];
+            }
+        } else {
+            $result = [];
+        }
         return $result;
     }
 

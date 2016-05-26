@@ -15,6 +15,7 @@
 this.Skill = function (id, name, description, requiredLevel, buyPrice, multiplier)
 {
     //properties
+    this.type = "skill";
     this.id = id;
     this.name = name;
     this.description = description;
@@ -22,6 +23,8 @@ this.Skill = function (id, name, description, requiredLevel, buyPrice, multiplie
     this.buyPrice = buyPrice;
     this.multiplier = multiplier;
     this.invalid = 0;
+    this.attribute;
+    this.value;
     this.sellPrice = Math.round((this.buyPrice/3));
 
     //accessors

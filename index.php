@@ -48,7 +48,7 @@ $controller->run();
             <button class="menuButton" disabled>HANGAR</button>
             <button class="menuButton" disabled>SHOP</button>
             <button class="menuButton" disabled>PROFILE</button>
-            <span class="gameTitle">The fall of men</span>
+            <span class="gameTitle">The fall of men<small class="byJuanFra">  by JuanFra</small></span>
         </header>
         <section class="loginBox" ng-show="show == 0">
             <form class="loginForm" action="" method="post">

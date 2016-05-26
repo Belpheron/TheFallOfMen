@@ -98,7 +98,7 @@ this.ProfileWindow = function (accessService, scope)
             if (outputData[0] === true)
             {
                 //changes saved
-                alert("Changes saved succesfuckly!");
+                alert("Changes succesfully saved!");
             }
             else
             {

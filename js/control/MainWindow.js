@@ -4,6 +4,7 @@ var chatMessageLoadTimer;
 var duelRequestTimer;
 var responseTimer;
 var checkRequestResponseTimer;
+var hangarAnimationTemp;
 
 //jQuery code
 
@@ -63,7 +64,6 @@ var checkRequestResponseTimer;
                             outputData[2].idCountry);
                     //load user statistics data.
                     var userStatisticData = new UserStatistic(
-                            outputData[3].id,
                             outputData[3].id,
                             outputData[3].wins,
                             outputData[3].defeats,
@@ -212,7 +212,7 @@ var checkRequestResponseTimer;
     {
         return {
             restrict: 'E',
-            templateUrl: "templates/hangar-template_1.html",
+            templateUrl: "templates/hangar-template.html",
             controller: function ()
             {
 

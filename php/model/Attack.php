@@ -3,12 +3,15 @@
 class Attack {
 
     //properties
+    private $id;
     private $name;
     private $description;
     private $attribute;
     private $value;
     private $multiplier;
     private $target;
+    private $requiredLevel;
+    private $buyPrice;
 
     //constructor
     function __construct($name = "", $description = "", $attribute = "", $value = "", $multiplier = "", $target = "") {
@@ -21,6 +24,31 @@ class Attack {
     }
 
     //accessors
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function getBuyPrice() {
+        return $this->buyPrice;
+    }
+
+    public function setBuyPrice($buyPrice) {
+        $this->buyPrice = $buyPrice;
+    }
+
+    public function getRequiredLevel() {
+        return $this->requiredLevel;
+    }
+
+    public function setRequiredLevel($requiredLevel) {
+        $this->requiredLevel = $requiredLevel;
+    }
+
     function getTarget() {
         return $this->target;
     }
@@ -77,7 +105,10 @@ class Attack {
             "attribute" => $this->attribute,
             "value" => $this->value,
             "multiplier" => $this->multiplier,
-            "target" => $this->target
+            "target" => $this->target,
+            "requiredLevel" => $this->requiredLevel,
+            "buyPrice" => $this->buyPrice,
+            "id" => $this->id
         ];
         return $result;
     }

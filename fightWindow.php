@@ -39,7 +39,11 @@ if (!isset($_SESSION["user"])) {
     </head>
     <body ng-controller="controller as ctrl" id="body" ng-init="game.load(<?php echo "'" . $_GET["p1"] . "','" . $_GET["p2"] . "','" . $_SESSION["user"]->getUserName() . "'"; ?>)">        
         <!--message window-->
-        <div class="messageWindow" id="messageWindow"></div>
+        <div class="centerMsg txtMsg" id="centerMsg"></div>
+        <div class="p1DmgMsg txtMsg" id="p1DmgMsg"></div>
+        <div class="p1HealMsg txtMsg" id="p1HealMsg"></div>
+        <div class="p2HealMsg txtMsg" id="p2HealMsg"></div>
+        <div class="p2DmgMsg txtMsg" id="p2DmgMsg"></div>
         <!--block section-->
         <div class="blockSection" ng-show="game.showBlockScreen"></div>
         <!--load window-->
@@ -65,19 +69,20 @@ if (!isset($_SESSION["user"])) {
             </div>
             <div class="userName">{{fightDetails.p1_id}}</div> 
             <!--buttons-->
-            <div class="buttonsContainer" ng-show="userName == player1.playerName">
-                <button class="btn btn-info" ng-click="game.setAction('rock', '1')">Rock</button>
-                <button class="btn btn-info" ng-click="game.setAction('paper', '1')">Paper</button>
-                <button class="btn btn-info" ng-click="game.setAction('scissors', '1')">Scissors</button>                 
-                <div ng-show="player1.ultimate < 5000">
-                    <button ng-show="player1.ultimate >= 100" class="ultimateButton" ng-click="game.setAction('ultimate', '1')">Ultimate!</button>
-                    <div class="ultimateContainer" ng-show="player1.ultimate < 100">
-                        <div class="ultimateBar" style="width: {{player1.ultimate}}%">
-                            <span ng-show="player1.ultimate > 30">Ultimate!</span>
-                        </div>
+            <button class="rockButton gameButton" ng-click="game.setAction('rock', '1')" ng-show="userName == player1.playerName"></button>
+            <button class="paperButton gameButton" ng-click="game.setAction('paper', '1')" ng-show="userName == player1.playerName"></button>
+            <button class="scissorsButton gameButton" ng-click="game.setAction('scissors', '1')" ng-show="userName == player1.playerName"></button>                 
+            <div ng-show="player1.ultimate < 5000">
+                <div ng-show="userName == player1.playerName">
+                    <button ng-show="player1.ultimate >= 100" class="ultimateButton gameButton" ng-click="game.setAction('ultimate', '1')">Ultimate</button>
+                </div> 
+            </div>            
+            <div ng-show="player1.ultimate < 5000">                    
+                <div class="ultimateContainer" ng-show="player1.ultimate < 100">
+                    <div class="ultimateBar" style="width: {{player1.ultimate}}%">
                     </div>
                 </div>
-            </div>
+            </div>>
         </section> 
         <!--player 2 container-->        
         <section class="p2MainContainer mainContainer">
@@ -91,16 +96,17 @@ if (!isset($_SESSION["user"])) {
                 <div class="healthBar unReverse" id="p2healthBar"></div>
             </div> 
             <!--buttons-->
-            <div class="buttonsContainer" ng-show="userName == player2.playerName">
-                <button class="btn btn-info" ng-click="game.setAction('rock', '2')">Rock</button>
-                <button class="btn btn-info" ng-click="game.setAction('paper', '2')">Paper</button>
-                <button class="btn btn-info" ng-click="game.setAction('scissors', '2')">Scissors</button>
-                <div ng-show="player2.ultimate < 5000">
-                    <button ng-show="player2.ultimate >= 100" class="ultimateButton" ng-click="game.setAction('ultimate', '2')">Ultimate!</button>
-                    <div class="ultimateContainer" ng-show="player2.ultimate < 100">
-                        <div class="ultimateBar unReverse" style="width: {{player2.ultimate}}%">
-                            <span ng-show="player2.ultimate > 30">Ultimate!</span>
-                        </div>
+            <button class="rockButton gameButton" ng-click="game.setAction('rock', '2')" ng-show="userName == player2.playerName"></button>
+            <button class="paperButton gameButton" ng-click="game.setAction('paper', '2')" ng-show="userName == player2.playerName"></button>
+            <button class="scissorsButton gameButton" ng-click="game.setAction('scissors', '2')" ng-show="userName == player2.playerName"></button>
+            <div ng-show="player2.ultimate < 5000">
+                <div ng-show="userName == player2.playerName">
+                    <button ng-show="player2.ultimate >= 100" class="ultimateButton gameButton unReverse" ng-click="game.setAction('ultimate', '2')">Ultimate</button>
+                </div> 
+            </div>
+            <div ng-show="player2.ultimate < 5000">                    
+                <div class="ultimateContainer" ng-show="player2.ultimate < 100">
+                    <div class="ultimateBar" style="width: {{player2.ultimate}}%">
                     </div>
                 </div>
             </div>
