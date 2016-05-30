@@ -94,11 +94,11 @@
                         <td class="colPriceEdit" ng-show="editImplant == $index" style="width: 60px; appearance: none;"><input class="form-control" type="number" min="1" max="100" step="1" ng-pattern="/^[1]?[0-9]{1,2}$/" ng-model="implant.buyPrice" required=""></td>
                         <td class="colAttribute" ng-show="editImplant != $index">{{implant.attribute}}</td>
                         <td class="colAttributeEdit" ng-show="editImplant == $index"  >
-                            <select class="" ng-model="calcAttribute" ng-init="loadSelectAttribute(implant.attribute)">
-                                <option value="1">AP</option>
-                                <option value="2">DP</option>
-                                <option value="3">CP</option>
-                                <option value="4">HP</option>
+                            <select class="" ng-model="implant.attribute">
+                                <option value="ap">AP</option>
+                                <option value="dp">DP</option>
+                                <option value="cp">CP</option>
+                                <option value="hp">HP</option>
                             </select></td>
                         <td class="colValue" ng-show="editImplant != $index">{{implant.value}}</td>
                         <td class="colValueEdit" ng-show="editImplant == $index"><input class="form-control" type="text" min="1" max="20" ng-pattern="/^[1-2]?[0-9]{1}$/" ng-model="implant.value"></td>
@@ -106,10 +106,11 @@
                         <td class="colTargetEdit" ng-show="editImplant == $index">
                             <select class="" ng-model="implant.target">
                                 <option value="enemy">Enemy</option>
+                                <option value="self">Self</option>
                             </select></td>
-                        <td class="colBtn"><button class="btn btn-warning" ng-click="allowEdit($index)" ng-show="showFormsAdmin == 12 && editImplant != $index">Edit</button></td>
-                        <td class="colBtn"><button class="btn btn-danger" ng-click="delete(implant)" ng-show="showFormsAdmin == 13">Delete</button></td>
-                        <td class="colBtn"><button class="btn btn-success" ng-click="trySaveChangesImplant(implant, calcAttribute)" ng-show="editImplant == $index">Save</button></td>
+                        <td class="colBtn"><button class=" btn-warning" ng-click="allowEdit($index)" ng-show="showFormsAdmin == 12 && editImplant != $index">Edit</button></td>
+                        <td class="colBtn"><button class=" btn-danger" ng-click="delete(implant)" ng-show="showFormsAdmin == 13">Delete</button></td>
+                        <td class="colBtn"><button class=" btn-success" style="position: relative; left: -25px;" ng-click="trySaveChangesImplant(implant)" ng-show="editImplant == $index">Save</button><button class=" btn-danger" ng-click="cancelEdit()" ng-show="editImplant == $index" >Cancel</button></td>
                     </tr>
                 </table>
 

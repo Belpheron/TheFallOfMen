@@ -53,7 +53,7 @@ if (isset($_GET["logOut"]))
             <!--init -->
             <div ng-show="showAdmin == 0">
                 <label class="text-capitalize alert-info">Choose a option</label>
-                informacion variada y de uso administrativo.
+                
             </div>
 
             <!--manage implants -->
@@ -63,10 +63,18 @@ if (isset($_GET["logOut"]))
             <div ng-show="showAdmin == 2">
                 <manage-skill></manage-skill>
             </div>
+            <div ng-show="showAdmin == 3">
+                <manage-chat-template></manage-chat-template>
+            </div>
+            <div ng-show="showAdmin == 4">
+                <manage-user></manage-user>
+            </div>
             
         </main>
     </body>
-    {{messageAdmin}}
+    <div style="position: relative; top: -50px;"><label class="text-success bold">{{messageAdmin}}</label></div>
+    
+   
 
 </html>
 

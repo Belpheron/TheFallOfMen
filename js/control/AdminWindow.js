@@ -14,9 +14,11 @@
         $scope.messageAdmin = "";
         $scope.allImplants = new Array();
         $scope.allSkills = new Array();
+        $scope.allUsers = new Array();
         $scope.editImplant = -1;
         $scope.editSkill = -1;
         $scope.calcAttribute = -1;
+        calcAttributeSkill = -1;
         $scope.currentPage = 1;
         $scope.pagSize = 5;
         $scope.implantToSearchName;
@@ -52,6 +54,7 @@
         $scope.manageImplants = function ()
         {
             $scope.showAdmin = 1;
+            $scope.messageAdmin = "";
         };
 
         /**
@@ -65,6 +68,7 @@
         $scope.showFormCreateImplant = function ()
         {
             $scope.showFormsAdmin = 11;
+            $scope.messageAdmin = "";
         };
 
         /**
@@ -188,35 +192,6 @@
 
         };
 
-        /**
-         * @name loadSelectAttribute()
-         * @author franc
-         * @version 1.0
-         * @date 27/05/2016
-         * @description set a first value for a select.
-         * @returns none.
-         */
-        $scope.loadSelectAttribute = function (attribute)
-        {
-            switch (attribute)
-            {
-                case 'ap':
-                    $scope.calcAttribute = '1';
-                    break;
-                case 'dp':
-                    $scope.calcAttribute = '2';
-                    break;
-                case 'cp':
-                    $scope.calcAttribute = '3';
-                    break;
-                case 'hp':
-                    $scope.calcAttribute = '4';
-                    break;
-                default:
-                    break;
-            }
-        };
-
 
         /**
          * @name trySaveChangesImplant()
@@ -226,11 +201,36 @@
          * @description send a request to save a implant changes.
          * @returns none.
          */
-        $scope.trySaveChangesImplant = function (implant, attr)
+        $scope.trySaveChangesImplant = function (implant)
         {
-            if ($scope.allOK(implant))
+
+            var idAttribute = 0;
+            var iso = "";
+            if ($scope.allOKSkill(implant))
             {
-                implant.setAttribute(attr);
+
+                switch (implant.attribute)
+                {
+                    case 'ap':
+                        idAttribute = '1';
+                        iso = "ap";
+                        break;
+                    case 'dp':
+                        idAttribute = '2';
+                        iso = "dp";
+                        break;
+                    case 'cp':
+                        idAttribute = '3';
+                        iso = "cp";
+                        break;
+                    case 'hp':
+                        idAttribute = '4';
+                        iso = "hp";
+                        break;
+                    default:
+                        break;
+                }
+                implant.setAttribute(idAttribute);
                 var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 202, jsonData: JSON.stringify(implant)});
                 promise.then(function (outputData)
                 {
@@ -244,6 +244,7 @@
                     {
                         $scope.messageAdmin = outputData[1];
                     }
+                    implant.attribute = iso;
                 });
             }
             else
@@ -331,6 +332,7 @@
         $scope.manageSkills = function ()
         {
             $scope.showAdmin = 2;
+            $scope.messageAdmin = "";
         };
 
         /**
@@ -344,6 +346,7 @@
         $scope.showFormCreateSkill = function ()
         {
             $scope.showFormsAdmin = 21;
+            $scope.messageAdmin = "";
         };
 
         /**
@@ -357,6 +360,7 @@
         $scope.modifySkill = function ()
         {
             $scope.showFormsAdmin = 22;
+            $scope.messageAdmin = "";
             $scope.allSKills = new Array();
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 204, jsonData: ""});
             promise.then(function (outputData)
@@ -370,7 +374,7 @@
                                 outputData[1][i].description,
                                 parseInt(outputData[1][i].requiredLevel),
                                 parseInt(outputData[1][i].buyPrice),
-                                parseInt(outputData[1][i].multiplier)
+                                (outputData[1][i].multiplier)
                                 );
                         skill.attribute = (outputData[1][i].attribute);
                         skill.value = (outputData[1][i].value);
@@ -397,9 +401,9 @@
         $scope.deleteSkill = function ()
         {
             $scope.showFormsAdmin = 23;
+            $scope.messageAdmin = "";
             $scope.allSkills = new Array();
-            //otro numero de action
-            //var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 201, jsonData: ""});
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 204, jsonData: ""});
             promise.then(function (outputData)
             {
                 if (outputData[0] === true)
@@ -409,9 +413,13 @@
                         var skill = new Skill(outputData[1][i].id,
                                 outputData[1][i].name,
                                 outputData[1][i].description,
-                                parseInt(outputData[1][i].buyPrice));
+                                parseInt(outputData[1][i].requiredLevel),
+                                parseInt(outputData[1][i].buyPrice),
+                                (outputData[1][i].multiplier)
+                                );
                         skill.attribute = (outputData[1][i].attribute);
                         skill.value = (outputData[1][i].value);
+                        skill.target = (outputData[1][i].target);
                         $scope.allSkills.push(skill);
                     }
                 }
@@ -473,6 +481,23 @@
         };
 
         /**
+         * @name cancelEdit()
+         * @author franc
+         * @version 1.0
+         * @date 30/05/2016
+         * @description hide the current edition and discard the changes.
+         * @returns none.
+         */
+
+        $scope.cancelEdit = function ()
+        {
+            $scope.messageAdmin = "Skill or implant no modified";
+            $scope.editImplant = -1;
+            $scope.editSkill = -1;
+            editInProgress = false;
+        };
+
+        /**
          * @name trySaveChangesSkill()
          * @author franc
          * @version 1.0
@@ -480,12 +505,36 @@
          * @description send a request to save a skill changes.
          * @returns none.
          */
-        $scope.trySaveChangesSkill = function (skill, attr)
+        $scope.trySaveChangesSkill = function (skill)
         {
+            var idAttribute = 0;
+            var iso = "";
             if ($scope.allOKSkill(skill))
             {
-                skill.setAttribute(attr);
-                var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 206, jsonData: JSON.stringify(implant)});
+
+                switch (skill.attribute)
+                {
+                    case 'ap':
+                        idAttribute = '1';
+                        iso = "ap";
+                        break;
+                    case 'dp':
+                        idAttribute = '2';
+                        iso = "dp";
+                        break;
+                    case 'cp':
+                        idAttribute = '3';
+                        iso = "cp";
+                        break;
+                    case 'hp':
+                        idAttribute = '4';
+                        iso = "hp";
+                        break;
+                    default:
+                        break;
+                }
+                skill.setAttribute(idAttribute);
+                var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 206, jsonData: JSON.stringify(skill)});
                 promise.then(function (outputData)
                 {
                     if (outputData[0] === true)
@@ -498,6 +547,7 @@
                     {
                         $scope.messageAdmin = outputData[1];
                     }
+                    skill.attribute = iso;
                 });
             }
             else
@@ -506,7 +556,7 @@
             }
         };
 
-           /**
+        /**
          * @name allOK()
          * @author franc
          * @version 1.0
@@ -543,21 +593,36 @@
             }
         };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /**
+         * @name tryDeleteSkill()
+         * @author franc
+         * @version 1.0
+         * @date 27/05/2016
+         * @description send a request to delete a skill.
+         * @returns none.
+         */
+        $scope.tryDeleteSkill = function (skill)
+        {
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 207, jsonData: JSON.stringify(skill)});
+            promise.then(function (outputData)
+            {
+                if (outputData[0] === true)
+                {
+                    $scope.messageAdmin = "Skill delete success";
+                    for (var i = 0; i < $scope.allSkills.length; i++)
+                    {
+                        if (skill.getId() == $scope.allSkills[i].getId())
+                        {
+                            $scope.allSkills.splice(i, 1);
+                        }
+                    }
+                }
+                else
+                {
+                    $scope.messageAdmin = outputData[1];
+                }
+            });
+        };
 
         /**
          * @name manageChat()
@@ -569,6 +634,32 @@
          */
         $scope.manageChat = function ()
         {
+            $scope.showAdmin = 3;
+            $scope.messageAdmin = "";
+        };
+
+        /**
+         * @name cleanChat()
+         * @author franc
+         * @version 1.0
+         * @date 30/05/2016
+         * @description erase a few rows of chat (lees size of data base.).
+         * @returns none.
+         */
+        $scope.cleanChat = function ()
+        {
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 208, jsonData: ""});
+            promise.then(function (outputData)
+            {
+                if (outputData[0] === true)
+                {
+                    $scope.messageAdmin = "Size of chat reduced!";
+                }
+                else
+                {
+                    $scope.messageAdmin = outputData[1];
+                }
+            });
 
         };
 
@@ -576,18 +667,96 @@
          * @name dropOutUsers()
          * @author franc
          * @version 1.0
-         * @date 26/05/2016
-         * @description allow drop users are inactive.
+         * @date 30/05/2016
+         * @description erase a few rows of chat (lees size of data base.).
          * @returns none.
          */
         $scope.dropOutUsers = function ()
         {
-
+            $scope.showAdmin = 4;
+            $scope.messageAdmin = "";   
+            //load all user are inactive.
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 209, jsonData: ""});
+            promise.then(function (outputData)
+            {
+                $scope.allUsers = new Array();
+                if (outputData[0] === true)
+                {
+                    
+                    for (var i = 0; i < outputData[1].length; i++)
+                    {
+                        var user = new User(outputData[1][i].userName,0);
+                        $scope.allUsers.push(user);
+                    }
+                }
+                else
+                {
+                    $scope.messageAdmin = outputData[1];
+                }
+                console.log($scope.allUsers);
+            });
+        };
+        
+         /**
+         * @name tryDeleteUser()
+         * @author franc
+         * @version 1.0
+         * @date 30/05/2016
+         * @description send a requset for delete a user at db.
+         * @returns none.
+         */
+        $scope.tryDeleteUser = function (user)
+        {
+            //try to delete user.
+             var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 8, action: 210, jsonData: JSON.stringify(user)});
+            promise.then(function (outputData)
+            {
+                if (outputData[0] === true)
+                {
+                    for (var i = 0; i < $scope.allUsers.length; i++)
+                    {
+                        if (user.getUserName() == $scope.allUsers[i].getUserName())
+                        {
+                            $scope.allUsers.splice(i, 1);
+                        }
+                    }
+                }
+                else
+                {
+                    $scope.messageAdmin = outputData[1];
+                }
+                console.log($scope.allUsers);
+            });
         };
     });
 
 
     //directives
+    fallOfMenAppAdmin.directive("manageUser", function ()
+    {
+        return {
+            restrict: 'E',
+            templateUrl: "templates/manage-user.html",
+            controller: function ()
+            {
+
+            },
+            controllerAs: 'manageUser'
+        };
+    });
+     fallOfMenAppAdmin.directive("manageChatTemplate", function ()
+    {
+        return {
+            restrict: 'E',
+            templateUrl: "templates/manage-chat-template.html",
+            controller: function ()
+            {
+
+            },
+            controllerAs: 'manageChatTemplate'
+        };
+    });
+
     fallOfMenAppAdmin.directive("manageImplant", function ()
     {
         return {

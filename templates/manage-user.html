@@ -1,0 +1,45 @@
+<button class="btn btn-danger bottom-left" ng-click="showAdmin = 0">Back</button>
+<hr>
+<div  class="row">
+    <div class="col-md-10 col-md-offset-1 bordered semi-color-form">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="label-form">Features</h3>
+            </div>  
+        </div>
+        <div class="row"> 
+            <div class="col-md-2">
+                <label class="label-form">Items per page</label>
+                <select id="itemsPage" name="itemsPage" ng-model="pagSize" ng-init="pagSize = '5'">
+                    <option selected="" value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option> 
+                </select>
+            </div>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-lg-10 col-md-offset-1 tophangarInventoryWindow">                           
+            <div class="col-md-0 "><label>#</label></div>
+            <div class="col-md-2 col-md-offset-1" style="position: relative; left: 30px;"><label>Name</label></div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 col-md-offset-1 hangarInventoryWindow" id="tableImplants">
+                <table class="table table-striped hangarInventoryWindow">
+                    <tr dir-paginate="user in allUsers| itemsPerPage: pagSize" current-page="currentPage">	
+                        <td >{{$index + 1}}</td>
+                        <td>{{user.userName}}</td>
+                        <td class="colBtn"><button class=" btn-danger pull-right" style="position: relative; left: -30px;" ng-click="tryDeleteUser(user)">Delete</button></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row" ng-show="editSkill == -1">
+                <div class="col-md-offset-5">
+                    <dir-pagination-controls boundary-links="true" template-url="templates/dir-pagination-controls.html"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

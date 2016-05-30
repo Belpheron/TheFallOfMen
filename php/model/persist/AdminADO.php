@@ -157,12 +157,12 @@ class AdminADO implements ADOinterface
             $array = [$implant->getId()];
             $infoImplantEffect = $this->dbConnection->execute($sqlImplantEffect, $array);
             $idEffect = $infoImplantEffect->fetch();
-          
+
             //delte implantEffect
             $sqlImplantEffectDel = "DELETE FROM `implanteffect` WHERE `idImplant`=?";
             $array = [$implant->getId()];
             $infoImplantEffectDel = $this->dbConnection->execute($sqlImplantEffectDel, $array);
-            
+
             //delete effect
             $sqlEffect = "DELETE FROM `effect` WHERE `id`=? ";
             $array = [$idEffect[0]];
@@ -172,7 +172,7 @@ class AdminADO implements ADOinterface
             $sqlEffectAttribute = "DELETE FROM `effectattribute` WHERE `idEffect`=?";
             $array = [$idEffect[0]];
             $infoImplantEffect = $this->dbConnection->execute($sqlEffectAttribute, $array);
-            
+
             //delete implant
             $sqlImplant = "DELETE FROM `implant` WHERE `id`=?";
             $array = [$implant->getId()];
@@ -185,8 +185,8 @@ class AdminADO implements ADOinterface
             return null;
         }
     }
-    
-     /**
+
+    /**
      * @name getAllSkills()
      * @author Franc
      * @version 1.0
@@ -216,7 +216,7 @@ class AdminADO implements ADOinterface
                     $skill->setMultiplier($skillList[$i]["multiplier"]);
                     $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
                     $query2 = $this->dbConnection->execute($sql, [$skillList[$i]["id"]]);
-                    $effect = $query2->fetch();                    
+                    $effect = $query2->fetch();
                     $skill->setValue($effect["value"]);
                     $skill->setTarget($effect["target"]);
                     $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = ?)";
@@ -237,8 +237,8 @@ class AdminADO implements ADOinterface
         }
         return $result;
     }
-    
-     /**
+
+    /**
      * @name insertSkill()
      * @author Franc
      * @version 1.0
@@ -278,7 +278,7 @@ class AdminADO implements ADOinterface
             return null;
         }
     }
-    
+
     /**
      * @name updateSkill()
      * @author Franc
@@ -293,17 +293,17 @@ class AdminADO implements ADOinterface
         try
         {
             //update implant
-            $sqlSkill = "UPDATE `skill` SET `name`=?,`description`=?, `requiredLevel`=?,`buyPrice`=? `multiplier`=? WHERE `id`=?";
+            $sqlSkill = "UPDATE `skill` SET `name`=?,`description`=?, `requiredLevel`=?,`buyPrice`=?, `multiplier`=? WHERE `id`=?";
             $array = [$skill->getName(), $skill->getDescription(), $skill->getRequiredLevel(), $skill->getBuyPrice(), $skill->getMultiplier(), $skill->getId()];
-            $infoImplant = $this->dbConnection->execute($sqlSkill, $array);
+            $infoSkill = $this->dbConnection->execute($sqlSkill, $array);
             //select SkillEffect
             $sqlSkillEffect = "SELECT `idEffect` FROM `skilleffect` WHERE `idSkill`=?";
             $array = [$skill->getId()];
             $infoSkillEffect = $this->dbConnection->execute($sqlSkillEffect, $array);
             $idEffect = $infoSkillEffect->fetch();
             //insert effect
-            $sqlEffect = "UPDATE `effect` SET `value`=?, `target`=? WHERE `id`=? ";
-            $array = [$skill->getValue(), $skill->getTarget(), $idEffect[0]];
+            $sqlEffect = "UPDATE `effect` SET `value`=? WHERE `id`=? ";
+            $array = [$skill->getValue(), $idEffect[0]];
             $infoEffect = $this->dbConnection->execute($sqlEffect, $array);
             //insert effectAttribute
             $sqlEffectAttribute = "UPDATE `effectattribute` SET`idAttribute`=? WHERE `idEffect`=?";
@@ -318,6 +318,138 @@ class AdminADO implements ADOinterface
         }
     }
 
+    public function deleteSkill($skill)
+    {
+        try
+        {
+            //select ImplantEffect
+            $sqlSkillEffect = "SELECT `idEffect` FROM `skilleffect` WHERE `idSkill`=?";
+            $array = [$skill->getId()];
+            $infoSkillEffect = $this->dbConnection->execute($sqlSkillEffect, $array);
+            $idEffect = $infoSkillEffect->fetch();
+
+            //delte implantEffect
+            $sqlSkillEffectDel = "DELETE FROM `skilleffect` WHERE `idSkill`=?";
+            $array = [$skill->getId()];
+            $infoSkillEffectDel = $this->dbConnection->execute($sqlSkillEffectDel, $array);
+
+            //delete effect
+            $sqlEffect = "DELETE FROM `effect` WHERE `id`=? ";
+            $array = [$idEffect[0]];
+            $infoEffect = $this->dbConnection->execute($sqlEffect, $array);
+
+            //delete effectAttribute
+            $sqlEffectAttribute = "DELETE FROM `effectattribute` WHERE `idEffect`=?";
+            $array = [$idEffect[0]];
+            $infoSkillEffect = $this->dbConnection->execute($sqlEffectAttribute, $array);
+
+            //delete implant
+            $sqlSkill = "DELETE FROM `skill` WHERE `id`=?";
+            $array = [$skill->getId()];
+            $infoSkill = $this->dbConnection->execute($sqlSkill, $array);
+            return $this->dbConnection->getLink()->lastInsertId();
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            return null;
+        }
+    }
+
+    public function deleteChat()
+    {
+        $sqlCount = "SELECT count(*) FROM `chatmessage`";
+        $array = [];
+        $infoCount = $this->dbConnection->execute($sqlCount, $array);
+        $count = $infoCount->fetch();
+        if ($count[0] < 1)
+        {
+            return false;
+        }
+        else
+        {
+
+            $sqlDelete = "DELETE FROM `chatmessage`";
+            $array = [];
+            $infoCount = $this->dbConnection->execute($sqlDelete, $array);
+            return true;
+        }
+    }
+
+    public function loadInactiveUsers()
+    {
+        try
+        {
+            $sqlLoad = "SELECT * FROM `user` WHERE `active` = 0";
+            $array = [];
+            $infoLoad = $this->dbConnection->execute($sqlLoad, $array);
+            $result = $infoLoad->fetchAll();
+            return $result;
+        }
+        catch (Exception $ex)
+        {
+            return false;
+        }
+    }
+
+    public function deleteInactiveUsers($user)
+    {
+        try
+        {
+            //get all info user.
+            $sqlLoad = "SELECT * FROM `user` WHERE `userName` = ?";
+            $array = [$user->getUserName()];
+            $infoLoad = $this->dbConnection->execute($sqlLoad, $array);
+            $result = $infoLoad->fetch();
+            $userName = $result['userName'];
+            $idProfile = $result['idProfile'];
+            $idRobotStatistic = $result['idRobotStatistic'];
+            $idUserStatistic = $result['idUserStatistic'];
+
+            //user
+            $sqlDeleteUser = "DELETE FROM user WHERE `userName` = ?";
+            $array = [$user->getUserName()];
+            $infoLoad = $this->dbConnection->execute($sqlDeleteUser, $array);
+
+            //UserStatistic
+            $sqlDeleteUser = "DELETE FROM userstatistic WHERE `id` = ?";
+            $array = [$idUserStatistic];
+            $infoLoad = $this->dbConnection->execute($sqlDeleteUser, $array);
+
+            //robotstatistic
+            $sqlDeleteUser = "DELETE FROM robotstatistic WHERE `id` = ?";
+            $array = [$idRobotStatistic];
+            $infoLoad = $this->dbConnection->execute($sqlDeleteUser, $array);
+
+            //profile
+            $sqlDeleteUser = "DELETE FROM profile WHERE `id` = ?";
+            $array = [$idProfile];
+            $infoLoad = $this->dbConnection->execute($sqlDeleteUser, $array);
+
+            //friend
+            $sqlDeleteUser = "DELETE FROM friend WHERE `idUserName` = ?";
+            $array = [$userName];
+            $infoLoad = $this->dbConnection->execute($sqlDeleteUser, $array);
+            
+            $sqlDeleteUser = "DELETE FROM friend WHERE `idUserNameFriend` = ?";
+            $array = [$userName];
+            $infoLoad = $this->dbConnection->execute($sqlDeleteUser, $array);
+        
+            //bloqued
+            $sqlDeleteUser = "DELETE FROM bloqued WHERE `idUserName` = ?";
+            $array = [$userName];
+            $infoLoad = $this->dbConnection->execute($sqlDeleteUser, $array);
+            
+            $sqlDeleteUser = "DELETE FROM bloqued WHERE `idUserNameBloqued` = ?";
+            $array = [$userName];
+            $infoLoad = $this->dbConnection->execute($sqlDeleteUser, $array);
+            return true;
+        }
+        catch (Exception $e)
+        {
+            return false;
+        }
+    }
 
     public function delete($entity)
     {
