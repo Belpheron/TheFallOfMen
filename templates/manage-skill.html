@@ -73,14 +73,14 @@
     <div class="row">
         <div class="col-lg-10 col-md-offset-1 tophangarInventoryWindow">                           
             <div class="col-md-0 "><label>#</label></div>
-            <div class="col-md-2"><label id="">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></div>
-            <div class="col-md-4"><label id="" >Description</label></div>
-            <div class="col-md-1"><label id="" >Level</label></div>
-            <div class="col-md-1"><label id="">Price</label></div>
-            <div class="col-md-1"><label id="">Bost</label></div>
-            <div class="col-md-0"><label id="">Attribute</label></div>
-            <div class="col-md-1"><label id="">Value</label></div>
-            <div class="col-md-1"><label id="">&nbsp;</label></div>                          
+            <div class="col-md-2"><label>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></div>
+            <div class="col-md-4"><label>Description</label></div>
+            <div class="col-md-1"><label>Level</label></div>
+            <div class="col-md-1"><label>Price</label></div>
+            <div class="col-md-1"><label>Bost</label></div>
+            <div class="col-md-1"><label style="position: relative; left: -40px;">Attribute</label></div>
+            <div class="col-md-1"><label style="position: relative; left: -60px;">Value</label></div>
+            <div class="col-md-1"><label>&nbsp;</label></div>                          
         </div>
         <div class="row">
             <div class="col-lg-10 col-md-offset-1 hangarInventoryWindow" id="tableImplants">
@@ -89,28 +89,27 @@
                         <td >{{$index + 1}}</td>
                         <td class="colName" ng-show="editSkill != $index">{{skill.name}}</td>
                         <td class="colName" ng-show="editSkill == $index"><input class="form-control" type="text" ng-pattern="/^[\w\d ]{5,50}$/" ng-model="skill.name" required=""></td>
-                        <td class="colDescription" ng-show="editSkill != $index">{{skill.description}}</td>
+                        <td class="colDescription text small" ng-show="editSkill != $index">{{skill.description}}</td>
                         <td class="colDescriptionEdit" ng-show="editSkill == $index"><input class="form-control" type="text" ng-pattern="/^[\w\d ]{5,50}$/" ng-model="skill.description" required=""></td>
                         <td class="colPriceSkill" ng-show="editSkill != $index">{{skill.requiredLevel}}</td>
-                        <td class="colPriceEdit" ng-show="editSkill == $index" style="width: 60px; appearance: none;"><input class="form-control" type="number" min="1" max="100" step="1" ng-pattern="/^[0-9]{1}$/" ng-model="skill.requiredLevel" required=""></td>
+                        <td class="colPriceEdit" ng-show="editSkill == $index" style="width: 60px; appearance: none;"><input class="form-control" type="number" min="1" max="9" step="1" ng-pattern="/^[0-9]{1}$/" ng-model="skill.requiredLevel" required=""></td>
                         <td class="colPriceSkill" ng-show="editSkill != $index">{{skill.buyPrice}} Humans</td>
                         <td class="colPriceEdit" ng-show="editSkill == $index" style="width: 60px; appearance: none;"><input class="form-control" type="number" min="1" max="100" step="1" ng-pattern="/^[1]?[0-9]{1,2}$/" ng-model="skill.buyPrice" required=""></td>
-                        <td class="colPriceSkill" ng-show="editSkill != $index">{{skill.multiplier}}</td>
-                        <td class="colPriceEdit" ng-show="editSkill == $index" style="width: 60px; appearance: none;"><input class="form-control" type="number" min="1" max="100" step="1" ng-pattern="/^[1-2]?[.0-9]{1,2}$/" ng-model="skill.multiplier" required=""></td>
+                        <td class="colPriceSkill" ng-show="editSkill != $index">{{skill.multiplier|number:1}}</td>
+                        <td class="colPriceEdit" ng-show="editSkill == $index" style="width: 80px; appearance: none;"><input class="form-control" type="text" ng-pattern="/^[1-2]?[.0-9]{1,2}$/" ng-model="skill.multiplier" required=""></td>
                         <td class="colAttributeSkill" ng-show="editSkill != $index">{{skill.attribute}}</td>
-                        <td class="colAttributeEdit" ng-show="editSkill == $index"  >
-                            <select class="" ng-model="calcAttribute" ng-init="loadSelectAttribute(skill.attribute)">
-                                <option value="1">AP</option>
-                                <option value="2">DP</option>
-                                <option value="3">CP</option>
-                                <option value="4">HP</option>
+                        <td class="colAttributeEdit" ng-show="editSkill == $index">
+                            <select class="" ng-model="skill.attribute">
+                                <option value="ap">AP</option>
+                                <option value="dp">DP</option>
+                                <option value="cp">CP</option>
+                                <option value="hp">HP</option>
                             </select></td>
                         <td class="colValueSkill" ng-show="editSkill != $index">{{skill.value}}</td>
-                        <td class="colValueEdit" ng-show="editSkill == $index"><input class="form-control" type="text" min="1" max="20" ng-pattern="/^[1-2]?[0-9]{1}$/" ng-model="skill.value"></td>
-                     
-                        <td class="colBtn"><button class="btn btn-warning" ng-click="allowEditSkill($index)" ng-show="showFormsAdmin == 22 && editSkill != $index">Edit</button></td>
-                        <td class="colBtn"><button class="btn btn-danger" ng-click="delete(skill)" ng-show="showFormsAdmin == 23">Delete</button></td>
-                        <td class="colBtn"><button class="btn btn-success" ng-click="trySaveChangesSkill(skill, calcAttribute)" ng-show="editSkill == $index">Save</button></td>
+                        <td class="colValueEdit" ng-show="editSkill == $index"><input class="form-control" type="text" min="1" max="20" ng-pattern="/^[1-2]?[0-9]{1}$/" ng-model="skill.value"></td>                     
+                        <td class="colBtn"><button class=" btn-warning" ng-click="allowEditSkill($index)" ng-show="showFormsAdmin == 22 && editSkill != $index">Edit</button></td>
+                        <td class="colBtn"><button class=" btn-danger" ng-click="tryDeleteSkill(skill)" ng-show="showFormsAdmin == 23">Delete</button></td>
+                        <td class="colBtn"><button class=" btn-success" ng-click="trySaveChangesSkill(skill)" ng-show="editSkill == $index" style="position: relative; left:-40px;">Save</button><button style="position: relative; left:-20px;" class=" btn-danger" ng-click="cancelEdit()" ng-show="editSkill == $index" >Cancel</button></td>
                     </tr>
                 </table>
 

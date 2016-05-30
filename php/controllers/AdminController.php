@@ -144,7 +144,9 @@ class AdminController implements ControllerInterface
                 break;
             case 206:
                 $skill = new Skill($this->jsonData->id, $this->jsonData->name, $this->jsonData->description, $this->jsonData->requiredLevel, $this->jsonData->buyPrice, $this->jsonData->multiplier);
-               $skill->setTarget($this->jsonData->target);
+                $skill->setTarget($this->jsonData->target);
+                $skill->setAttribute($this->jsonData->attribute);
+                $skill->setValue($this->jsonData->value);
                 $result = $this->ado->updateSkill($skill);
                 if ($result != null)
                 {
@@ -155,6 +157,66 @@ class AdminController implements ControllerInterface
                 {
                     $outputData[0] = false;
                     $outputData[1] = "Sorry cannot load update implant";
+                }
+                break;
+            case 207:
+                $skill = new Skill($this->jsonData->id, $this->jsonData->name, $this->jsonData->description, $this->jsonData->requiredLevel, $this->jsonData->buyPrice, $this->jsonData->multiplier);
+                $skill->setTarget($this->jsonData->target);
+                $skill->setAttribute($this->jsonData->attribute);
+                $skill->setValue($this->jsonData->value);
+                $result = $this->ado->deleteSkill($skill);
+                if ($result != null)
+                {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                }
+                else
+                {
+                    $outputData[0] = false;
+                    $outputData[1] = "Sorry cannot delete skill";
+                }
+                break;
+            //chat erase
+            case 208:
+                $result = $this->ado->deleteChat();
+                if ($result != false)
+                {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                }
+                else
+                {
+                    $outputData[0] = false;
+                    $outputData[1] = "Sorry cannot reduce size of chat";
+                }
+                break;
+            case 209:
+                //load inactive suers.
+                $result = $this->ado->loadInactiveUsers();
+                if ($result != null)
+                {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                }
+                else
+                {
+                    $outputData[0] = false;
+                    $outputData[1] = "Sorry cannot load user or no has in BD";
+                }
+                break;
+            case 210:
+                //delete inactive user.
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->deleteInactiveUsers($user);
+                if ($result != null)
+                {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                }
+                else
+                {
+                    $outputData[0] = false;
+                    $outputData[1] = "Sorry cannot delete user at BD";
                 }
                 break;
             default:
