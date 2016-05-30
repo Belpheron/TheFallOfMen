@@ -1,5 +1,4 @@
-this.Hangar = function(accessService, scope)
-{
+this.Hangar = function (accessService, scope) {
     //properties
     this.currentTab = "skills";
     this.assignedImplants = [];
@@ -13,11 +12,14 @@ this.Hangar = function(accessService, scope)
         "images/tooltips/implant2.jpg",
         "images/tooltips/implant1.jpg"
     ];
+    this.textInfo = "";
+    this.textInfoError = "";
 
     //methods
-    this.installImplant = function(implant) {
+    this.installImplant = function (implant) {
         if (scope.hangar.assignedImplants.length >= 3) {
-            alert("Implant slots are full. Please remove one first.");
+            scope.hangar.textInfo = "";
+            scope.hangar.textInfoError = "Maximum of 3 implants allowed.";
         } else {
             scope.hangar.assignedImplants.push(implant);
             scope.hangar.storedImplants.splice(scope.hangar.storedImplants.indexOf(implant), 1);
@@ -25,49 +27,102 @@ this.Hangar = function(accessService, scope)
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                     {controllerType: 3, action: 108,
                         jsonData: {idRobot: scope.currentUser.robotStatistic.id, idImplant: implant.id}});
-            promise.then(function(outputData) {
-
+            promise.then(function (outputData) {
+                scope.hangar.textInfo = "Implant succesfully installed";
+                scope.hangar.textInfoError = "";
             });
         }
     }
 
-    this.removeImplant = function(implant) {
+    this.removeImplant = function (implant) {
         scope.hangar.assignedImplants.splice(scope.hangar.assignedImplants.indexOf(implant), 1);
         scope.hangar.storedImplants.push(implant);
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 3, action: 109,
                     jsonData: {idRobot: scope.currentUser.robotStatistic.id, idImplant: implant.id}});
-        promise.then(function(outputData) {
-
+        promise.then(function (outputData) {
+            scope.hangar.textInfo = "Implant removed";
+            scope.hangar.textInfoError = "";
         });
     }
+    
+    this.setSkill = function(skill, type) {
+        if (type == "rock") {
+            if (scope.hangar.assignedRockAttack != null) {
+                scope.hangar.storedAttacks.push(scope.hangar.assignedRockAttack);
+            }
+            scope.hangar.assignedRockAttack = skill;
+        }
+        if (type == "paper") {
+            if (scope.hangar.assignedPaperAttack != null) {
+                scope.hangar.storedAttacks.push(scope.hangar.assignedPaperAttack);
+            }
+            scope.hangar.assignedPaperAttack = skill;
+        }
+        if (type == "scissors") {
+            if (scope.hangar.assignedScissorsAttack != null) {
+                scope.hangar.storedAttacks.push(scope.hangar.assignedScissorsAttack);
+            }
+            scope.hangar.assignedScissorsAttack = skill;
+        }
+        scope.hangar.storedAttacks.splice(scope.hangar.storedAttacks.indexOf(skill), 1);
+        var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                {controllerType: 3, action: 111,
+                    jsonData: {idSkill:skill.id, idRobot: scope.currentUser.robotStatistic.id, type:type}});
+        promise.then(function (outputData) {
+            scope.hangar.textInfo = "Skill set for "+type+" attack.";
+            scope.hangar.textInfoError = "";
+        });        
+    }
 
-    this.removeSkill = function(type) {
+    this.removeSkill = function (type) {
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 3, action: 110,
                     jsonData: {idRobot: scope.currentUser.robotStatistic.id, type: type}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             if (type == "rock") {
-                var a = new Skill(scope.hangar.assignedRockAttack.id, 
-                    scope.hangar.assignedRockAttack.name, 
-                    scope.hangar.assignedRockAttack.description, 
-                    scope.hangar.assignedRockAttack.requiredLevel, 
-                    scope.hangar.assignedRockAttack.buyPrice, 
-                    scope.hangar.assignedRockAttack.multiplier);
+                var a = new Skill(scope.hangar.assignedRockAttack.id,
+                        scope.hangar.assignedRockAttack.name,
+                        scope.hangar.assignedRockAttack.description,
+                        scope.hangar.assignedRockAttack.requiredLevel,
+                        scope.hangar.assignedRockAttack.buyPrice,
+                        scope.hangar.assignedRockAttack.multiplier);
                 a.attribute = scope.hangar.assignedRockAttack.attribute;
                 a.value = scope.hangar.assignedRockAttack.value;
                 a.type = scope.hangar.assignedRockAttack.type;
                 scope.hangar.storedAttacks.push(a);
                 scope.hangar.assignedRockAttack = null;
             } else if (type == "paper") {
+                var a = new Skill(scope.hangar.assignedPaperAttack.id,
+                        scope.hangar.assignedPaperAttack.name,
+                        scope.hangar.assignedPaperAttack.description,
+                        scope.hangar.assignedPaperAttack.requiredLevel,
+                        scope.hangar.assignedPaperAttack.buyPrice,
+                        scope.hangar.assignedPaperAttack.multiplier);
+                a.attribute = scope.hangar.assignedPaperAttack.attribute;
+                a.value = scope.hangar.assignedPaperAttack.value;
+                a.type = scope.hangar.assignedPaperAttack.type;
+                scope.hangar.storedAttacks.push(a);
                 scope.hangar.assignedPaperAttack = null;
             } else if (type == "scissors") {
+                var a = new Skill(scope.hangar.assignedScissorsAttack.id,
+                        scope.hangar.assignedScissorsAttack.name,
+                        scope.hangar.assignedScissorsAttack.description,
+                        scope.hangar.assignedScissorsAttack.requiredLevel,
+                        scope.hangar.assignedScissorsAttack.buyPrice,
+                        scope.hangar.assignedScissorsAttack.multiplier);
+                a.attribute = scope.hangar.assignedScissorsAttack.attribute;
+                a.value = scope.hangar.assignedScissorsAttack.value;
+                a.type = scope.hangar.assignedScissorsAttack.type;
+                scope.hangar.storedAttacks.push(a);
                 scope.hangar.assignedScissorsAttack = null;
             }
+            scope.hangar.textInfoError = "";
+            scope.hangar.textInfo = "Skill removed from "+type+" attack.";
         });
     }
 
-    this.showItemInfo = function(item, event, message) {
+    this.showItemInfo = function (item, event, message) {
         var xpos;
         var ypos;
         if (event.offsetX == undefined) {
@@ -107,11 +162,11 @@ this.Hangar = function(accessService, scope)
         $("#hangarInfoPopUp").show();
     }
 
-    this.hideItemInfo = function() {
+    this.hideItemInfo = function () {
         $("#hangarInfoPopUp").hide();
     }
 
-    this.show = function()
+    this.show = function ()
     {
         clearInterval(hangarAnimationTemp);
         scope.hangar.doAnimation();
@@ -119,7 +174,7 @@ this.Hangar = function(accessService, scope)
         scope.hangar.loadData();
     };
 
-    this.setTab = function(tabName) {
+    this.setTab = function (tabName) {
         scope.hangar.currentTab = tabName;
         if (tabName == "skills") {
             $("#hangar_implants_tab").removeClass("active");
@@ -134,12 +189,12 @@ this.Hangar = function(accessService, scope)
         $("#hangar_" + tabName + "_tab").addClass("active");
     }
 
-    this.loadData = function() {
+    this.loadData = function () {
         //gets all assigned implants
         scope.hangar.assignedImplants = [];
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 3, action: 101, jsonData: {userName: scope.currentUser.userName}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             for (var i = 0; i < outputData[1].length; i++) {
                 var implant = new Implant(outputData[1][i].id, outputData[1][i].name,
                         outputData[1][i].description, outputData[1][i].buyPrice);
@@ -152,7 +207,7 @@ this.Hangar = function(accessService, scope)
             scope.hangar.storedImplants = [];
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                     {controllerType: 3, action: 106, jsonData: {userName: scope.currentUser.userName}});
-            promise.then(function(outputData) {
+            promise.then(function (outputData) {
                 for (var i = 0; i < outputData[1].length; i++) {
                     var isAssigned = false;
                     for (var j = 0; j < scope.hangar.assignedImplants.length; j++) {
@@ -178,7 +233,7 @@ this.Hangar = function(accessService, scope)
         scope.hangar.assignedScissorsAttack = null;
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 3, action: 104, jsonData: {userName: scope.currentUser.userName}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             for (var i = 0; i < outputData[1].length; i++) {
                 var attack = new Skill(outputData[1][i].id, outputData[1][i].name,
                         outputData[1][i].description, outputData[1][i].requiredLevel,
@@ -199,13 +254,23 @@ this.Hangar = function(accessService, scope)
             scope.hangar.storedAttacks = [];
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                     {controllerType: 3, action: 107, jsonData: {userName: scope.currentUser.userName}});
-            promise.then(function(outputData) {
+            promise.then(function (outputData) {
                 for (var i = 0; i < outputData[1].length; i++) {
                     var isAssigned = false;
-                    if (outputData[1][i].id == scope.hangar.assignedRockAttack.id ||
-                            outputData[1][i].id == scope.hangar.assignedPaperAttack.id ||
-                            outputData[1][i].id == scope.hangar.assignedScissorsAttack.id) {
-                        isAssigned = true;
+                    if (scope.hangar.assignedRockAttack != null) {
+                        if (outputData[1][i].id == scope.hangar.assignedRockAttack.id) {
+                            isAssigned = true;
+                        }
+                    }
+                    if (scope.hangar.assignedPaperAttack != null) {
+                        if (outputData[1][i].id == scope.hangar.assignedPaperAttack.id) {
+                            isAssigned = true;
+                        }
+                    } 
+                    if (scope.hangar.assignedScissorsAttack != null) {
+                        if (outputData[1][i].id == scope.hangar.assignedScissorsAttack.id) {
+                            isAssigned = true;
+                        }
                     }
                     if (!isAssigned) {
                         var attack = new Skill(outputData[1][i].id, outputData[1][i].name,
@@ -219,7 +284,6 @@ this.Hangar = function(accessService, scope)
             });
         });
     }
-
     /**
      * doAnimation()
      * @author Franc
@@ -228,7 +292,7 @@ this.Hangar = function(accessService, scope)
      * @param none
      * @returns none
      */
-    this.doAnimation = function()
+    this.doAnimation = function ()
     {
         var robotName;
         if (scope.currentUser.robotStatistic.idRobotSkin == 1) {
@@ -237,7 +301,7 @@ this.Hangar = function(accessService, scope)
             robotName = "PRIME";
         }
         var currentFrame = 0;
-        hangarAnimationTemp = setInterval(function() {
+        hangarAnimationTemp = setInterval(function () {
             $("#robotImage").attr("src", "images/animations/" + robotName.toLowerCase() +
                     "/hangar/" + robotName.toUpperCase() + "_HANGAR." + putFourDigits(currentFrame) + ".png");
             if (currentFrame == 35) {

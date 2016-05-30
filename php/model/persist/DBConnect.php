@@ -25,10 +25,6 @@ class DBConnect
     {
         return $this->link;
     }
-    
-    public function getStmt() {
-        return $this->stmt;
-    }
 
     //methods
     /**

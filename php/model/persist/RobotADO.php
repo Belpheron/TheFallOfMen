@@ -17,24 +17,35 @@ class RobotADO implements ADOinterface {
     }
 
     //methods
-    public function unSetSkill($idRobot, $type) {
-        $null = "";
-        $attack = "";
+    public function setSkill($idRobot, $idSkill, $type) {
         if ($type == "rock") {
-            $attack = "attack1_id";
+            $sql = "UPDATE robotskill SET attack1_id = ? WHERE idRobotStatistic = ?";
         } else if ($type == "paper") {
-            $attack = "attack2_id";
-        } else {
-            $attack = "attack3_id";
+            $sql = "UPDATE robotskill SET attack2_id = ? WHERE idRobotStatistic = ?";
+        } else if ($type == "scissors") {
+            $sql = "UPDATE robotskill SET attack3_id = ? WHERE idRobotStatistic = ?";
         }
-        $sql = "UPDATE robotskill SET ? = ? WHERE idRobotStatistic = ?";
-        $query = $this->dbConnection->execute($sql, [$attack, $null, $idRobot]);
+        $query = $this->dbConnection->execute($sql, [$idSkill, $idRobot]);
         if ($query != null) {
             return true;
         }
         return false;
     }
     
+    public function unSetSkill($idRobot, $type) {
+        if ($type == "rock") {
+            $sql = "UPDATE robotskill SET attack1_id = :null WHERE idRobotStatistic = :idRobot";
+        } else if ($type == "paper") {
+            $sql = "UPDATE robotskill SET attack2_id = :null WHERE idRobotStatistic = :idRobot";
+        } else {
+            $sql = "UPDATE robotskill SET attack3_id = :null WHERE idRobotStatistic = :idRobot";
+        }
+        $query = $this->dbConnection->getLink()->prepare($sql);
+        $query->bindValue(":null", NULL, PDO::PARAM_STR);
+        $query->bindValue(":idRobot", $idRobot, PDO::PARAM_INT);
+        $query->execute();
+    }
+
     public function setImplant($idRobot, $idImplant) {
         $sql = "INSERT INTO robotimplant (idRobotStatistic, idImplant) VALUES (?, ?)";
         $query = $this->dbConnection->execute($sql, [$idRobot, $idImplant]);
@@ -43,7 +54,7 @@ class RobotADO implements ADOinterface {
         }
         return false;
     }
-    
+
     public function unSetImplant($idRobot, $idImplant) {
         $sql = "DELETE FROM robotimplant WHERE idRobotStatistic=? AND idImplant=?";
         $query = $this->dbConnection->execute($sql, [$idRobot, $idImplant]);
@@ -52,7 +63,7 @@ class RobotADO implements ADOinterface {
         }
         return false;
     }
-    
+
     public function getImages($skinName) {
         $sql = "SELECT * FROM infoanimations WHERE idskin = (SELECT id FROM robotskin WHERE name = ?)";
         $query = $this->dbConnection->execute($sql, [$skinName]);
@@ -150,71 +161,78 @@ class RobotADO implements ADOinterface {
         $sql = "SELECT * FROM skill WHERE id = (SELECT attack1_id FROM robotskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
-        $attack = new Attack();
-        $attack->setId($temp["id"]);
-        $attack->setName($temp["name"]);
-        $attack->setDescription($temp["description"]);
-        $attack->setMultiplier($temp["multiplier"]);
-        $attack->setRequiredLevel($temp["requiredLevel"]);
-        $attack->setBuyPrice($temp["buyPrice"]);
-        $attack->setType("rock");
-        $skillId = $temp["id"];
-        $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
-        $query = $this->dbConnection->execute($sql, [$skillId]);
-        $temp = $query->fetch();
-        $attack->setAttribute($temp["iso"]);
-        $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
-        $query = $this->dbConnection->execute($sql, [$skillId]);
-        $temp = $query->fetch();
-        $attack->setValue($temp["value"]);
-        $attack->setTarget($temp["target"]);
-        $result[] = $attack->toArray();
+        if ($temp != null) {
+            $attack = new Attack();
+            $attack->setId($temp["id"]);
+            $attack->setName($temp["name"]);
+            $attack->setDescription($temp["description"]);
+            $attack->setMultiplier($temp["multiplier"]);
+            $attack->setRequiredLevel($temp["requiredLevel"]);
+            $attack->setBuyPrice($temp["buyPrice"]);
+            $attack->setType("rock");
+            $skillId = $temp["id"];
+            $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
+            $query = $this->dbConnection->execute($sql, [$skillId]);
+            $temp = $query->fetch();
+            $attack->setAttribute($temp["iso"]);
+            $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
+            $query = $this->dbConnection->execute($sql, [$skillId]);
+            $temp = $query->fetch();
+            $attack->setValue($temp["value"]);
+            $attack->setTarget($temp["target"]);
+            $result[] = $attack->toArray();
+        }
         //attack2
         $sql = "SELECT * FROM skill WHERE id = (SELECT attack2_id FROM robotskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
-        $attack = new Attack();
-        $attack->setId($temp["id"]);
-        $attack->setName($temp["name"]);
-        $attack->setDescription($temp["description"]);
-        $attack->setMultiplier($temp["multiplier"]);
-        $attack->setRequiredLevel($temp["requiredLevel"]);
-        $attack->setBuyPrice($temp["buyPrice"]);
-        $attack->setType("paper");
-        $skillId = $temp["id"];
-        $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
-        $query = $this->dbConnection->execute($sql, [$skillId]);
-        $temp = $query->fetch();
-        $attack->setAttribute($temp["iso"]);
-        $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
-        $query = $this->dbConnection->execute($sql, [$skillId]);
-        $temp = $query->fetch();
-        $attack->setValue($temp["value"]);
-        $attack->setTarget($temp["target"]);
-        $result[] = $attack->toArray();
+        if ($temp != null) {
+            $attack = new Attack();
+            $attack->setId($temp["id"]);
+            $attack->setName($temp["name"]);
+            $attack->setDescription($temp["description"]);
+            $attack->setMultiplier($temp["multiplier"]);
+            $attack->setRequiredLevel($temp["requiredLevel"]);
+            $attack->setBuyPrice($temp["buyPrice"]);
+            $attack->setType("paper");
+            $skillId = $temp["id"];
+            $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
+            $query = $this->dbConnection->execute($sql, [$skillId]);
+            $temp = $query->fetch();
+            $attack->setAttribute($temp["iso"]);
+            $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
+            $query = $this->dbConnection->execute($sql, [$skillId]);
+            $temp = $query->fetch();
+            $attack->setValue($temp["value"]);
+            $attack->setTarget($temp["target"]);
+            $result[] = $attack->toArray();
+        }
+
         //attack3
         $sql = "SELECT * FROM skill WHERE id = (SELECT attack3_id FROM robotskill WHERE idRobotStatistic = (SELECT idRobotStatistic FROM user WHERE userName = ?))";
         $query = $this->dbConnection->execute($sql, [$user->getUserName()]);
         $temp = $query->fetch();
-        $attack = new Attack();
-        $attack->setId($temp["id"]);
-        $attack->setName($temp["name"]);
-        $attack->setDescription($temp["description"]);
-        $attack->setMultiplier($temp["multiplier"]);
-        $attack->setRequiredLevel($temp["requiredLevel"]);
-        $attack->setBuyPrice($temp["buyPrice"]);
-        $attack->setType("scissors");
-        $skillId = $temp["id"];
-        $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
-        $query = $this->dbConnection->execute($sql, [$skillId]);
-        $temp = $query->fetch();
-        $attack->setAttribute($temp["iso"]);
-        $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
-        $query = $this->dbConnection->execute($sql, [$skillId]);
-        $temp = $query->fetch();
-        $attack->setValue($temp["value"]);
-        $attack->setTarget($temp["target"]);
-        $result[] = $attack->toArray();
+        if ($temp != null) {
+            $attack = new Attack();
+            $attack->setId($temp["id"]);
+            $attack->setName($temp["name"]);
+            $attack->setDescription($temp["description"]);
+            $attack->setMultiplier($temp["multiplier"]);
+            $attack->setRequiredLevel($temp["requiredLevel"]);
+            $attack->setBuyPrice($temp["buyPrice"]);
+            $attack->setType("scissors");
+            $skillId = $temp["id"];
+            $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
+            $query = $this->dbConnection->execute($sql, [$skillId]);
+            $temp = $query->fetch();
+            $attack->setAttribute($temp["iso"]);
+            $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
+            $query = $this->dbConnection->execute($sql, [$skillId]);
+            $temp = $query->fetch();
+            $attack->setValue($temp["value"]);
+            $attack->setTarget($temp["target"]);
+            $result[] = $attack->toArray();
+        }
 
         //returns result
         return $result;

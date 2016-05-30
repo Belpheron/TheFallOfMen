@@ -2,6 +2,51 @@
     border: 1px solid silver;
     height: 60vh;
 }
+.hangarSkillButton{
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    z-index: 99999;
+    transition: 0.4s all;    
+}
+.hangarSkillButton:hover{
+    filter: brightness(130%);
+}
+.hangarTextInfo{
+    font-family: "Batman";
+    font-size: 1.2em;
+    color: lime;
+    font-weight: bold;
+}
+.hangarTextInfoError{
+    font-family: "Batman";
+    font-size: 1.2em;
+    color: red;
+    font-weight: bold;
+}
+.btn-rock{
+    background: url(../images/tooltips/rock.jpg) no-repeat scroll 0 0 transparent; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.btn-paper{
+    background: url(../images/tooltips/paper.jpg) no-repeat scroll 0 0 transparent; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.btn-scissors{
+    background: url(../images/tooltips/scissors.jpg) no-repeat scroll 0 0 transparent; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 .hangarLeftWindow{
     margin-right: 10px;
     margin-left: 30px;

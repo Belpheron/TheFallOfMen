@@ -64,9 +64,9 @@
                             <td class="text-uppercase">{{skill.attribute}}</td>
                             <td>{{skill.value}}</td>
                             <td>
-                                <button class="btn btn-info">Rock</button>
-                                <button class="btn btn-info">Paper</button>
-                                <button class="btn btn-info">Scissors</button>
+                                <button class="btn hangarSkillButton btn-rock" ng-click="hangar.setSkill(skill, 'rock')"></button>
+                                <button class="btn hangarSkillButton btn-paper" ng-click="hangar.setSkill(skill, 'paper')"></button>
+                                <button class="btn hangarSkillButton btn-scissors" ng-click="hangar.setSkill(skill, 'scissors')"></button>
                             </td>
                         </tr>
                     </table>
@@ -205,6 +205,7 @@
             </div>
         </div>
     </div>    
-    {{messageHangar}}
+    <span class="hangarTextInfo">{{hangar.textInfo}}</span>
+    <span class="hangarTextInfoError">{{hangar.textInfoError}}</span>
 </main>
 

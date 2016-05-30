@@ -140,10 +140,17 @@ class RobotController implements ControllerInterface {
                 }
                 break;
             case 110:
-                if($this->ado->unSetSkill($this->jsonData->idRobot, $this->jsonData->type)) {
+                if ($this->ado->unSetSkill($this->jsonData->idRobot, $this->jsonData->type)) {
                     $outputData[0] = true;
                 } else {
-                    $outputData[0] = false;                
+                    $outputData[0] = false;
+                }
+                break;
+            case 111:
+                if ($this->ado->setSkill($this->jsonData->idRobot, $this->jsonData->idSkill, $this->jsonData->type)) {
+                    $outputData[0] = true;
+                } else {
+                    $outputData[0] = false;
                 }
                 break;
             default:
