@@ -26,6 +26,7 @@ this.Skill = function (id, name, description, requiredLevel, buyPrice, multiplie
     this.attribute;
     this.value;
     this.sellPrice = Math.round((this.buyPrice/3));
+    this.type = "";
 
     //accessors
     //getters
@@ -89,6 +90,12 @@ this.Skill = function (id, name, description, requiredLevel, buyPrice, multiplie
     {
         this.multiplier = multiplier;
     };
+    this.setType = function(type) {
+        this.type = type;
+    }
+    this.getType = function() {
+        return this.type;
+    }
 };
 
 

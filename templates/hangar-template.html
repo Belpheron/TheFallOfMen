@@ -20,17 +20,25 @@
             </div>
         </div>
         <div class="col-md-7">
+            <!-- installed implants -->
             <div class="row hangarImplantSlotsWindow">
-                <!--<table border="0">
-                   <tbody>
-                       <tr>
-                           <td class= "skill"><span class="blur">Slot 1</span></td>
-                           <td class="skill"><span class="blur">Slot 2</span></td>
-                           <td class="skill"><span class="blur">Slot 3</span></td>
-                       </tr>
-                   </tbody>
-               </table> -->        
-            </div>      
+                <div class="implantSlot" ng-repeat="implant in hangar.assignedImplants">
+                    <div class="row">
+                        <div class="col-md-6">                                    
+                            <img src="{{hangar.implantImageArray[$index]}}" class="implantTooltip"/>                                    
+                        </div>
+                        <div class="col-md-6 text-uppercase implantTooltipText">
+                            <div class="row">
+                                {{implant.attribute}} + {{implant.value}}
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-success" style="margin-top: 20px" 
+                                        ng-click="hangar.removeImplant(implant)">Remove</button>                                    
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </div>
             <!-- inventory tab-->
             <div class="row hangarInventoryWindow">
                 <ul class="nav nav-tabs">
@@ -71,7 +79,7 @@
                             <th>Name</th>
                             <th>Attribute</th>
                             <th>Value</th>
-                            <th>Assign</th>
+                            <th>Action</th>
                         </tr>
                         <tr ng-repeat="implant in hangar.storedImplants">
                             <td><span id="hangarInfoImplant{{implant.id}}" class="hangarInfo" 
@@ -81,9 +89,9 @@
                             <td class="text-uppercase">{{implant.attribute}}</td>
                             <td>{{implant.value}}</td>
                             <td>
-                                <button class="btn btn-info">Slot 1</button>
-                                <button class="btn btn-info">Slot 2</button>
-                                <button class="btn btn-info">Slot 3</button>
+                                <button class="btn btn-info" ng-click="hangar.installImplant(implant)">Install</button>
+                                <!--<button class="btn btn-info">Slot 2</button>
+                                <button class="btn btn-info">Slot 3</button>-->
                             </td>
                         </tr>
                     </table>
@@ -93,22 +101,108 @@
                     attributes
                 </div>
             </div> 
-            <div class="row hangarSkillsWindow">
-                <!--<table border="0" id="destinySkill" class="list">
-                    <tbody>
-                        <tr>
-                            <td class= "skill"><span class="blur">Rock</span></td>
-                            <td class="skill"><span class="blur">Paper</span></td>
-                            <td class="skill"><span class="blur">Scissor</span></td>
-                        </tr>
-                    </tbody>
-                </table> -->      
+            <!-- installed skills -->
+            <!--ROCK-->
+            <div class="row hangarInventoryContainer" style="color:white">
+                <div class="implantSlot" ng-show="hangar.assignedRockAttack != null">
+                    <div class="row">
+                        <div class="col-md-6">                                    
+                            <img src="images/tooltips/rock.jpg" class="skillTooltip"/>                                    
+                        </div>
+                        <div class="col-md-6 skillTooltipText">
+                            <div class="row">
+                                {{hangar.assignedRockAttack.attribute}} + {{hangar.assignedRockAttack.value}}
+                            </div>
+                            <div class="row">
+                                x {{hangar.assignedRockAttack.multiplier}} dmg
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-success" style="margin-top: 20px" 
+                                        ng-click="hangar.removeSkill('rock')">Remove</button>                                    
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                <!--off-->
+                <div class="implantSlot" ng-show="hangar.assignedRockAttack == null">
+                    <div class="row">
+                        <div class="col-md-6">                                    
+                            <img src="images/tooltips/rock_off.jpg" class="skillTooltip" style="opacity: 0.4"/>                                    
+                        </div>
+                        <div class="col-md-6 skillTooltipText">  
+                            base dmg x 1
+                        </div>
+                    </div>
+                </div>   
+                <!--PAPER-->
+                <div class="implantSlot" ng-show="hangar.assignedPaperAttack != null">
+                    <div class="row">
+                        <div class="col-md-6">                                    
+                            <img src="images/tooltips/paper.jpg" class="skillTooltip"/>                                    
+                        </div>
+                        <div class="col-md-6 skillTooltipText">
+                            <div class="row">
+                                {{hangar.assignedPaperAttack.attribute}} + {{hangar.assignedPaperAttack.value}}
+                            </div>
+                            <div class="row">
+                                x {{hangar.assignedPaperAttack.multiplier}} dmg
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-success" style="margin-top: 20px" 
+                                        ng-click="hangar.removeSkill('paper')">Remove</button>                                    
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                <!--off-->
+                <div class="implantSlot" ng-show="hangar.assignedPaperAttack == null">
+                    <div class="row">
+                        <div class="col-md-6">                                    
+                            <img src="images/tooltips/paper_off.jpg" class="skillTooltip" style="opacity: 0.4"/>                                    
+                        </div>
+                        <div class="col-md-6 skillTooltipText">
+                            base dmg x 1
+                        </div>
+                    </div>
+                </div>  
+                <!--SCISSORS-->
+                <div class="implantSlot" ng-show="hangar.assignedScissorsAttack != null">
+                    <div class="row">
+                        <div class="col-md-6">                                    
+                            <img src="images/tooltips/scissors.jpg" class="skillTooltip"/>                                    
+                        </div>
+                        <div class="col-md-6 skillTooltipText">
+                            <div class="row">
+                                {{hangar.assignedScissorsAttack.attribute}} + {{hangar.assignedScissorsAttack.value}}
+                            </div>
+                            <div class="row">
+                                x {{hangar.assignedScissorsAttack.multiplier}} dmg
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-success" style="margin-top: 20px" 
+                                        ng-click="hangar.removeSkill('scissors')">Remove</button>                                    
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                <!--off-->
+                <div class="implantSlot" ng-show="hangar.assignedScissorsAttack == null">
+                    <div class="row">
+                        <div class="col-md-6">                                    
+                            <img src="images/tooltips/scissors_off.jpg" class="skillTooltip" style="opacity: 0.4"/>                                    
+                        </div>
+                        <div class="col-md-6 skillTooltipText"> 
+                            base dmg x 1
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div>  
         <div class="col-md-1 hangarInformationColumn">
             <div class="row">
                 <label>{{currentUser.coins}} Human/s</label>
             </div>
         </div>
-    </div>
+    </div>    
+</div>
 </main>

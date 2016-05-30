@@ -17,6 +17,42 @@ class RobotADO implements ADOinterface {
     }
 
     //methods
+    public function unSetSkill($idRobot, $type) {
+        $null = "";
+        $attack = "";
+        if ($type == "rock") {
+            $attack = "attack1_id";
+        } else if ($type == "paper") {
+            $attack = "attack2_id";
+        } else {
+            $attack = "attack3_id";
+        }
+        $sql = "UPDATE robotskill SET ? = ? WHERE idRobotStatistic = ?";
+        $query = $this->dbConnection->execute($sql, [$attack, $null, $idRobot]);
+        if ($query != null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function setImplant($idRobot, $idImplant) {
+        $sql = "INSERT INTO robotimplant (idRobotStatistic, idImplant) VALUES (?, ?)";
+        $query = $this->dbConnection->execute($sql, [$idRobot, $idImplant]);
+        if ($query != null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function unSetImplant($idRobot, $idImplant) {
+        $sql = "DELETE FROM robotimplant WHERE idRobotStatistic=? AND idImplant=?";
+        $query = $this->dbConnection->execute($sql, [$idRobot, $idImplant]);
+        if ($query != null) {
+            return true;
+        }
+        return false;
+    }
+    
     public function getImages($skinName) {
         $sql = "SELECT * FROM infoanimations WHERE idskin = (SELECT id FROM robotskin WHERE name = ?)";
         $query = $this->dbConnection->execute($sql, [$skinName]);
@@ -121,6 +157,7 @@ class RobotADO implements ADOinterface {
         $attack->setMultiplier($temp["multiplier"]);
         $attack->setRequiredLevel($temp["requiredLevel"]);
         $attack->setBuyPrice($temp["buyPrice"]);
+        $attack->setType("rock");
         $skillId = $temp["id"];
         $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
         $query = $this->dbConnection->execute($sql, [$skillId]);
@@ -143,6 +180,7 @@ class RobotADO implements ADOinterface {
         $attack->setMultiplier($temp["multiplier"]);
         $attack->setRequiredLevel($temp["requiredLevel"]);
         $attack->setBuyPrice($temp["buyPrice"]);
+        $attack->setType("paper");
         $skillId = $temp["id"];
         $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
         $query = $this->dbConnection->execute($sql, [$skillId]);
@@ -165,6 +203,7 @@ class RobotADO implements ADOinterface {
         $attack->setMultiplier($temp["multiplier"]);
         $attack->setRequiredLevel($temp["requiredLevel"]);
         $attack->setBuyPrice($temp["buyPrice"]);
+        $attack->setType("scissors");
         $skillId = $temp["id"];
         $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = (SELECT idEffect FROM skilleffect WHERE idSkill = ?))";
         $query = $this->dbConnection->execute($sql, [$skillId]);

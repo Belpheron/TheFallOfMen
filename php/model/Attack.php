@@ -12,6 +12,7 @@ class Attack {
     private $target;
     private $requiredLevel;
     private $buyPrice;
+    private $type;
 
     //constructor
     function __construct($name = "", $description = "", $attribute = "", $value = "", $multiplier = "", $target = "") {
@@ -24,6 +25,13 @@ class Attack {
     }
 
     //accessors
+    public function getType() {
+        return $this->type;
+    }
+
+    public function setType($type) {
+        $this->type = $type;
+    }
 
     public function getId() {
         return $this->id;
@@ -108,7 +116,8 @@ class Attack {
             "target" => $this->target,
             "requiredLevel" => $this->requiredLevel,
             "buyPrice" => $this->buyPrice,
-            "id" => $this->id
+            "id" => $this->id,
+            "type" => $this->type
         ];
         return $result;
     }
