@@ -220,18 +220,6 @@ var hangarAnimationTemp;
             controllerAs: 'hangarTemplate'
         };
     });
-    fallOfMenApp.directive("profileTemplate", function ()
-    {
-        return {
-            restrict: 'E',
-            templateUrl: "templates/profile-template.html",
-            controller: function ()
-            {
-
-            },
-            controllerAs: 'profileTemplate'
-        };
-    });
     fallOfMenApp.directive("statisticTemplate", function ()
     {
         return {
@@ -254,6 +242,18 @@ var hangarAnimationTemp;
 
             },
             controllerAs: 'shopTemplate'
+        };
+    });
+    fallOfMenApp.directive("profileTemplate", function ()
+    {
+        return {
+            restrict: 'E',
+            templateUrl: "templates/profile-template.html",
+            controller: function ()
+            {
+
+            },
+            controllerAs: 'profileTemplate'
         };
     });
 })();

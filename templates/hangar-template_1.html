@@ -24,6 +24,11 @@
                     <table border="0">
                         <tbody>
                             <tr>
+                                <td><label>Implant slot 1</label></td>
+                                <td><label>Implant slot 2</label></td>
+                                <td><label>Implant slot 3</label></td>
+                            </tr>
+                            <tr>
                                 <td class= "skill"><span class="blur">Slot 1</span></td>
                                 <td class="skill"><span class="blur">Slot 2</span></td>
                                 <td class="skill"><span class="blur">Slot 3</span></td>
@@ -33,9 +38,9 @@
                 </div>
                 <div class="row hangarInventoryWindow">
                     <ul class="nav nav-tabs">
-                        <li id="tabSkill" class="active" ng-click="setActive('skill', hangar)"><a><span>Skills</span></a></li>
-                        <li id="tabImplant" ng-click="setActive('implant', hangar)"><a><span>Implants</span></a></li>
-                        <li id="tabAttribute" ng-click="setActive('attribute', hangar)"><a><span>Attributes</span></a></li>
+                        <li id="tabSkill" class="active" ng-click="setActive('skill')"><a><span>Skills</span></a></li>
+                        <li id="tabImplant" ng-click="setActive('implant')"><a><span>Implants</span></a></li>
+                        <li id="tabAttribute" ng-click="setActive('attribute')"><a><span>Attributes</span></a></li>
                     </ul>
                     <div ng-if="show == 'skill'" class="fixed">
                         <table  class="table table-striped">
@@ -48,17 +53,16 @@
                                 <td colspan="4"><label>Assign</label></td>
                             </tr>
                             <tr ng-repeat="skill in purchasedSkills">
-                                <input type="hidden" name="valueId{{$index}}" value="{{skill.id}}"/>
-                                <td>{{skill.name}}</td>
-                                <td>{{skill.requiredLevel}}</td>
-                                <td>{{skill.multiplier}}</td>
-                                <td>{{attrSkill[$index][0]}}</td>
-                                <td>{{attrSkill[$index][1]}}</td>
-                                <td><input type="radio" name="assign{{$index}}" value="undefined">nada</td>
-                                <td><input type="radio" name="assign{{$index}}" value="rock">piedra</td>
-                                <td><input type="radio" name="assign{{$index}}" value="paper">papel</td>
-                                <td><input type="radio" name="assign{{$index}}" value="scissor">tijeras</td>
-                                
+                            <td>{{skill.name}}</td>
+                            <td>{{skill.requiredLevel}}</td>
+                            <td>{{skill.multiplier}}</td>
+                            <td>{{attrSkill[$index][0]}}</td>
+                            <td>{{attrSkill[$index][1]}}</td>
+                            <td><button  ng-click="hangar.updateAssignSkill(skill.id, 'rock')">Rock</button></td>
+                            <td><button  ng-click="hangar.updateAssignSkill(skill.id, 'paper')">Paper</button></td>
+                            <td><button  ng-click="hangar.updateAssignSkill(skill.id, 'scissor)">Scissor</button></td>
+
+
                             </tr>
                         </table>
                     </div>

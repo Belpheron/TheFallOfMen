@@ -47,14 +47,22 @@ class LoginController implements ControllerInterface
                 $loginUser->setIdRobotStatistic($foundUser["idRobotStatistic"]);
                 $loginUser->setActive(1);
 
-                if ($this->ado->addOnlineUser($loginUser))
+                if ($loginUser->getUserType() == 1)
                 {
-                    $_SESSION["user"] = $loginUser;
-                    header("Location: mainWindow.php");
+                    $_SESSION["admin"] = $loginUser;
+                    header("Location: adminWindow.php");
                 }
                 else
                 {
-                    header("Location: index.php?error=4");
+                    if ($this->ado->addOnlineUser($loginUser))
+                    {
+                        $_SESSION["user"] = $loginUser;
+                        header("Location: mainWindow.php");
+                    }
+                    else
+                    {
+                        header("Location: index.php?error=4");
+                    }
                 }
             }
             else

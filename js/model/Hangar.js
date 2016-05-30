@@ -249,4 +249,3 @@ this.Hangar = function(accessService, scope)
 
     };
 };
-

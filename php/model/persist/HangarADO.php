@@ -16,7 +16,42 @@ class HangarADO implements ADOinterface
     }
 
     //methods
-        /**
+
+    public function updateSkill($skill, $user, $objective)
+    {
+        try
+        {
+            switch ($objective)
+            {
+                case '1':
+                    $sqlUpdateSkill = "UPDATE `robotskill` SET `attack1_id`=? WHERE `idRobotStatistic`=?";
+                    break;
+                case '2':
+                    $sqlUpdateSkill = "UPDATE `robotskill` SET `attack2_id`=? WHERE `idRobotStatistic`=?";
+                    break;
+                case '3':
+                    $sqlUpdateSkill = "UPDATE `robotskill` SET `attack3_id`=? WHERE `idRobotStatistic`=?";
+                    break;
+            }
+            $array = [$skill->getId(), $user->getIdRobotStatistic()];
+            $infoUpdateSkill = $this->dbConnection->execute($sqlUpdateSkill, $array);
+            if ($infoUpdateSkill->rowCount() != 0)
+            {
+                return true;
+            }
+            else
+            {
+              return null;  
+            }
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            return null;
+        }
+    }
+
+    /**
      * @name getSkill()
      * @author Franc
      * @version 1.0
@@ -42,8 +77,7 @@ class HangarADO implements ADOinterface
         }
     }
 
-    
-      /**
+    /**
      * @name getAssignedSkill()
      * @author Franc
      * @version 1.0
@@ -69,7 +103,7 @@ class HangarADO implements ADOinterface
         }
     }
 
-     /**
+    /**
      * @name getRobotAttributes()
      * @author Franc
      * @version 1.0
@@ -94,7 +128,7 @@ class HangarADO implements ADOinterface
             return null;
         }
     }
-    
+
     /**
      * @name getAllInfoImplant()
      * @author Franc

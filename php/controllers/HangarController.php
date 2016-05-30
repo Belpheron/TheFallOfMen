@@ -50,7 +50,7 @@ class HangarController implements ControllerInterface
         {
             //get info attributes skill.
             case 200:
-                $skill = new Skill($this->jsonData->id, $this->jsonData->name, $this->jsonData->description, $this->jsonData->requiredLevel, $this->jsonData->buyPrice, $this->jsonData->multiplier);
+                $skill = new Skill($this->jsonData->id);
                 $result = $this->ado->getAllInfoSkill($skill);
                 if ($result != null)
                 {
@@ -94,9 +94,10 @@ class HangarController implements ControllerInterface
                     $outputData[1] = "Sorry can't load attributes robot.";
                 }
                 break;
+            //load skill assigned.
             case 203:
                 $user = new User($this->jsonData->userName);
-                $user->setidRobotStatistic($this->jsonData->robotStatistic->id);
+                $user->setIdRobotStatistic($this->jsonData->robotStatistic->id);
                 $result = $this->ado->getAssignedSkill($user);
                 if ($result != null)
                 {
@@ -109,8 +110,9 @@ class HangarController implements ControllerInterface
                     $outputData[1] = "Sorry can't load assigned skills robot.";
                 }
                 break;
+            //take info about a skill whit only give id
             case 204:
-                $result = $this->ado->getSkill($this->jsonData->skill);
+                $result = $this->ado->getSkill($this->jsonData->id);
                 if ($result != null)
                 {
                     $outputData[0] = true;
@@ -119,7 +121,24 @@ class HangarController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry can't load assigned skills robot.";
+                    $outputData[1] = "Sorry cannot load assigned skills robot";
+                }
+                break;
+            case 205:
+                $skill = new Skill($this->jsonData->id);
+                $user = new User(0);
+                $user->setIdRobotStatistic($this->jsonData->idRobotStatistic);
+                $objective = $this->jsonData->objective;
+                $result = $this->ado->updateSkill($skill, $user, $objective);
+                if ($result != null)
+                {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                }
+                else
+                {
+                    $outputData[0] = false;
+                    $outputData[1] = "Sorry skill alredy assigned";
                 }
                 break;
             default:

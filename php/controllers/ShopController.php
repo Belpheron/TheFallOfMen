@@ -84,6 +84,7 @@ class ShopController implements ControllerInterface
                 $array = [];
                 $user = new User($this->jsonData->userName);
                 $user->setIdRobotStatistic($this->jsonData->robotStatistic->id);
+                
                 $result = $this->ado->getAllPurchasedSkill($user);
                 if ($result != null)
                 {

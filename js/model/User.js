@@ -6,6 +6,7 @@ this.User = function (userName, coins)
     this.profile;
     this.robotStatistic;
     this.userStatistic;
+  
 
     //accessors
     this.getUserName = function ()

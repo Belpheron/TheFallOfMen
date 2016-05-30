@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/persist/RobotADO.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/js/model/Hangar.js</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/js/model/Skill.js</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/Attack.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/model/persist/DBConnect.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/php/controllers/RobotController.php</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/js/model/FightDetails.js</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/css/hangarStyle.css</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/css/generalStyle.css</file>
+            <file>file:/E:/XAMPP/htdocs/Alpha/templates/hangar-template.html</file>
+        </group>
     </open-files>
 </project-private>

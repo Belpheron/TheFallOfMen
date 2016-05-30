@@ -80,7 +80,7 @@ this.ProfileWindow = function (accessService, scope)
             scope.show = 1;
         }
     };
-
+    
     scope.saveChanges = function ()
     {
         scope.currentUser = angular.copy(scope.currentUser);

@@ -7,8 +7,8 @@
  * @date 12/05/2016
  * @description encapsulates a skill object
  */
-class Skill {
-
+class Skill
+{
     //properties
     private $id;
     private $name;
@@ -17,9 +17,14 @@ class Skill {
     private $buyPrice;
     private $multiplier;
     private $sellPrice;
+    private $value;
+    private $target;
+    private $attribute;
+    private $turns;
 
     //constructor
-    function __construct($id = "", $name = "", $description = "", $requiredLevel = "", $buyPrice = "", $multiplier = "") {
+    function __construct($id = "", $name = "", $description = "", $requiredLevel = "", $buyPrice = "", $multiplier = "")
+    {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
@@ -30,61 +35,122 @@ class Skill {
 
     //accesosrs
     //getters
-    function getId() {
+    function getAttribute()
+    {
+        return $this->attribute;
+    }
+
+    function setAttribute($attribute)
+    {
+        $this->attribute = $attribute;
+    }
+
+        function getValue()
+    {
+        return $this->value;
+    }
+
+    function getTarget()
+    {
+        return $this->target;
+    }
+
+    function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    function setTarget($target)
+    {
+        $this->target = $target;
+    }
+
+        function getId()
+    {
         return $this->id;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->name;
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return $this->description;
     }
 
-    function getRequiredLevel() {
+    function getRequiredLevel()
+    {
         return $this->requiredLevel;
     }
 
-    function getBuyPrice() {
+    function getBuyPrice()
+    {
         return $this->buyPrice;
     }
 
-    function getMultiplier() {
+    function getMultiplier()
+    {
         return $this->multiplier;
     }
 
     //setters
-    function setId($id) {
+    function setId($id)
+    {
         $this->id = $id;
     }
 
-    function setName($name) {
+    function setName($name)
+    {
         $this->name = $name;
     }
 
-    function setDescription($description) {
+    function setDescription($description)
+    {
         $this->description = $description;
     }
 
-    function setRequiredLevel($requiredLevel) {
+    function setRequiredLevel($requiredLevel)
+    {
         $this->requiredLevel = $requiredLevel;
     }
 
-    function setBuyPrice($buyPrice) {
+    function setBuyPrice($buyPrice)
+    {
         $this->buyPrice = $buyPrice;
     }
 
-    function setMultiplier($multiplier) {
+    function setMultiplier($multiplier)
+    {
         $this->multiplier = $multiplier;
     }
 
-    function getSellPrice() {
+    function getSellPrice()
+    {
         return $this->sellPrice;
     }
 
-    function setSellPrice($sellPrice) {
+    function setSellPrice($sellPrice)
+    {
         $this->sellPrice = $sellPrice;
+    }
+
+    function toArrayFull()
+    {
+        $result = [
+            "id" => $this->id,
+            "name" => $this->name,
+            "description" => $this->description,
+            "requiredLevel" => $this->requiredLevel,
+            "buyPrice" => $this->buyPrice,
+            "multiplier" => $this->multiplier,
+            "attribute" => $this->attribute,
+            "value" => $this->value,
+            "turns" => $this->turns,
+            "target" => $this->target
+        ];
+        return $result;
     }
 
 }
