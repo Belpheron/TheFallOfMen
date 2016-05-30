@@ -4,10 +4,69 @@ this.Hangar = function(accessService, scope)
     this.currentTab = "skills";
     this.assignedImplants = [];
     this.storedImplants = [];
-    this.assignedAttacks = [];
+    this.assignedRockAttack;
+    this.assignedPaperAttack;
+    this.assignedScissorsAttack;
     this.storedAttacks = [];
+    this.implantImageArray = [
+        "images/tooltips/implant1.jpg",
+        "images/tooltips/implant2.jpg",
+        "images/tooltips/implant1.jpg"
+    ];
 
     //methods
+    this.installImplant = function(implant) {
+        if (scope.hangar.assignedImplants.length >= 3) {
+            alert("Implant slots are full. Please remove one first.");
+        } else {
+            scope.hangar.assignedImplants.push(implant);
+            scope.hangar.storedImplants.splice(scope.hangar.storedImplants.indexOf(implant), 1);
+            //updates database
+            var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                    {controllerType: 3, action: 108,
+                        jsonData: {idRobot: scope.currentUser.robotStatistic.id, idImplant: implant.id}});
+            promise.then(function(outputData) {
+
+            });
+        }
+    }
+
+    this.removeImplant = function(implant) {
+        scope.hangar.assignedImplants.splice(scope.hangar.assignedImplants.indexOf(implant), 1);
+        scope.hangar.storedImplants.push(implant);
+        var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                {controllerType: 3, action: 109,
+                    jsonData: {idRobot: scope.currentUser.robotStatistic.id, idImplant: implant.id}});
+        promise.then(function(outputData) {
+
+        });
+    }
+
+    this.removeSkill = function(type) {
+        var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
+                {controllerType: 3, action: 110,
+                    jsonData: {idRobot: scope.currentUser.robotStatistic.id, type: type}});
+        promise.then(function(outputData) {
+            if (type == "rock") {
+                var a = new Skill(scope.hangar.assignedRockAttack.id, 
+                    scope.hangar.assignedRockAttack.name, 
+                    scope.hangar.assignedRockAttack.description, 
+                    scope.hangar.assignedRockAttack.requiredLevel, 
+                    scope.hangar.assignedRockAttack.buyPrice, 
+                    scope.hangar.assignedRockAttack.multiplier);
+                a.attribute = scope.hangar.assignedRockAttack.attribute;
+                a.value = scope.hangar.assignedRockAttack.value;
+                a.type = scope.hangar.assignedRockAttack.type;
+                scope.hangar.storedAttacks.push(a);
+                scope.hangar.assignedRockAttack = null;
+            } else if (type == "paper") {
+                scope.hangar.assignedPaperAttack = null;
+            } else if (type == "scissors") {
+                scope.hangar.assignedScissorsAttack = null;
+            }
+        });
+    }
+
     this.showItemInfo = function(item, event, message) {
         var xpos;
         var ypos;
@@ -31,23 +90,23 @@ this.Hangar = function(accessService, scope)
         }
         var content = "<h4>Item information</h4><hr/>";
         content += "<ul>";
-        content += "<li><b>Name</b>: "+item.name+"</li>";
-        content += "<li><b>Type</b>: "+item.type+"</li>";
-        content += "<li><b>Description</b>: "+item.description+"</li>";
-        content += "<li><b>Affected attribute<b/>: "+item.attribute.toUpperCase()+"</li>";
-        content += "<li><b>Value<b/>: +"+item.value+"</li>";
+        content += "<li><b>Name</b>: " + item.name + "</li>";
+        content += "<li><b>Type</b>: " + item.type + "</li>";
+        content += "<li><b>Description</b>: " + item.description + "</li>";
+        content += "<li><b>Affected attribute<b/>: " + item.attribute.toUpperCase() + "</li>";
+        content += "<li><b>Value<b/>: +" + item.value + "</li>";
         if (item.type == "skill") {
-            content += "<li><b>Multiplier<b/>: x"+item.multiplier+"</li>";
+            content += "<li><b>Multiplier<b/>: x" + item.multiplier + "</li>";
         }
         content += "</ul>";
-        
+
         //inserts content into the pop up window
         $("#hangarInfoPopUp").css("left", xpos);
         $("#hangarInfoPopUp").css("top", ypos);
         $("#hangarInfoPopUp").html(content);
         $("#hangarInfoPopUp").show();
     }
-    
+
     this.hideItemInfo = function() {
         $("#hangarInfoPopUp").hide();
     }
@@ -88,6 +147,7 @@ this.Hangar = function(accessService, scope)
                 implant.value = outputData[1][i].value;
                 scope.hangar.assignedImplants.push(implant);
             }
+
             //gets all stored implants
             scope.hangar.storedImplants = [];
             var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
@@ -109,15 +169,13 @@ this.Hangar = function(accessService, scope)
                         scope.hangar.storedImplants.push(implant);
                     }
                 }
-                console.log("Implantes asignados");
-                console.log(scope.hangar.assignedImplants);
-                console.log("Implantes inventario");
-                console.log(scope.hangar.storedImplants);
             });
         });
 
         //gets all assigned attacks
-        scope.hangar.assignedAttacks = [];
+        scope.hangar.assignedRockAttack = null;
+        scope.hangar.assignedPaperAttack = null;
+        scope.hangar.assignedScissorsAttack = null;
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 3, action: 104, jsonData: {userName: scope.currentUser.userName}});
         promise.then(function(outputData) {
@@ -127,10 +185,15 @@ this.Hangar = function(accessService, scope)
                         outputData[1][i].buyPrice, outputData[1][i].multiplier);
                 attack.attribute = outputData[1][i].attribute;
                 attack.value = outputData[1][i].value;
-                scope.hangar.assignedAttacks.push(attack);
+                attack.type = outputData[1][i].type;
+                if (attack.type == "rock") {
+                    scope.hangar.assignedRockAttack = attack;
+                } else if (attack.type == "paper") {
+                    scope.hangar.assignedPaperAttack = attack;
+                } else if (attack.type == "scissors") {
+                    scope.hangar.assignedScissorsAttack = attack;
+                }
             }
-            console.log("Ataques asignados");
-            console.log(scope.hangar.assignedAttacks);
 
             //gets all stored attacks
             scope.hangar.storedAttacks = [];
@@ -139,23 +202,20 @@ this.Hangar = function(accessService, scope)
             promise.then(function(outputData) {
                 for (var i = 0; i < outputData[1].length; i++) {
                     var isAssigned = false;
-                    for (var j = 0; j < scope.hangar.assignedAttacks.length; j++) {
-                        if (outputData[1][i].id == scope.hangar.assignedAttacks[j].id) {
-                            isAssigned = true;
-                            break;
-                        }
+                    if (outputData[1][i].id == scope.hangar.assignedRockAttack.id ||
+                            outputData[1][i].id == scope.hangar.assignedPaperAttack.id ||
+                            outputData[1][i].id == scope.hangar.assignedScissorsAttack.id) {
+                        isAssigned = true;
                     }
                     if (!isAssigned) {
                         var attack = new Skill(outputData[1][i].id, outputData[1][i].name,
                                 outputData[1][i].description, outputData[1][i].requiredLevel,
                                 outputData[1][i].buyPrice, outputData[1][i].multiplier);
-                        scope.hangar.storedAttacks.push(attack);
                         attack.attribute = outputData[1][i].attribute;
                         attack.value = outputData[1][i].value;
+                        scope.hangar.storedAttacks.push(attack);
                     }
                 }
-                console.log("Ataques inventario");
-                console.log(scope.hangar.storedAttacks);
             });
         });
     }
@@ -186,6 +246,6 @@ this.Hangar = function(accessService, scope)
             }
             currentFrame++;
         }, 100);
+
     };
 };
-

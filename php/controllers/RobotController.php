@@ -125,6 +125,27 @@ class RobotController implements ControllerInterface {
                     $outputData[1] = [];
                 }
                 break;
+            case 108:
+                if ($this->ado->setImplant($this->jsonData->idRobot, $this->jsonData->idImplant)) {
+                    $outputData[0] = true;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
+            case 109:
+                if ($this->ado->unSetImplant($this->jsonData->idRobot, $this->jsonData->idImplant)) {
+                    $outputData[0] = true;
+                } else {
+                    $outputData[0] = false;
+                }
+                break;
+            case 110:
+                if($this->ado->unSetSkill($this->jsonData->idRobot, $this->jsonData->type)) {
+                    $outputData[0] = true;
+                } else {
+                    $outputData[0] = false;                
+                }
+                break;
             default:
                 $outputData[0] = false;
                 $outputData[1] = "Sorry, there has been an error. Try later";
@@ -134,7 +155,7 @@ class RobotController implements ControllerInterface {
 
         return $outputData;
     }
-}
 
+}
 ?>
 

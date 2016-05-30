@@ -6,6 +6,33 @@
     margin-right: 10px;
     margin-left: 30px;
 }
+.implantTooltip {
+    height: 100%;
+    width: 100%;
+}
+.skillTooltip{
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid silver;
+}
+.implantTooltipText{
+    color: white;
+    font-family: "Batman";
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5em;
+}
+.implantSlot{
+    width: 30%;
+    height: 90%;
+    float: left;
+    margin-left: 10px;
+    background-color: rgba(27,70,171,0.7);
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid silver;
+}
 .hangarInfo{
     color: lime;
     font-weight: bolder;
@@ -27,9 +54,12 @@
     box-shadow: 22px 24px 20px -1px rgba(0,0,0,0.75);
 }
 .hangarInventoryContainer{
-    background-color: rgba(89,34,240,0.7);
     border: none;
-    border-radius: 10px;
+}
+.skillTooltipText{
+    font-family: "Batman";
+    font-size: 1.2em;
+    text-align: center;
 }
 .hangarExperienceWindow{
     border: 1px solid silver;
@@ -37,8 +67,8 @@
     margin-top: 5px;
 }
 .hangarImplantSlotsWindow{
-    border: 1px solid silver;
     height: 20vh;
+    overflow: hidden;
 }
 .hangarInventoryWindow{
     height: 40vh;

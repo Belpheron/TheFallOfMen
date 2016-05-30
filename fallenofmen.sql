@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-05-2016 a las 09:24:22
+-- Tiempo de generación: 30-05-2016 a las 09:57:14
 -- Versión del servidor: 10.1.10-MariaDB
 -- Versión de PHP: 7.0.4
 
@@ -78,141 +78,10 @@ CREATE TABLE `chatmessage` (
 --
 
 INSERT INTO `chatmessage` (`id`, `date`, `content`, `idUserNameSender`, `idUserNameReceiver`) VALUES
-(1, '2016-05-02 00:00:00', 'hola, como estas?', 'alumne', 'Daw2000'),
-(2, '2016-05-10 13:29:52', 'hola q tal', 'alumne', 'all'),
-(3, '2016-05-10 13:36:09', 'hola hola', 'alumne', 'daw2'),
-(4, '2016-05-10 13:49:33', 'aldsfk jlkdafs jlghyujtyuty', 'alumne', 'all'),
-(5, '2016-05-10 13:49:56', 'aldsfk jlkdafs jlghyujtyuty', 'alumne', 'all'),
-(6, '2016-05-11 09:01:54', 'hola bon dia', 'alumne', 'all'),
-(7, '2016-05-11 09:02:29', '/pepito hola bon dia', 'alumne', 'pepito'),
-(8, '2016-05-11 09:16:35', 'hola k ase', 'alumne', 'all'),
-(9, '2016-05-11 09:16:56', 'ola k ase', 'alumne', 'pepito'),
-(10, '2016-05-11 09:18:16', 'ola pepi', 'alumne', 'pepi'),
-(11, '2016-05-11 09:19:47', 'ola pepi', 'alumne', 'all'),
-(12, '2016-05-11 09:20:10', '&lt;asdc&amp;%$Â·&gt;script&gt;&gt;&gt; ola', 'alumne', 'all'),
-(13, '2016-05-11 09:33:28', 'lkjljk', 'alumne', 'all'),
-(14, '2016-05-11 09:38:03', 'lkjlkj', 'alumne', 'all'),
-(15, '2016-05-11 09:38:12', 'lkjlkj', 'alumne', 'all'),
-(16, '2016-05-11 09:39:15', 'lkjlkjlkj', 'alumne', 'all'),
-(17, '2016-05-11 09:39:24', 'hola q ase', 'alumne', 'all'),
-(18, '2016-05-11 09:39:54', 'bon dia', 'alumne', 'all'),
-(19, '2016-05-11 09:39:59', 'ola como estas', 'alumne', 'all'),
-(20, '2016-05-11 09:40:05', 'yo bien y tu', 'alumne', 'all'),
-(21, '2016-05-11 09:40:20', 'me la comes', 'alumne', 'pepito'),
-(22, '2016-05-11 09:42:34', 'hola richard+', 'Daw2000', 'all'),
-(23, '2016-05-11 09:42:35', 'hola richard', 'Daw2000', 'all'),
-(24, '2016-05-11 09:42:45', 'q pasa nen', 'alumne', 'all'),
-(25, '2016-05-11 09:42:54', 'hola', 'Daw2000', 'all'),
-(26, '2016-05-11 09:43:00', 'hola+', 'Daw2000', 'all'),
-(27, '2016-05-11 09:43:06', 'gggg', 'Daw2000', 'all'),
-(28, '2016-05-11 09:43:11', 'gggg+fgg', 'Daw2000', 'all'),
-(29, '2016-05-11 10:04:38', 'hola', 'alumne', 'alumne'),
-(30, '2016-05-11 10:05:20', 'hola primo', 'pepito', 'alumne'),
-(31, '2016-05-11 10:05:44', 'hola', 'alumne', 'all'),
-(32, '2016-05-11 10:05:48', 'hola primo', 'pepito', 'all'),
-(33, '2016-05-11 10:05:52', 'hola q kas', 'alumne', 'pepito'),
-(34, '2016-05-11 10:06:19', 'hola primo', 'pepito', 'daw2000'),
-(35, '2016-05-11 10:08:54', 'hola pepito', 'alumne', 'pepito'),
-(36, '2016-05-11 10:09:04', 'hola don jose', 'pepito', 'all'),
-(37, '2016-05-11 10:09:47', 'pipolopollas', 'pepito', 'Daw2000'),
-(38, '2016-05-11 10:11:56', 'hola q ase', 'alumne', 'all'),
-(39, '2016-05-11 10:12:19', 'hola k ase', 'alumne', 'pepito'),
-(40, '2016-05-11 12:19:03', 'kjhkjh', 'alumne', 'all'),
-(41, '2016-05-11 12:36:42', 'bitch', 'pepito', 'alumne'),
-(42, '2016-05-11 12:37:01', 'you wanna fuck??', 'pepito', 'alumne'),
-(43, '2016-05-11 13:18:10', 'pollas', 'srsole', 'Daw2000'),
-(44, '2016-05-11 13:18:36', 'piedra', 'srsole', 'all'),
-(45, '2016-05-12 12:17:58', 'pollas', 'Daw2000', 'alumne'),
-(46, '2016-05-23 12:42:32', 'pllas', 'alumne', 'all'),
-(47, '2016-05-23 12:42:34', 'pollas', 'alumne', 'all'),
-(48, '2016-05-24 13:53:26', 'lkjlkj', 'alumne', 'all'),
-(49, '2016-05-24 13:55:17', 'kjhkjh', 'alumne', 'all'),
-(50, '2016-05-24 13:56:42', 'jhgjhg', 'alumne', 'all'),
-(51, '2016-05-24 13:56:47', 'adsf', 'alumne', 'all'),
-(52, '2016-05-24 13:56:56', 'hola', 'pepito', 'alumne'),
-(53, '2016-05-24 13:58:04', 'hola', 'alumne', 'pepito'),
-(54, '2016-05-24 13:58:25', 'fasdf', 'alumne', 'all'),
-(55, '2016-05-24 13:58:27', 'lkjlkjjlk', 'alumne', 'all'),
-(56, '2016-05-24 13:59:17', 'lkjkjl', 'alumne', 'all'),
-(57, '2016-05-24 13:59:19', 'lkjlkj', 'alumne', 'all'),
-(58, '2016-05-24 13:59:30', 'kjhkjh', 'alumne', 'all'),
-(59, '2016-05-24 13:59:32', 'kjhkjh', 'alumne', 'all'),
-(60, '2016-05-24 13:59:58', 'kjhkjlhlkjh', 'alumne', 'all'),
-(61, '2016-05-24 14:00:00', 'kjhkjh', 'alumne', 'all'),
-(62, '2016-05-24 14:00:08', 'kjhkjh', 'alumne', 'all'),
-(63, '2016-05-24 14:06:40', 'lkj', 'alumne', 'all'),
-(64, '2016-05-24 14:06:41', 'adsfdsa', 'alumne', 'all'),
-(65, '2016-05-24 14:06:42', 'adsfadf', 'alumne', 'all'),
-(66, '2016-05-24 14:06:44', 'adsfa', 'alumne', 'all'),
-(67, '2016-05-24 14:06:44', 'asdf', 'alumne', 'all'),
-(68, '2016-05-24 14:06:45', 'asdf', 'alumne', 'all'),
-(69, '2016-05-24 14:06:46', 'asdfvads', 'alumne', 'all'),
-(70, '2016-05-24 14:06:47', 'vfds', 'alumne', 'all'),
-(71, '2016-05-24 14:06:48', 'vfsfds', 'alumne', 'all'),
-(72, '2016-05-24 14:06:49', 'vsfd', 'alumne', 'all'),
-(73, '2016-05-24 14:06:50', 'ss', 'alumne', 'all'),
-(74, '2016-05-24 14:06:51', 'sdfvfd', 'alumne', 'all'),
-(75, '2016-05-24 14:06:52', 'vfds', 'alumne', 'all'),
-(76, '2016-05-24 14:06:52', 'vfds', 'alumne', 'all'),
-(77, '2016-05-24 14:06:54', 'vfsdv', 'alumne', 'all'),
-(78, '2016-05-24 14:06:55', 'bvsdvfdfd', 'alumne', 'all'),
-(79, '2016-05-24 14:06:56', 'vsfddfds', 'alumne', 'all'),
-(80, '2016-05-24 14:06:58', 'svfvf', 'alumne', 'all'),
-(81, '2016-05-24 14:07:00', 'gvfdsfdfdfds', 'alumne', 'all'),
-(82, '2016-05-24 14:07:01', 'vfdfdf', 'alumne', 'all'),
-(83, '2016-05-24 14:07:02', 'fdfd', 'alumne', 'all'),
-(84, '2016-05-24 14:07:03', 'fdfdfd', 'alumne', 'all'),
-(85, '2016-05-24 14:07:04', 'fdfdfd', 'alumne', 'all'),
-(86, '2016-05-24 14:07:05', 'fdfdfd', 'alumne', 'all'),
-(87, '2016-05-24 14:07:07', 'rrr', 'alumne', 'all'),
-(88, '2016-05-24 14:07:08', 'rerer', 'alumne', 'all'),
-(89, '2016-05-24 14:07:10', 'fdfdfd', 'alumne', 'all'),
-(90, '2016-05-24 14:07:12', 'ffdfd', 'alumne', 'all'),
-(91, '2016-05-24 14:07:19', 'fdfdfd', 'alumne', 'all'),
-(92, '2016-05-24 14:07:27', 'gfdsfd', 'alumne', 'all'),
-(93, '2016-05-24 14:08:07', 'kjhkjh', 'alumne', 'all'),
-(94, '2016-05-24 14:08:09', 'kjhkjhkjh', 'alumne', 'all'),
-(95, '2016-05-24 14:08:11', 'kjh', 'alumne', 'all'),
-(96, '2016-05-24 14:26:04', 'jlkjhdsafkds', 'alumne', 'all'),
-(97, '2016-05-24 14:26:10', 'hola', 'alumne', 'pepito'),
-(98, '2016-05-24 14:26:42', 'k', 'alumne', 'all'),
-(99, '2016-05-24 14:26:42', 'k', 'alumne', 'all'),
-(100, '2016-05-24 14:26:43', 'k', 'alumne', 'all'),
-(101, '2016-05-24 14:26:43', 'k', 'alumne', 'all'),
-(102, '2016-05-24 14:26:43', 'k', 'alumne', 'all'),
-(103, '2016-05-24 14:26:43', 'k', 'alumne', 'all'),
-(104, '2016-05-24 14:26:43', 'k', 'alumne', 'all'),
-(105, '2016-05-24 14:26:43', 'k', 'alumne', 'all'),
-(106, '2016-05-24 14:26:43', 'k', 'alumne', 'all'),
-(107, '2016-05-24 14:26:43', 'k', 'alumne', 'all'),
-(108, '2016-05-24 14:26:44', 'k', 'alumne', 'all'),
-(109, '2016-05-24 14:26:44', 'k', 'alumne', 'all'),
-(110, '2016-05-24 14:26:44', 'k', 'alumne', 'all'),
-(111, '2016-05-24 14:26:44', 'k', 'alumne', 'all'),
-(112, '2016-05-24 14:26:44', 'k', 'alumne', 'all'),
-(113, '2016-05-24 14:26:44', 'k', 'alumne', 'all'),
-(114, '2016-05-24 14:26:44', 'k', 'alumne', 'all'),
-(115, '2016-05-24 14:26:45', 'k', 'alumne', 'all'),
-(116, '2016-05-24 14:26:45', 'k', 'alumne', 'all'),
-(117, '2016-05-24 14:26:45', 'k', 'alumne', 'all'),
-(118, '2016-05-24 14:26:45', 'k', 'alumne', 'all'),
-(119, '2016-05-24 14:26:45', 'k', 'alumne', 'all'),
-(120, '2016-05-24 14:26:45', 'k', 'alumne', 'all'),
-(121, '2016-05-24 14:26:45', 'k', 'alumne', 'all'),
-(122, '2016-05-24 14:26:45', 'k', 'alumne', 'all'),
-(123, '2016-05-24 14:26:46', 'k', 'alumne', 'all'),
-(124, '2016-05-24 14:26:46', 'k', 'alumne', 'all'),
-(125, '2016-05-24 14:26:46', 'k', 'alumne', 'all'),
-(126, '2016-05-24 14:26:47', 'sfdgfd', 'alumne', 'all'),
-(127, '2016-05-24 14:26:47', '', 'alumne', 'all'),
-(128, '2016-05-24 14:26:47', 'fdsgfd', 'alumne', 'all'),
-(129, '2016-05-24 14:26:48', '', 'alumne', 'all'),
-(130, '2016-05-24 14:26:48', 'fdg', 'alumne', 'all'),
-(131, '2016-05-24 14:26:48', 'fd', 'alumne', 'all'),
-(132, '2016-05-24 14:26:48', 'f', 'alumne', 'all'),
-(133, '2016-05-24 14:26:49', 'fd', 'alumne', 'all'),
-(134, '2016-05-24 14:28:48', '', 'alumne', 'all'),
-(135, '2016-05-24 14:29:28', '&lt;script&gt;&lt;b&gt;hola&lt;/b&gt;%$&amp;$', 'alumne', 'all');
+(1, '2016-05-25 15:02:45', 'hola pepito', 'juan4', 'pepito'),
+(2, '2016-05-25 15:03:44', 'hola juan4', 'pepito', 'juan4'),
+(3, '2016-05-25 15:03:49', 'jkhjh', 'pepito', 'all'),
+(4, '2016-05-26 14:09:18', 'this is the end', 'pepito', 'all');
 
 -- --------------------------------------------------------
 
@@ -515,9 +384,18 @@ CREATE TABLE `effect` (
 --
 
 INSERT INTO `effect` (`id`, `name`, `description`, `turns`, `value`, `target`) VALUES
-(1, 'attack effect', 'adds a bonus to aatack point', 1, 2, 'enemy'),
-(2, 'defense effect', 'adds a bonus to defense points', 1, 3, 'enemy'),
-(3, 'crtitical effect', 'adds a bonus to critical points', 2, 1, 'enemy');
+(1, 'Light attack bonus', 'Light bonus to attack points', 1, 1, 'self'),
+(2, 'Light defense bonus', 'Light bonus to defense points', 1, 1, 'self'),
+(3, 'Light critical bonus', 'Light bonus to critical points', 1, 1, 'self'),
+(4, 'Light heal', 'Light health point recovery', 1, 1, 'self'),
+(5, 'Medium attack bonus', 'Medium bonus to attack', 1, 5, 'self'),
+(6, 'Medium bonus to defense', 'Medium bonus to defense points', 1, 5, 'self'),
+(7, 'Medium bonus to critical', 'Medium bonus to critical points', 1, 5, 'self'),
+(8, 'Medium heal', 'Recovers health points by a medium amount', 1, 5, 'self'),
+(9, 'Heavy attack bonus', 'Heavy bonus to attack points', 1, 10, 'self'),
+(10, 'Heavy defense bonus', 'Heavy bonus to defense points', 1, 10, 'self'),
+(11, 'Heavy critical bonus', 'Heavy bonus to critical points', 1, 10, 'self'),
+(12, 'Heavy heal', 'Heavy health points recovery', 1, 10, 'self');
 
 -- --------------------------------------------------------
 
@@ -537,9 +415,18 @@ CREATE TABLE `effectattribute` (
 --
 
 INSERT INTO `effectattribute` (`id`, `idEffect`, `idAttribute`) VALUES
-(1, 1, 1),
-(2, 2, 3),
-(3, 3, 3);
+(5, 1, 1),
+(6, 2, 2),
+(7, 3, 3),
+(8, 4, 4),
+(9, 5, 1),
+(10, 6, 2),
+(11, 7, 3),
+(12, 8, 4),
+(13, 9, 1),
+(14, 10, 2),
+(15, 11, 3),
+(16, 12, 4);
 
 -- --------------------------------------------------------
 
@@ -599,6 +486,13 @@ CREATE TABLE `fights` (
   `id_winner` varchar(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `fights`
+--
+
+INSERT INTO `fights` (`id`, `p1_id`, `p1_ap`, `p1_dp`, `p1_hp`, `p1_cp`, `p1_xp`, `p1_money`, `p1_skin`, `p1_attack1_dmg`, `p1_attack1_attribute`, `p1_attack1_value`, `p1_attack1_name`, `p1_attack1_description`, `p1_attack2_dmg`, `p1_attack2_attribute`, `p1_attack2_value`, `p1_attack2_name`, `p1_attack2_description`, `p1_attack3_dmg`, `p1_attack3_attribute`, `p1_attack3_value`, `p1_attack3_name`, `p1_attack3_description`, `p2_id`, `p2_ap`, `p2_dp`, `p2_hp`, `p2_cp`, `p2_xp`, `p2_money`, `p2_skin`, `p2_attack1_dmg`, `p2_attack1_attribute`, `p2_attack1_value`, `p2_attack1_name`, `p2_attack1_description`, `p2_attack2_dmg`, `p2_attack2_attribute`, `p2_attack2_value`, `p2_attack2_name`, `p2_attack2_description`, `p2_attack3_dmg`, `p2_attack3_attribute`, `p2_attack3_value`, `p2_attack3_name`, `p2_attack3_description`, `id_winner`) VALUES
+(11, 'alumne', 5, 5, 5, 5, 0, 0, 'mobot', 11, 'ap', 1, 'Light head hit', 'Light attack that hits the enemy in the head', 11, 'dp', 1, 'Light leg hit', 'Light attack that hits the enemy in the leg', 11, 'hp', 1, 'Light chest hit', 'Light attack that hits the enemy in the chest', 'pepito', 5, 5, 5, 5, 0, 0, 'mobot', 11, 'ap', 1, 'Light head hit', 'Light attack that hits the enemy in the head', 11, 'dp', 1, 'Light leg hit', 'Light attack that hits the enemy in the leg', 11, 'hp', 1, 'Light chest hit', 'Light attack that hits the enemy in the chest', '');
+
 -- --------------------------------------------------------
 
 --
@@ -620,6 +514,13 @@ CREATE TABLE `fight_events` (
   `p1Health` int(11) DEFAULT NULL,
   `p2Health` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `fight_events`
+--
+
+INSERT INTO `fight_events` (`id`, `p1_id`, `p2_id`, `p1IsReady`, `p2IsReady`, `winner`, `player1Action`, `player2Action`, `roundIsEnded`, `roundNumber`, `p1Health`, `p2Health`) VALUES
+(41, 'alumne', 'pepito', 0, 0, 0, 'null', 'null', NULL, NULL, 27, 37);
 
 -- --------------------------------------------------------
 
@@ -663,9 +564,15 @@ CREATE TABLE `implant` (
 --
 
 INSERT INTO `implant` (`id`, `name`, `description`, `buyPrice`) VALUES
-(1, 'green cristal implant', 'adds a bonus to attack attribute', 15),
-(2, 'blue ruby implant', 'adds a bonus to defense attribute', 17),
-(3, 'Yellow fiber implant', 'adds a bonus to critical attribute', 20);
+(1, 'Light gem implant', 'Light bonus to attack points', 10),
+(2, 'Light ruby implant', 'Light bonus to defense points', 12),
+(3, 'Light crystal implant', 'Light bonus to health points', 13),
+(4, 'Medium blue gem implant', 'Medium bonus to attack points', 23),
+(5, 'Medium alirium implant', 'Medium bonus to defense points', 24),
+(6, 'Medium Iritus implant', 'Medium bonus to health points', 27),
+(7, 'Heavy Veldspar implant', 'Heavy bonus to attack points', 35),
+(8, 'Heavy Scordite implant', 'Heavy bonus to defense points', 42),
+(9, 'Heavy Iranium implant', 'Heavy bonus to health points', 57);
 
 -- --------------------------------------------------------
 
@@ -685,9 +592,15 @@ CREATE TABLE `implanteffect` (
 --
 
 INSERT INTO `implanteffect` (`id`, `idImplant`, `idEffect`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3);
+(4, 1, 1),
+(5, 2, 2),
+(6, 3, 4),
+(7, 4, 5),
+(8, 5, 6),
+(9, 6, 8),
+(10, 7, 9),
+(11, 8, 10),
+(12, 9, 12);
 
 -- --------------------------------------------------------
 
@@ -732,6 +645,13 @@ CREATE TABLE `onlineusers` (
   `idUser` varchar(150) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `onlineusers`
+--
+
+INSERT INTO `onlineusers` (`id`, `idUser`) VALUES
+(46, 'alumne');
+
 -- --------------------------------------------------------
 
 --
@@ -767,7 +687,18 @@ INSERT INTO `profile` (`id`, `name`, `lastName1`, `lastName2`, `birthDate`, `ema
 (11, 'Jkjlj', 'Jkjlj', 'Jlkjk', '2016-05-03 00:00:00', 'adsf@asdf.com', 202),
 (12, 'Jkjlj', 'Jkjlj', 'Jlkjk', '2016-05-03 00:00:00', 'adsf@asdf.com', 202),
 (13, 'Pepito', 'Hola', '', '2016-05-01 00:00:00', 'pepito@gmail.com', 197),
-(14, 'Francisco', 'Sole', 'Gonzalez', '2016-05-01 00:00:00', 'francxyolanda@hotmail.com', 202);
+(14, 'Francisco', 'Sole', 'Gonzalez', '2016-05-01 00:00:00', 'francxyolanda@hotmail.com', 202),
+(15, 'Whuekcoh', 'Whuekcoh', 'Whuekcoh', '2009-08-12 00:00:00', 'a@a.aa', 202),
+(16, 'Mojito', 'Juan andrez', '', '2016-05-11 00:00:00', 'lolazo@hotmail.com', 202),
+(17, 'Polla', 'Patata', 'Joder', '2016-05-02 00:00:00', 'dsdsa@gmail.com', 201),
+(18, 'Francisco', 'Figuereo', 'Moya', '2015-10-13 00:00:00', 'ffiguereo2@gmail.com', 202),
+(19, 'Gerard', 'Romero', 'Arroyo', '2016-05-19 00:00:00', 'gerard.romero7@gmail.com', 202),
+(20, 'Johan', 'Rodas', 'Morales', '2016-04-23 00:00:00', 'sebastian.rbcn@gmail.com', 202),
+(21, 'Juan', 'Montemayor', 'Escuder', '2015-10-07 00:00:00', 'montemayor_bdt@hotmail.com', 150),
+(22, 'Juan', 'Jklj', 'Jlkjlk', '2016-05-03 00:00:00', 'lkj@adsf.com', 201),
+(23, 'Jlkj', 'Jkjkj', 'Jkjljl', '2016-05-02 00:00:00', 'lkj@adf.com', 202),
+(24, 'Pedro', 'Picapiedra', '', '2016-05-03 00:00:00', 'lkj@adsf.com', 202),
+(25, 'Jadf', 'Jkljlkj', '', '2016-05-20 00:00:00', 'asdf@adsf.com', 202);
 
 -- --------------------------------------------------------
 
@@ -794,8 +725,12 @@ INSERT INTO `robotattribute` (`id`, `idRobotStatistic`, `idAttribute`, `value`) 
 (6, 1, 4, 5),
 (7, 4, 1, 5),
 (8, 4, 2, 5),
-(9, 4, 3, 6),
-(10, 4, 4, 5);
+(9, 4, 3, 5),
+(10, 4, 4, 5),
+(11, 16, 1, 5),
+(12, 16, 2, 5),
+(13, 16, 3, 5),
+(14, 16, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -809,15 +744,6 @@ CREATE TABLE `robotimplant` (
   `idRobotStatistic` int(11) NOT NULL,
   `idImplant` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `robotimplant`
---
-
-INSERT INTO `robotimplant` (`id`, `idRobotStatistic`, `idImplant`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -840,7 +766,10 @@ CREATE TABLE `robotskill` (
 
 INSERT INTO `robotskill` (`id`, `idRobotStatistic`, `attack1_id`, `attack2_id`, `attack3_id`) VALUES
 (1, 1, 1, 2, 3),
-(3, 4, 1, 2, 3);
+(3, 4, 1, 2, 3),
+(4, 14, 1, 2, 3),
+(5, 15, 1, 2, 3),
+(6, 16, 1, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -883,11 +812,22 @@ CREATE TABLE `robotstatistic` (
 --
 
 INSERT INTO `robotstatistic` (`id`, `name`, `level`, `experience`, `idRobotSkin`) VALUES
-(1, 'robotron', 4, 2525, 1),
+(1, 'robotron', 4, 2558, 1),
 (2, 'mecabot', 5, 5433, 0),
 (3, '0', 1, 1, 0),
-(4, '0', 1, 1269, 1),
-(5, '0', 1, 1, 2);
+(4, '0', 1, 90, 1),
+(5, '0', 1, 1, 2),
+(6, '0', 1, 1, 2),
+(7, '0', 1, 1, 2),
+(8, '0', 1, 1, 2),
+(9, '0', 1, 1, 2),
+(10, '0', 1, 1, 2),
+(11, '0', 1, 1, 2),
+(12, '0', 1, 1, 2),
+(13, '0', 1, 1, 1),
+(14, 'juan2Tron', 1, 1, 1),
+(15, 'juan3Tron', 1, 1, 1),
+(16, 'juan4Tron', 1, 42, 1);
 
 -- --------------------------------------------------------
 
@@ -914,7 +854,9 @@ INSERT INTO `robotstoreimplant` (`id`, `idRobotStatistic`, `idImplant`) VALUES
 (5, 2, 3),
 (6, 4, 1),
 (7, 4, 2),
-(8, 4, 3);
+(8, 4, 3),
+(9, 14, 1),
+(10, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -935,7 +877,23 @@ CREATE TABLE `robotstoreskill` (
 
 INSERT INTO `robotstoreskill` (`id`, `idRobotStatistic`, `idSkill`) VALUES
 (1, 1, 1),
-(2, 2, 2);
+(2, 2, 2),
+(7, 14, 1),
+(8, 14, 2),
+(9, 14, 3),
+(10, 15, 1),
+(11, 15, 2),
+(12, 15, 3),
+(13, 16, 1),
+(14, 16, 2),
+(15, 16, 3),
+(16, 4, 1),
+(17, 4, 2),
+(18, 4, 3),
+(19, 1, 2),
+(20, 1, 3),
+(21, 1, 4),
+(22, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -958,9 +916,15 @@ CREATE TABLE `skill` (
 --
 
 INSERT INTO `skill` (`id`, `name`, `description`, `requiredLevel`, `buyPrice`, `multiplier`) VALUES
-(1, 'high powered attack', 'charges up a super attack', 1, 12, 1.4),
-(2, 'leg hit', 'hits oppent''s leg', 3, 10, 1.2),
-(3, 'fire shoot', 'fires  a charged shoot', 5, 9, 1.5);
+(1, 'Light head hit', 'Light attack that hits the enemy in the head', 1, 0, 1.1),
+(2, 'Light leg hit', 'Light attack that hits the enemy in the leg', 1, 0, 1.1),
+(3, 'Light chest hit', 'Light attack that hits the enemy in the chest', 1, 0, 1.1),
+(4, 'Medium beam stroke', 'Medium beam attack that hits enemy defenses', 3, 20, 1.6),
+(5, 'Medium hilt strike', 'Medium hilt strike that makes a hole in enemy chips', 4, 33, 2),
+(6, 'Medium laser hit', 'Medium hit that does laser damage on enemy defenses', 5, 35, 2.2),
+(7, 'Heavy satellite strike', 'Heavy strike with satellite bonus', 7, 40, 2.8),
+(8, 'Heavy pulse laser hit', 'Uses laser power to drain enemy strengh', 8, 46, 3.3),
+(9, 'Heavy hard finishing strike', 'Uses all remaining energy to strike enemy with the power core.', 9, 67, 5);
 
 -- --------------------------------------------------------
 
@@ -980,9 +944,15 @@ CREATE TABLE `skilleffect` (
 --
 
 INSERT INTO `skilleffect` (`id`, `idSkill`, `idEffect`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3);
+(4, 1, 1),
+(5, 2, 2),
+(6, 3, 4),
+(7, 5, 7),
+(8, 6, 5),
+(9, 4, 6),
+(10, 7, 9),
+(11, 8, 10),
+(12, 9, 12);
 
 -- --------------------------------------------------------
 
@@ -1007,13 +977,24 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userName`, `password`, `coins`, `userType`, `idProfile`, `idUserStatistic`, `idRobotStatistic`, `active`) VALUES
-('alumne', 'c98a0d7fe575cc92f0cc931db5e31552', 705, 0, 1, 1, 1, 1),
+('alumne', 'c98a0d7fe575cc92f0cc931db5e31552', 638, 0, 1, 1, 1, 1),
 ('alumne2', '6b2703c4bcba1e9cad1c09a623daac68', 10, 0, 12, 4, 3, 1),
 ('all', 'nulo', 0, 0, 4, 3, 0, 1),
 ('Daw2000', 'faa320ce1968c190c880a54b27914f46', 100, 0, 2, 2, 2, 1),
-('pepito', '32164702f8ffd2b418d780ff02371e4c', 456, 0, 13, 5, 4, 1),
+('ffiguereo', '50aba55caaceacbe743a8cef5372c3cc', 10, 0, 18, 10, 9, 1),
+('juan', 'a94652aa97c7211ba8954dd15a3cf838', 10, 0, 21, 13, 12, 1),
+('juan1', 'e3a96c29002aed35295dc9c062e1f331', 10, 0, 22, 14, 13, 1),
+('juan2', '3d81ce8c68f69bf6c36057b9b668b2ba', 61, 0, 23, 15, 14, 1),
+('juan3', '7b5331875e44f1eb08619d8b95226a3f', 10, 0, 24, 16, 15, 1),
+('juan4', '9c1f30eaf71c7e03307138106a071a13', 21, 0, 25, 17, 16, 1),
+('Luigisalva', '81dc9bdb52d04dc20036dbd8313ed055', 10, 0, 17, 9, 8, 1),
+('mojito', '6979c66655648273a3a2c8ab8b474ff7', 10, 0, 16, 8, 7, 1),
+('pepito', '32164702f8ffd2b418d780ff02371e4c', 491, 0, 13, 5, 4, 1),
 ('provenAdmin123', '0192023a7bbd73250516f069df18b500', 0, 1, 3, 0, 0, 1),
-('srsole', '80e77d999f423e6560ce579b07329d87', 10, 0, 14, 6, 5, 1);
+('sebastian', '25d55ad283aa400af464c76d713c07ad', 10, 0, 20, 12, 11, 1),
+('srsole', '80e77d999f423e6560ce579b07329d87', 10, 0, 14, 6, 5, 1),
+('ttn7', '281d262fcff8cd4b44424ab183d763ec', 10, 0, 19, 11, 10, 1),
+('Whuekcoh', '3a6d25ddefa7727e705c51be07a81115', 10, 0, 15, 7, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -1037,12 +1018,23 @@ CREATE TABLE `userstatistic` (
 --
 
 INSERT INTO `userstatistic` (`id`, `wins`, `defeats`, `totalInflictedDamage`, `totalRecivedDamage`, `totalWinCoins`, `totalExpendCoins`) VALUES
-(1, 19, 16, 12991, 9964, 598, 0),
+(1, 20, 17, 13123, 10098, 607, 0),
 (2, 22, 15, 32115, 5532, 231, 211),
 (3, 0, 0, 0, 0, 0, 0),
 (4, 0, 0, 0, 0, 0, 0),
-(5, 14, 21, 9964, 12991, 456, 0),
-(6, 0, 0, 0, 0, 0, 0);
+(5, 18, 23, 10388, 13338, 491, 0),
+(6, 0, 0, 0, 0, 0, 0),
+(7, 0, 0, 0, 0, 0, 0),
+(8, 0, 0, 0, 0, 0, 0),
+(9, 0, 0, 0, 0, 0, 0),
+(10, 0, 0, 0, 0, 0, 0),
+(11, 0, 0, 0, 0, 0, 0),
+(12, 0, 0, 0, 0, 0, 0),
+(13, 0, 0, 0, 0, 0, 0),
+(14, 0, 0, 0, 0, 0, 0),
+(15, 0, 0, 0, 0, 0, 0),
+(16, 0, 0, 0, 0, 0, 0),
+(17, 1, 3, 215, 290, 11, 0);
 
 --
 -- Índices para tablas volcadas
@@ -1223,7 +1215,7 @@ ALTER TABLE `bloqued`
 -- AUTO_INCREMENT de la tabla `chatmessage`
 --
 ALTER TABLE `chatmessage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=136;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `country`
 --
@@ -1233,27 +1225,27 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT de la tabla `duel_requests`
 --
 ALTER TABLE `duel_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `effect`
 --
 ALTER TABLE `effect`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `effectattribute`
 --
 ALTER TABLE `effectattribute`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `fights`
 --
 ALTER TABLE `fights`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `fight_events`
 --
 ALTER TABLE `fight_events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT de la tabla `friend`
 --
@@ -1263,12 +1255,12 @@ ALTER TABLE `friend`
 -- AUTO_INCREMENT de la tabla `implant`
 --
 ALTER TABLE `implant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `implanteffect`
 --
 ALTER TABLE `implanteffect`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `infoanimations`
 --
@@ -1278,27 +1270,27 @@ ALTER TABLE `infoanimations`
 -- AUTO_INCREMENT de la tabla `onlineusers`
 --
 ALTER TABLE `onlineusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT de la tabla `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `robotattribute`
 --
 ALTER TABLE `robotattribute`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT de la tabla `robotimplant`
 --
 ALTER TABLE `robotimplant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary';
 --
 -- AUTO_INCREMENT de la tabla `robotskill`
 --
 ALTER TABLE `robotskill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `robotskin`
 --
@@ -1308,32 +1300,32 @@ ALTER TABLE `robotskin`
 -- AUTO_INCREMENT de la tabla `robotstatistic`
 --
 ALTER TABLE `robotstatistic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `robotstoreimplant`
 --
 ALTER TABLE `robotstoreimplant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `robotstoreskill`
 --
 ALTER TABLE `robotstoreskill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT de la tabla `skill`
 --
 ALTER TABLE `skill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `skilleffect`
 --
 ALTER TABLE `skilleffect`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `userstatistic`
 --
 ALTER TABLE `userstatistic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'es la primary', AUTO_INCREMENT=18;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
