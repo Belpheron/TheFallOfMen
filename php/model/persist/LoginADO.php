@@ -116,12 +116,27 @@ class LoginADO
 
                 //creates robot statistics for user
                 $sql = "INSERT INTO robotstatistic (name, level, experience, idRobotSkin) VALUES (?,?,?,?)";
-                $query = $this->dbConnection->execute($sql, [$user->getUserName() + "Tron", 1, 1, $user->getRobotSkinId()]);
+                $query = $this->dbConnection->execute($sql, [$user->getUserName()."Tron", 1, 1, $user->getRobotSkinId()]);
                 $idRobot = $this->dbConnection->getLink()->lastInsertId();
 
                 //creates user
                 $sql = "INSERT INTO user (userName, password, coins, userType, idProfile, idUserStatistic, idRobotStatistic, active) VALUES (?,?,?,?,?,?,?,?)";
                 $query = $this->dbConnection->execute($sql, [$user->getUserName(), $user->getPassword(), 10, 0, $idProfile, $idStatistic, $idRobot, 1]);
+                
+                //assigns basic skills
+                $sql = "INSERT INTO robotskill (idRobotStatistic,attack1_id,attack2_id,attack3_id) VALUES (?,?,?,?)";
+                $query = $this->dbConnection->execute($sql, [$idRobot, 1, 2, 3]);
+                $sql = "INSERT INTO robotstoreskill (idRobotStatistic,idSkill) VALUES (?,?)";
+                $query = $this->dbConnection->execute($sql, [$idRobot, 1]);
+                $query = $this->dbConnection->execute($sql, [$idRobot, 2]);
+                $query = $this->dbConnection->execute($sql, [$idRobot, 3]);
+                
+                //sets starting attributes
+                $sql = "INSERT INTO robotattribute (idRobotStatistic,idAttribute,value) VALUES (?,?,?)";
+                $query = $this->dbConnection->execute($sql, [$idRobot, 1, 5]);
+                $query = $this->dbConnection->execute($sql, [$idRobot, 2, 5]);
+                $query = $this->dbConnection->execute($sql, [$idRobot, 3, 5]);
+                $query = $this->dbConnection->execute($sql, [$idRobot, 4, 5]);
                 if ($query != null)
                 {
                     return true;

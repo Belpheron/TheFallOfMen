@@ -5,6 +5,7 @@ require_once "../model/persist/UserADO.php";
 require_once "../model/persist/LoginADO.php";
 require_once "../model/User.php";
 require_once "../model/Profile.php";
+require_once "../model/Register.php";
 
 class UserController implements ControllerInterface
 {
@@ -141,19 +142,19 @@ class UserController implements ControllerInterface
                     if ($friends != null)
                     {
                         $outputData[2] = $friends;
-                        $blocked = $this->ado->getBlocked($user);
-                        if ($blocked != null)
-                        {
-                            $outputData[3] = $blocked;
-                        }
-                        else
-                        {
-                            $outputData[3] = false;
-                        }
                     }
                     else
                     {
                         $outputData[2] = false;
+                    }
+                    $blocked = $this->ado->getBlocked($user);
+                    if ($blocked != null)
+                    {
+                        $outputData[3] = $blocked;
+                    }
+                    else
+                    {
+                        $outputData[3] = false;
                     }
                 }
                 else
@@ -259,6 +260,23 @@ class UserController implements ControllerInterface
                     //password incorrect.
                     $outputData[0] = false;
                     $outputData[1] = "Password incorrect.";
+                }
+                break;
+            case 201:
+                $user = new Register($this->jsonData->profile->name, $this->jsonData->profile->lastName1, $this->jsonData->profile->lastName2, $this->jsonData->profile->email, $this->jsonData->profile->birthDate, $this->jsonData->profile->idCountry, $this->jsonData->userName, $this->jsonData->password, $this->jsonData->robotStatistic->idRobotSkin);
+                $id = $this->jsonData->profile->id;
+                $result = $this->ado->updateProfile($user,$id);
+                if ($result == true)
+                {
+                    //correct
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                }
+                else
+                {
+                    //incorrect
+                    $outputData[0] = false;
+                    $outputData[1] = $result;
                 }
                 break;
             default:

@@ -2,6 +2,29 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/model/persist/DBConnect.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/mainWindow.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/templates/hangar-template.html</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/model/persist/UserADO.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/model/persist/AdminADO.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/UserController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/templates/profile-template.html</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/LoginController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/css/adminWindow.css</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/index.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/model/Implant.js</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/control/AdminWindow.js</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/model/Skill.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/model/Implant.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/model/Register.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/MainController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/model/Hangar.js</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/templates/statistic-template.html</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/FightController.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/adminWindow.php</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/js/control/ProfileWindow.js</file>
+            <file>file:/C:/xampp/htdocs/proyecto/TheFallOfMen/php/controllers/AdminController.php</file>
+        </group>
     </open-files>
 </project-private>

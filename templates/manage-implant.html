@@ -1,0 +1,124 @@
+<button class="btn btn-info" ng-click="showFormCreateImplant()">Create Implant</button>
+<button class="btn btn-info" ng-click="modifyImplant()">Modify Implant</button>
+<button class="btn btn-info"ng-click="deleteImplant()">Delete Implant</button>
+<button class="btn btn-danger bottom-left" ng-click="showAdmin = 0">Back</button>
+<hr>
+<div  class="row" ng-show="showFormsAdmin == 11">
+    <div class="col-md-7">
+        <form  id="formCreateImplant" name="formCreateImplant" class="bordered semi-color-form col-lg-offset-2" novalidate="" ng-submit="formCreateImplant.$valid && ctrl.saveImplant()">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label-form">Name</label><br>
+                    <label class="label-form">Description</label><br>
+                    <label class="label-form">Price</label><br>
+                    <label class="label-form">Attribute affected</label><br>
+                    <label class="label-form">Value</label><br>
+                    <label class="label-form">Target</label><br>
+
+                </div>
+                <div class="col-md-8"> 
+                    <input required class="form-control" ng-pattern="/^[\w\d ]{5,50}$/" type="text" ng-model="implant.name"><br>
+                    <input required class="form-control" ng-pattern="/^[\w\d ]{5,50}$/" type="text" ng-model="implant.description"><br>
+                    <input required class="form-control" type="number" min="5" max="100" step="1" ng-pattern="/^[1]?[0-9]{1,2}$/" ng-model="implant.buyPrice"><br>
+                    <select class="" type="text" ng-model="implant.attribute" ng-init="implant.attribute = '1'">
+                        <option value="1">Attack points</option>
+                        <option value="2">Defense points</option>
+                        <option value="3">Critical points</option>
+                        <option value="4">Health points</option>
+                    </select><br>
+                    <input required class="form-control" type="number" min="1" max="20" ng-pattern="/^[1-2]?[0-9]{1}$/" ng-model="implant.value"><br>
+                    <select class="" type="text" ng-model="implant.target" ng-init="implant.target = 'self'">
+                        <option value="self">Self</option>
+                    </select><br>
+                </div> 
+                <button type="submit" id="btnCreate" class= "btn btn-success" ng-disabled="formCreateImplant.$invalid">Create</button>
+                <button type="reset" id="btnReset" class= "btn btn-danger">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div  class="row" ng-show="showFormsAdmin == 12 || showFormsAdmin == 13">
+    <div class="col-md-10 col-md-offset-1 bordered semi-color-form">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="label-form">Features</h3>
+            </div>  
+        </div>
+        <div class="row"> 
+            <div class="col-md-2">
+                <label class="label-form">Items per page</label>
+                <select id="itemsPage" name="itemsPage" ng-model="pagSize" ng-init="pagSize = '5'">
+                    <option selected="" value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option> 
+                </select>
+            </div>
+            <div class="col-md-8">
+                <label class="label-form">Name</label>
+                <input class="form-control" type="text" name="nameImplant" id="nameImplant" ng-model="ctrl.implantSearch.name">
+            </div>
+            <div class="col-md-2">
+                <label class="label-form">Attribute affected</label>
+                <select id="attributeImplant" name="attributeImplant" ng-model="ctrl.implantSearch.attribute" ng-init="ctrl.implantSearch.attribute = ''">
+                    <option value="">All</option>
+                    <option value="AP">Attack points</option>
+                    <option value="DP">Defense points</option>
+                    <option value="CP">Critical points</option>
+                    <option value="HP">Health points</option> 
+                </select>
+            </div>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-lg-10 col-md-offset-1 tophangarInventoryWindow">                           
+            <div class="col-md-0 "><label>#</label></div>
+            <div class="col-md-2"><label id="colName">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></div>
+            <div class="col-md-3"><label id="colDescription">Description</label></div>
+            <div class="col-md-1"><label id="colPrice">Price</label></div>
+            <div class="col-md-1"><label id="colAttribute">Attribute</label></div>
+            <div class="col-md-1"><label id="colValue">Value</label></div>
+            <div class="col-md-1"><label id="colTarget">Target</label></div>
+            <div class="col-md-1"><label id="colBtn">&nbsp;</label></div>                          
+        </div>
+        <div class="row">
+            <div class="col-lg-10 col-md-offset-1 hangarInventoryWindow" id="tableImplants">
+                <table class="table table-striped hangarInventoryWindow">
+                    <tr dir-paginate="implant in allImplants| filter : ctrl.implantSearch.name|filter:ctrl.implantSearch.attribute | itemsPerPage: pagSize as filtered" current-page="currentPage">	
+                        <td >{{$index + 1}}</td>
+                        <td class="colName" ng-show="editImplant != $index">{{implant.name}}</td>
+                        <td class="colName" ng-show="editImplant == $index"><input class="form-control" type="text" ng-pattern="/^[\w\d ]{5,50}$/" ng-model="implant.name" required=""></td>
+                        <td class="colDescription" ng-show="editImplant != $index">{{implant.description}}</td>
+                        <td class="colDescriptionEdit" ng-show="editImplant == $index"><input class="form-control" type="text" ng-pattern="/^[\w\d ]{5,50}$/" ng-model="implant.description" required=""></td>
+                        <td class="colPrice" ng-show="editImplant != $index">{{implant.buyPrice}} Humans</td>
+                        <td class="colPriceEdit" ng-show="editImplant == $index" style="width: 60px; appearance: none;"><input class="form-control" type="number" min="1" max="100" step="1" ng-pattern="/^[1]?[0-9]{1,2}$/" ng-model="implant.buyPrice" required=""></td>
+                        <td class="colAttribute" ng-show="editImplant != $index">{{implant.attribute}}</td>
+                        <td class="colAttributeEdit" ng-show="editImplant == $index"  >
+                            <select class="" ng-model="calcAttribute" ng-init="loadSelectAttribute(implant.attribute)">
+                                <option value="1">AP</option>
+                                <option value="2">DP</option>
+                                <option value="3">CP</option>
+                                <option value="4">HP</option>
+                            </select></td>
+                        <td class="colValue" ng-show="editImplant != $index">{{implant.value}}</td>
+                        <td class="colValueEdit" ng-show="editImplant == $index"><input class="form-control" type="text" min="1" max="20" ng-pattern="/^[1-2]?[0-9]{1}$/" ng-model="implant.value"></td>
+                        <td class="colTarget" ng-show="editImplant != $index">{{implant.target}}</td>
+                        <td class="colTargetEdit" ng-show="editImplant == $index">
+                            <select class="" ng-model="implant.target">
+                                <option value="enemy">Enemy</option>
+                            </select></td>
+                        <td class="colBtn"><button class="btn btn-warning" ng-click="allowEdit($index)" ng-show="showFormsAdmin == 12 && editImplant != $index">Edit</button></td>
+                        <td class="colBtn"><button class="btn btn-danger" ng-click="delete(implant)" ng-show="showFormsAdmin == 13">Delete</button></td>
+                        <td class="colBtn"><button class="btn btn-success" ng-click="trySaveChangesImplant(implant, calcAttribute)" ng-show="editImplant == $index">Save</button></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="row" ng-show="editImplant == -1">
+                <div class="col-md-offset-5">
+                    <dir-pagination-controls boundary-links="true" template-url="templates/dir-pagination-controls.html"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

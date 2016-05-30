@@ -48,9 +48,9 @@ class AdminController implements ControllerInterface
         $outputData = [];
         switch ($this->getAction())
         {
-            //get info attributes skill.
-            case 200: 
-                $implant = new Implant(0,  $this->jsonData->name, $this->jsonData->description, $this->jsonData->buyPrice, $this->jsonData->attrName, $this->jsonData->attrValue );
+            //insert a implant
+            case 200:
+                $implant = new Implant(0, $this->jsonData->name, $this->jsonData->description, $this->jsonData->buyPrice, $this->jsonData->attribute, $this->jsonData->value);
                 $implant->setTarget($this->jsonData->target);
                 $result = $this->ado->insertImplant($implant);
                 if ($result > 0)
@@ -61,13 +61,12 @@ class AdminController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry cannot creater implant";
+                    $outputData[1] = "Sorry cannot create implant";
                 }
                 break;
-            //get infoattributes implant.
+            //get info attributes implant.
             case 201:
-                $implant = new Implant($this->jsonData->id, $this->jsonData->name, $this->jsonData->description, $this->jsonData->buyPrice);
-                $result = $this->ado->getAllInfoImplant($implant);
+                $result = $this->ado->getAllImplants();
                 if ($result != null)
                 {
                     $outputData[0] = true;
@@ -75,15 +74,15 @@ class AdminController implements ControllerInterface
                 }
                 else
                 {
-                    $outputData[0] = false;
-                    $outputData[1] = "Sorry can't load extra info.";
+                    $outputData[0] = true;
+                    $outputData[1] = "Problem reported loadind data implant";
                 }
                 break;
-            //retrive a attributes of robot
+            //update implant
             case 202:
-                $user = new User($this->jsonData->userName);
-                $user->setidRobotStatistic($this->jsonData->robotStatistic->id);
-                $result = $this->ado->getRobotAttributes($user);
+                $implant = new Implant($this->jsonData->id, $this->jsonData->name, $this->jsonData->description, $this->jsonData->buyPrice, $this->jsonData->attribute, $this->jsonData->value, 1);
+                $implant->setTarget($this->jsonData->target);
+                $result = $this->ado->updateImplant($implant);
                 if ($result != null)
                 {
                     $outputData[0] = true;
@@ -92,14 +91,15 @@ class AdminController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry can't load attributes robot.";
+                    $outputData[1] = "Sorry cannot load update implant";
                 }
                 break;
-            //load skill assigned.
+            //delete implant
             case 203:
-                $user = new User($this->jsonData->userName);
-                $user->setIdRobotStatistic($this->jsonData->robotStatistic->id);
-                $result = $this->ado->getAssignedSkill($user);
+                $implant = new Implant($this->jsonData->id, $this->jsonData->name, $this->jsonData->description, $this->jsonData->buyPrice, $this->jsonData->attribute, $this->jsonData->value, 1);
+                $implant->setTarget($this->jsonData->target);
+
+                $result = $this->ado->deleteImplant($implant);
                 if ($result != null)
                 {
                     $outputData[0] = true;
@@ -108,12 +108,12 @@ class AdminController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry can't load assigned skills robot.";
+                    $outputData[1] = "Sorry cannot delete implant";
                 }
                 break;
-            //take info about a skill whit only give id
+            //get info attributes skills.
             case 204:
-                $result = $this->ado->getSkill($this->jsonData->id);
+                $result = $this->ado->getAllSkills();
                 if ($result != null)
                 {
                     $outputData[0] = true;
@@ -121,16 +121,31 @@ class AdminController implements ControllerInterface
                 }
                 else
                 {
-                    $outputData[0] = false;
-                    $outputData[1] = "Sorry cannot load assigned skills robot";
+                    $outputData[0] = true;
+                    $outputData[1] = "Problem reported loadind data skill";
                 }
                 break;
             case 205:
-                $skill = new Skill($this->jsonData->id);
-                $user = new User(0);
-                $user->setIdRobotStatistic($this->jsonData->idRobotStatistic);
-                $objective = $this->jsonData->objective;
-                $result = $this->ado->updateSkill($skill, $user, $objective);
+                $skill = new Skill(0, $this->jsonData->name, $this->jsonData->description, $this->jsonData->requiredLevel, $this->jsonData->buyPrice, $this->jsonData->multiplier);
+                $skill->setTarget("self");
+                $skill->setValue($this->jsonData->value);
+                $skill->setAttribute($this->jsonData->attribute);
+                $result = $this->ado->insertSkill($skill);
+                if ($result > 0)
+                {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                }
+                else
+                {
+                    $outputData[0] = false;
+                    $outputData[1] = "Sorry cannot create skill";
+                }
+                break;
+            case 206:
+                $skill = new Skill($this->jsonData->id, $this->jsonData->name, $this->jsonData->description, $this->jsonData->requiredLevel, $this->jsonData->buyPrice, $this->jsonData->multiplier);
+               $skill->setTarget($this->jsonData->target);
+                $result = $this->ado->updateSkill($skill);
                 if ($result != null)
                 {
                     $outputData[0] = true;
@@ -139,7 +154,7 @@ class AdminController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry skill alredy assigned";
+                    $outputData[1] = "Sorry cannot load update implant";
                 }
                 break;
             default:

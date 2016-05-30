@@ -59,7 +59,7 @@ class ShopController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "No skills found.";
+                    $outputData[1] = "No skills found";
                 }
                 break;
             //purchase a skill
@@ -71,12 +71,12 @@ class ShopController implements ControllerInterface
                 if ($result != null)
                 {
                     $outputData[0] = true;
-                    $outputData[1] = "Purchase succesfull!";
+                    $outputData[1] = "Purchase succesfull";
                 }
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry purchase can't done.";
+                    $outputData[1] = "Sorry purchase cannot be done";
                 }
                 break;
             //load skill purchased
@@ -98,7 +98,7 @@ class ShopController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "All done...";
+                    $outputData[1] = "All done";
                 }
                 break;
             //sell skill
@@ -111,12 +111,12 @@ class ShopController implements ControllerInterface
                 if ($result != null)
                 {
                     $outputData[0] = true;
-                    $outputData[1] = "Sell succesfull!";
+                    $outputData[1] = "Sell succesfull";
                 }
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry sell can't done.";
+                    $outputData[1] = "Sorry sell cannot be done";
                 }
                 break;
             //update coins user.
@@ -145,7 +145,7 @@ class ShopController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "No implants found.";
+                    $outputData[1] = "No implants found";
                 }
                 break;
             //load purchased implants.
@@ -166,7 +166,7 @@ class ShopController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "All done...";
+                    $outputData[1] = "All done";
                 }
                 break;
             //purchase a implant.
@@ -178,12 +178,12 @@ class ShopController implements ControllerInterface
                 if ($result != null)
                 {
                     $outputData[0] = true;
-                    $outputData[1] = "Purchase succesfull!";
+                    $outputData[1] = "Purchase succesfull";
                 }
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry purchase can't done.";
+                    $outputData[1] = "Sorry purchase cannot be done";
                 }
                 break;
             //sell implant
@@ -196,12 +196,12 @@ class ShopController implements ControllerInterface
                 if ($result != null)
                 {
                     $outputData[0] = true;
-                    $outputData[1] = "Sell succesfull!";
+                    $outputData[1] = "Sell succesfull";
                 }
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry sell can't done.";
+                    $outputData[1] = "Sorry sell cannot be done";
                 }
                 break;
             //load info for SKILL tooltip
@@ -216,7 +216,7 @@ class ShopController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry can't load extra info.";
+                    $outputData[1] = "Sorry cannot load extra info";
                 }
                 break;
                 //load info for IMPLANT tooltip
@@ -231,7 +231,7 @@ class ShopController implements ControllerInterface
                 else
                 {
                     $outputData[0] = false;
-                    $outputData[1] = "Sorry can't load extra info.";
+                    $outputData[1] = "Sorry cannot load extra info";
                 }
                 break;
             default:

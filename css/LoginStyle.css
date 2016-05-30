@@ -84,11 +84,13 @@ html{
     padding: 10px;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
-    line-height: 1;
+    line-height: 1.2;
 }
 .registerLink{
     cursor: pointer;
     font-size: 1.2em;
+    color: yellow;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 .registerLink:hover{
     color: blue;
@@ -109,14 +111,13 @@ legend{
 .text-danger{
     color: red;
     font-weight: bold;
-    clear: left;
     width: 90%;
-    padding: 10px;
-    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    float: left;
 }
 .form-control {
     margin-bottom: 5px;
-    margin-top: 5px;
     width: 100%;
     float: left;
     height: 20px;
@@ -227,4 +228,9 @@ label{
 }
 .registerButton:hover{
     background-color: blue;
+}
+.byJuanFra{
+    font-family: "Komtita";
+    font-size: 0.5em;
+    color: lightskyblue;
 }

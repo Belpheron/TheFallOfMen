@@ -516,32 +516,6 @@ this.Shop = function (accessService, scope)
                 break;
         }
     };
-
-    scope.saveChanges = function ()
-    {
-        scope.currentUser = angular.copy(scope.currentUser);
-        if (scope.newPassword != undefined)
-        {
-            scope.currentUser.password = scope.newPassword;
-        }
-        else
-        {
-            scope.currentUser.password = 0;
-        }
-        var promise = accessService.getData("php/controllers/MainController.php", true, "POST", {controllerType: 2, action: 201, jsonData: JSON.stringify(scope.currentUser)});
-        promise.then(function (outputData)
-        {
-            if (outputData[0] === true)
-            {
-                //changes saved
-                alert("Changes successfully saved!");
-            }
-            else
-            {
-                alert("No changes to save.");
-            }
-        });
-    };
 };
 
 

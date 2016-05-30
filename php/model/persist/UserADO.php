@@ -1,4 +1,5 @@
 <?php
+
 require_once "../model/persist/DBConnect.php";
 require_once "../model/persist/ADOinterface.php";
 
@@ -83,33 +84,58 @@ class UserADO implements ADOinterface
      * @param $entity: user object.
      * @return number of affected files, 1 ok; 0 error.
      */
-    public function updateProfile($entity)
+    public function updateProfile($entity, $id)
     {
-        $sql = "UPDATE `profile` SET `name`=?, `lastName1`=? ,`lastName2`=? ,`birthDate`=? ,`email`=? ,`idCountry`=? WHERE id = ?";
-        $array = [$entity->getName(),
-            $entity->getLastName1(),
-            $entity->getLastName2(),
-            $entity->getBirthDate(),
-            $entity->getEmail(),
-            $entity->getIdCountry(),
-            $entity->getId()];
-        try
+        if ($entity->getPassword() == 0)
         {
-            $query = $this->dbConnection->execute($sql, $array);
-            $rowAffected = $query->rowCount();
-            if ($rowAffected != 1)
+            $sql = "UPDATE `profile` SET `name`=?, `lastName1`=? ,`lastName2`=? ,`birthDate`=? ,`email`=? ,`idCountry`=? WHERE id = ?";
+            $array = [$entity->getName(),
+                $entity->getSurName1(),
+                $entity->getSurName2(),
+                $entity->getBirthDate(),
+                $entity->getEmail(),
+                $entity->getCountryId(),
+                $id];
+            try
             {
+                $query = $this->dbConnection->execute($sql, $array);
+                $rowAffected = $query->rowCount();
+                if ($rowAffected != 1)
+                {
+                    $result = false;
+                }
+                else
+                {
+                    $result = true;
+                }
+            }
+            catch (Exception $e)
+            {
+                error_log($e->getMessage());
                 $result = false;
             }
-            else
-            {
-                $result = true;
-            }
         }
-        catch (Exception $e)
+        else
         {
-            error_log($e->getMessage());
-            $result = false;
+            $sql = "UPDATE `profile` SET `name`=?, `lastName1`=? ,`lastName2`=? ,`birthDate`=? ,`email`=? ,`idCountry`=? WHERE id = ?";
+            $array = [$entity->getName(),
+                  $entity->getSurName1(),
+                $entity->getSurName2(),
+                $entity->getBirthDate(),
+                $entity->getEmail(),
+                $entity->getCountryId(),
+                $id];
+            try
+            {
+                $query = $this->dbConnection->execute($sql, $array);
+                $this->updateResetPassword($entity->getUserName(), $entity->getPassword());
+                $result = true; 
+            }
+            catch (Exception $e)
+            {
+                error_log($e->getMessage());
+                $result = false;
+            }
         }
         return $result;
     }
@@ -119,7 +145,7 @@ class UserADO implements ADOinterface
      * @author Franc
      * @version 1.0
      * @date 05/05/2016
-     * @description do a select for update the password of given user whit a given new password.
+     * @description do a select for update the password of given user with a given new password.
      * @param $user: user to change password.
      *              $password: new password to update.
      * @return number of affected files, 1ok; 0 error.

@@ -4,6 +4,32 @@
 }
 .hangarLeftWindow{
     margin-right: 10px;
+    margin-left: 30px;
+}
+.hangarInfo{
+    color: lime;
+    font-weight: bolder;
+    cursor: help;
+}
+.hangarInfoPopUp{
+    position: absolute;
+    padding: 10px;
+    background-color: rgba(27,70,171,0.9);
+    border: 1px solid silver;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 0.8em;
+    color: white;
+    display: none;
+    z-index: 1000;
+    -webkit-box-shadow: 22px 24px 20px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 22px 24px 20px -1px rgba(0,0,0,0.75);
+    box-shadow: 22px 24px 20px -1px rgba(0,0,0,0.75);
+}
+.hangarInventoryContainer{
+    background-color: rgba(89,34,240,0.7);
+    border: none;
+    border-radius: 10px;
 }
 .hangarExperienceWindow{
     border: 1px solid silver;
@@ -15,9 +41,10 @@
     height: 20vh;
 }
 .hangarInventoryWindow{
-    border: 1px solid silver;
     height: 40vh;
     margin-top: 5px;
+    color: white;
+    overflow: auto;
 }
 .hangarSkillsWindow{
     border: 1px solid silver;

@@ -57,8 +57,8 @@ class RobotController implements ControllerInterface {
                     $outputData[0] = true;
                     $outputData[1] = $result;
                 } else {
-                    $outputData[0] = false;
-                    $outputData[1] = "Error loading implants.";
+                    $outputData[0] = true;
+                    $outputData[1] = [];
                 }
                 break;
             //gets all attributes from username
@@ -69,8 +69,8 @@ class RobotController implements ControllerInterface {
                     $outputData[0] = true;
                     $outputData[1] = $result;
                 } else {
-                    $outputData[0] = false;
-                    $outputData[1] = "Error loading attributes";
+                    $outputData[0] = true;
+                    $outputData[1] = [];
                 }
                 break;
             case 103:
@@ -90,6 +90,7 @@ class RobotController implements ControllerInterface {
                     $outputData[1] = $result;
                 } else {
                     $outputData[0] = false;
+                    $outputData[1] = [];
                 }
                 break;
             case 105:
@@ -99,6 +100,29 @@ class RobotController implements ControllerInterface {
                     $outputData[1] = $result;
                 } else {
                     $outputData[0] = false;
+                }
+                break;
+            //gets all attributes for given username                
+            case 106:
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->getAllStoredImplants($user);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = true;
+                    $outputData[1] = [];
+                }
+                break;
+            case 107:
+                $user = new User($this->jsonData->userName);
+                $result = $this->ado->getAllStoredAttacks($user);
+                if ($result != null) {
+                    $outputData[0] = true;
+                    $outputData[1] = $result;
+                } else {
+                    $outputData[0] = false;
+                    $outputData[1] = [];
                 }
                 break;
             default:

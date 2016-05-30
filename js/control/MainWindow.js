@@ -4,6 +4,7 @@ var chatMessageLoadTimer;
 var duelRequestTimer;
 var responseTimer;
 var checkRequestResponseTimer;
+var hangarAnimationTemp;
 
 //jQuery code
 
@@ -63,7 +64,6 @@ var checkRequestResponseTimer;
                             outputData[2].idCountry);
                     //load user statistics data.
                     var userStatisticData = new UserStatistic(
-                            outputData[3].id,
                             outputData[3].id,
                             outputData[3].wins,
                             outputData[3].defeats,
@@ -242,6 +242,18 @@ var checkRequestResponseTimer;
 
             },
             controllerAs: 'shopTemplate'
+        };
+    });
+    fallOfMenApp.directive("profileTemplate", function ()
+    {
+        return {
+            restrict: 'E',
+            templateUrl: "templates/profile-template.html",
+            controller: function ()
+            {
+
+            },
+            controllerAs: 'profileTemplate'
         };
     });
 })();

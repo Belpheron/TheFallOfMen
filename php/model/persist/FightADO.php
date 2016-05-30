@@ -160,8 +160,8 @@ class FightADO implements ADOinterface {
     }
     
     public function createFightEvent($player1, $player2) {
-        $sql = "INSERT INTO fight_events (p1_id,p2_id,p1IsReady,p2IsReady) VALUES (?,?,?,?)";
-        $query = $this->dbConnection->execute($sql, [$player1->getUserName(), $player2->getUserName(), 0, 0]);
+        $sql = "INSERT INTO fight_events (p1_id,p2_id,p1IsReady,p2IsReady, p1Health, p2Health) VALUES (?,?,?,?,?,?)";
+        $query = $this->dbConnection->execute($sql, [$player1->getUserName(), $player2->getUserName(), 0, 0, 1, 1]);
         if ($query->rowCount() != 0) {
             $id = $this->dbConnection->getLink()->lastInsertId();
             $sql = "SELECT * FROM fight_events WHERE id = ?";

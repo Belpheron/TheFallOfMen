@@ -73,7 +73,7 @@ if (isset($_GET["logOut"]))
         <header class="menuBar row">
             <a href="mainWindow.php?logOut=1" class="menuButton logoutButton btn">LOGOUT</a>
             <button class="menuButton btn" ng-click="showHome()">HOME</button>
-            <button class="menuButton btn" ng-click="hangar.hangarShow()">HANGAR</button>
+            <button class="menuButton btn" ng-click="hangar.show()">HANGAR</button>
             <button class="menuButton btn" ng-click="shop.showShop()">SHOP</button>
             <button class="menuButton btn" ng-click="profileWindow.showProfile()">PROFILE</button>
             <span class="gameTitle">The fall of men<small class="byJuanFra">  by JuanFra</small></span>

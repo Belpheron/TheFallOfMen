@@ -59,29 +59,217 @@ class AdminADO implements ADOinterface
     }
 
     /**
-     * @name getAllInfoSkill()
+     * @name getAllImplants()
      * @author Franc
      * @version 1.0
-     * @date 17/05/2016
-     * @description give all information about a skill selected.
-     * @param skill: object skill wants info.
-     * @return : boolean.
+     * @date 27/05/2016
+     * @description give all information about a implant selected.
+     * @param none
+     * @return : array
      */
-    public function getAllInfoSkill($skill)
+    public function getAllImplants()
+    {
+        $result = [];
+        $sql = "SELECT * FROM implant";
+        $query = $this->dbConnection->execute($sql, []);
+        if ($query != null)
+        {
+            $implantList = $query->fetchAll();
+            if (count($implantList) > 0)
+            {
+                for ($i = 0; $i < count($implantList); $i++)
+                {
+                    $implant = new Implant();
+                    $implant->setId($implantList[$i]["id"]);
+                    $implant->setName($implantList[$i]["name"]);
+                    $implant->setDescription($implantList[$i]["description"]);
+                    $implant->setBuyPrice($implantList[$i]["buyPrice"]);
+                    $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM implanteffect WHERE idImplant = ?)";
+                    $query2 = $this->dbConnection->execute($sql, [$implantList[$i]["id"]]);
+                    $effect = $query2->fetch();
+                    $implant->setTurns($effect["turns"]);
+                    $implant->setValue($effect["value"]);
+                    $implant->setTarget($effect["target"]);
+                    $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = ?)";
+                    $query3 = $this->dbConnection->execute($sql, [$effect["id"]]);
+                    $att = $query3->fetch();
+                    $implant->setAttribute($att["iso"]);
+                    $result[] = $implant->toArrayFull();
+                }
+            }
+            else
+            {
+                $result = [];
+            }
+        }
+        else
+        {
+            $result = [];
+        }
+        return $result;
+    }
+
+    /**
+     * @name updateImplant()
+     * @author Franc
+     * @version 1.0
+     * @date 28/05/2016
+     * @description update a implant.
+     * @param implant: object
+     * @return : boolean
+     */
+    public function updateImplant($implant)
     {
         try
         {
-            $sqlEffect = "SELECT * FROM effect WHERE `id` = (SELECT `idEffect` FROM skilleffect  WHERE `idSkill` = ?)";
-            $array = [$skill->getId()];
+            //update implant
+            $sqlImplant = "UPDATE `implant` SET `name`=?,`description`=?,`buyPrice`=? WHERE `id`=?";
+            $array = [$implant->getName(), $implant->getDescription(), $implant->getBuyPrice(), $implant->getId()];
+            $infoImplant = $this->dbConnection->execute($sqlImplant, $array);
+            //select ImplantEffect
+            $sqlImplantEffect = "SELECT `idEffect` FROM `implanteffect` WHERE `idImplant`=?";
+            $array = [$implant->getId()];
+            $infoImplantEffect = $this->dbConnection->execute($sqlImplantEffect, $array);
+            $idEffect = $infoImplantEffect->fetch();
+            //insert effect
+            $sqlEffect = "UPDATE `effect` SET `value`=?, `target`=? WHERE `id`=? ";
+            $array = [$implant->getValue(), $implant->getTarget(), $idEffect[0]];
             $infoEffect = $this->dbConnection->execute($sqlEffect, $array);
-            $infoEffect = $infoEffect->fetch();
-            $sqlAttribute = "SELECT * FROM attribute WHERE `id` = (SELECT `idAttribute` FROM effectattribute  WHERE `idEffect` = ?)";
-            $array = [$infoEffect["id"]];
-            $infoAttribute = $this->dbConnection->execute($sqlAttribute, $array);
-            $infoAttribute = $infoAttribute->fetch();
+            //insert effectAttribute
+            $sqlEffectAttribute = "UPDATE `effectattribute` SET`idAttribute`=? WHERE `idEffect`=?";
+            $array = [$implant->getAttribute(), $idEffect[0]];
+            $infoImplantEffect = $this->dbConnection->execute($sqlEffectAttribute, $array);
+            return $this->dbConnection->getLink()->lastInsertId();
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            return null;
+        }
+    }
+
+    public function deleteImplant($implant)
+    {
+        try
+        {
+            //select ImplantEffect
+            $sqlImplantEffect = "SELECT `idEffect` FROM `implanteffect` WHERE `idImplant`=?";
+            $array = [$implant->getId()];
+            $infoImplantEffect = $this->dbConnection->execute($sqlImplantEffect, $array);
+            $idEffect = $infoImplantEffect->fetch();
+          
+            //delte implantEffect
+            $sqlImplantEffectDel = "DELETE FROM `implanteffect` WHERE `idImplant`=?";
+            $array = [$implant->getId()];
+            $infoImplantEffectDel = $this->dbConnection->execute($sqlImplantEffectDel, $array);
+            
+            //delete effect
+            $sqlEffect = "DELETE FROM `effect` WHERE `id`=? ";
+            $array = [$idEffect[0]];
+            $infoEffect = $this->dbConnection->execute($sqlEffect, $array);
+
+            //delete effectAttribute
+            $sqlEffectAttribute = "DELETE FROM `effectattribute` WHERE `idEffect`=?";
+            $array = [$idEffect[0]];
+            $infoImplantEffect = $this->dbConnection->execute($sqlEffectAttribute, $array);
+            
+            //delete implant
+            $sqlImplant = "DELETE FROM `implant` WHERE `id`=?";
+            $array = [$implant->getId()];
+            $infoImplant = $this->dbConnection->execute($sqlImplant, $array);
+            return $this->dbConnection->getLink()->lastInsertId();
+        }
+        catch (Exception $e)
+        {
+            error_log($e->getMessage());
+            return null;
+        }
+    }
+    
+     /**
+     * @name getAllSkills()
+     * @author Franc
+     * @version 1.0
+     * @date 27/05/2016
+     * @description give all information about a implant selected.
+     * @param none
+     * @return : array
+     */
+    public function getAllSkills()
+    {
+        $result = [];
+        $sql = "SELECT * FROM skill";
+        $query = $this->dbConnection->execute($sql, []);
+        if ($query != null)
+        {
+            $skillList = $query->fetchAll();
+            if (count($skillList) > 0)
+            {
+                for ($i = 0; $i < count($skillList); $i++)
+                {
+                    $skill = new Skill();
+                    $skill->setId($skillList[$i]["id"]);
+                    $skill->setName($skillList[$i]["name"]);
+                    $skill->setDescription($skillList[$i]["description"]);
+                    $skill->setRequiredLevel($skillList[$i]["requiredLevel"]);
+                    $skill->setBuyPrice($skillList[$i]["buyPrice"]);
+                    $skill->setMultiplier($skillList[$i]["multiplier"]);
+                    $sql = "SELECT * FROM effect WHERE id = (SELECT idEffect FROM skilleffect WHERE idSkill = ?)";
+                    $query2 = $this->dbConnection->execute($sql, [$skillList[$i]["id"]]);
+                    $effect = $query2->fetch();                    
+                    $skill->setValue($effect["value"]);
+                    $skill->setTarget($effect["target"]);
+                    $sql = "SELECT * FROM attribute WHERE id = (SELECT idAttribute FROM effectattribute WHERE idEffect = ?)";
+                    $query3 = $this->dbConnection->execute($sql, [$effect["id"]]);
+                    $att = $query3->fetch();
+                    $skill->setAttribute($att["iso"]);
+                    $result[] = $skill->toArrayFull();
+                }
+            }
+            else
+            {
+                $result = [];
+            }
+        }
+        else
+        {
             $result = [];
-            array_push($result, $infoEffect);
-            array_push($result, $infoAttribute);
+        }
+        return $result;
+    }
+    
+     /**
+     * @name insertSkill()
+     * @author Franc
+     * @version 1.0
+     * @date 30/05/2016
+     * @description insert a new skill.
+     * @param implant: object
+     * @return : num last id.
+     */
+    public function insertSkill($skill)
+    {
+        try
+        {
+            //insert implant
+            $sqlSkill = "INSERT INTO `skill`(`id`, `name`, `description`,`requiredLevel` ,`buyPrice`, `multiplier`) VALUES (0,?,?,?,?,?) ";
+            $array = [$skill->getName(), $skill->getDescription(), $skill->getRequiredLevel(), $skill->getBuyPrice(), $skill->getMultiplier()];
+            $infoSkill = $this->dbConnection->execute($sqlSkill, $array);
+            $lastIdSkill = $this->dbConnection->getLink()->lastInsertId();
+            //insert effect
+            $sqlEffect = "INSERT INTO `effect`( `name`, `description`, `turns`, `value`, `target`) VALUES ('Implant Add for admin','Personal attributes modified',1,?,?) ";
+            $array = [$skill->getValue(), $skill->getTarget()];
+            $infoEffect = $this->dbConnection->execute($sqlEffect, $array);
+            $lastIdEffect = $this->dbConnection->getLink()->lastInsertId();
+            //insert ImplantEffect
+            $sqlSkillEffect = "INSERT INTO `skilleffect` (`idSkill`, `idEffect`) VALUES (?,?)";
+            $array = [$lastIdSkill, $lastIdEffect];
+            $infoSkillEffect = $this->dbConnection->execute($sqlSkillEffect, $array);
+            //insert effectAttribute
+            $sqlEffectAttribute = "INSERT INTO `effectattribute` (`idEffect`, `idAttribute`) VALUES (?,?)";
+            $array = [$lastIdEffect, $skill->getAttribute()];
+            $infoSkillEffect = $this->dbConnection->execute($sqlEffectAttribute, $array);
+            $result = $this->dbConnection->getLink()->lastInsertId();
             return $result;
         }
         catch (Exception $e)
@@ -90,410 +278,58 @@ class AdminADO implements ADOinterface
             return null;
         }
     }
-
+    
     /**
-     * @name sellImplant()
+     * @name updateSkill()
      * @author Franc
      * @version 1.0
-     * @date 16/05/2016
-     * @description allow sell a implant if all conditions are done.
-     * @param none.
-     * @return : boolean.
+     * @date 30/05/2016
+     * @description update a skill.
+     * @param skill: object
+     * @return : boolean
      */
-    public function sellImplant($implant, $user)
+    public function updateSkill($skill)
     {
         try
         {
-            //1 take user coins.
-            $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
-            $array = [$user->getUserName()];
-            $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null)
-            {
-                $result = $query1->fetch();
-                //2 update coins user.
-                $sql2 = "UPDATE `user` SET `coins`= ? WHERE `userName` = ?";
-                $array = [$result[0] + $implant->getSellPrice(), $user->getUserName()];
-                $query2 = $this->dbConnection->execute($sql2, $array);
-                //3 remove skill to inventory.
-                $sql3 = "DELETE FROM `robotstoreimplant` WHERE `idRobotStatistic` = ? AND `idImplant` = ?";
-                $array = [$user->getIdRobotStatistic(), $implant->getId()];
-                $query3 = $this->dbConnection->execute($sql3, $array);
-                return true;
-            }
-            else
-            {
-                //problem coins// ¿hack?
-                return null;
-            }
+            //update implant
+            $sqlSkill = "UPDATE `skill` SET `name`=?,`description`=?, `requiredLevel`=?,`buyPrice`=? `multiplier`=? WHERE `id`=?";
+            $array = [$skill->getName(), $skill->getDescription(), $skill->getRequiredLevel(), $skill->getBuyPrice(), $skill->getMultiplier(), $skill->getId()];
+            $infoImplant = $this->dbConnection->execute($sqlSkill, $array);
+            //select SkillEffect
+            $sqlSkillEffect = "SELECT `idEffect` FROM `skilleffect` WHERE `idSkill`=?";
+            $array = [$skill->getId()];
+            $infoSkillEffect = $this->dbConnection->execute($sqlSkillEffect, $array);
+            $idEffect = $infoSkillEffect->fetch();
+            //insert effect
+            $sqlEffect = "UPDATE `effect` SET `value`=?, `target`=? WHERE `id`=? ";
+            $array = [$skill->getValue(), $skill->getTarget(), $idEffect[0]];
+            $infoEffect = $this->dbConnection->execute($sqlEffect, $array);
+            //insert effectAttribute
+            $sqlEffectAttribute = "UPDATE `effectattribute` SET`idAttribute`=? WHERE `idEffect`=?";
+            $array = [$skill->getAttribute(), $idEffect[0]];
+            $infoSkillEffect = $this->dbConnection->execute($sqlEffectAttribute, $array);
+            return $this->dbConnection->getLink()->lastInsertId();
         }
         catch (Exception $e)
         {
-            return null;
             error_log($e->getMessage());
-        }
-    }
-
-    /**
-     * @name purchaseImplant()
-     * @author Franc
-     * @version 1.0
-     * @date 16/05/2016
-     * @description allow purchase a implant if all conditions are done.
-     * @param none.
-     * @return : boolean.
-     */
-    public function purchaseImplant($imaplant, $user)
-    {
-        try
-        {
-            //1 comprobe user have enough coins.
-            $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
-            $array = [$user->getUserName()];
-            $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null)
-            {
-                $result = $query1->fetch();
-                if ($result[0] >= $imaplant->getBuyPrice())
-                {
-                    //2 update coins user.
-                    $sql2 = "UPDATE `user` SET `coins`= ? WHERE `userName` = ?";
-                    $array = [$result[0] - $imaplant->getBuyPrice(), $user->getUserName()];
-                    $query2 = $this->dbConnection->execute($sql2, $array);
-                    //3 add skill to inventory.
-                    $sql3 = "INSERT INTO `robotstoreimplant`(`idRobotStatistic`, `idImplant`) VALUES (?,?)";
-                    $array = [$user->getIdRobotStatistic(), $imaplant->getId()];
-                    $query3 = $this->dbConnection->execute($sql3, $array);
-                    return true;
-                }
-            }
-            else
-            {
-                //not enough coins// ¿hack?
-                return null;
-            }
-        }
-        catch (Exception $e)
-        {
             return null;
-            error_log($e->getMessage());
         }
     }
 
-    /**
-     * @name getInfoImplant()
-     * @author Franc
-     * @version 1.0 
-     * @date 16/05/2016
-     * @description get all data of selected implants.
-     * @param id array of implants.
-     * @return : data of implants purchased. (purchased)
-     */
-    public function getInfoImplant($arrayId)
-    {
-        $arrayResult = [];
-        try
-        {
-            for ($i = 0; $i < count($arrayId); $i++)
-            {
-                $sql = "SELECT * FROM implant WHERE id = ?";
-                $array = [$arrayId[$i][0]];
-                $query = $this->dbConnection->execute($sql, $array);
-                if ($query != null)
-                {
-                    $result = $query->fetch();
-                    array_push($arrayResult, $result);
-                }
-            }
-            return $arrayResult;
-        }
-        catch (Exception $ex)
-        {
-            error_log($ex->getMessage());
-        }
-
-        return null;
-    }
-
-    /**
-     * @name getAllPurchasedImplant()
-     * @author Franc
-     * @version 1.0
-     * @date 16/05/2016
-     * @description get all data of implant previously purchased
-     * @param none.
-     * @return : data of implants purchased. (purchased)
-     */
-    public function getAllPurchasedImplant($user)
-    {
-        try
-        {
-            $sql = "SELECT idImplant FROM robotstoreimplant WHERE idRobotStatistic = ?";
-            $array = [$user->getIdRobotStatistic()];
-            $query = $this->dbConnection->execute($sql, $array);
-            if ($query != null)
-            {
-                return $query->fetchAll();
-            }
-        }
-        catch (Exception $ex)
-        {
-            error_log($ex->getMessage());
-        }
-
-        return null;
-    }
-
-    /**
-     * @name getAllImplants()
-     * @author Franc
-     * @version 1.0
-     * @date 16/05/2016
-     * @description get all data of implants
-     * @param none.
-     * @return : data of implants. (all)
-     */
-    public function getAllImplants()
-    {
-        try
-        {
-            $sql = "SELECT * FROM implant";
-            $array = [];
-            $query = $this->dbConnection->execute($sql, $array);
-            if ($query != null)
-            {
-                return $query->fetchAll();
-            }
-        }
-        catch (Exception $ex)
-        {
-            error_log($ex->getMessage());
-        }
-
-        return null;
-    }
-
-    /**
-     * @name getCoins()
-     * @author Franc
-     * @version 1.0
-     * @date 15/05/2016
-     * @description get info coins from user
-     * @param user object.
-     * @return : data of coins.
-     */
-    public function getCoins($user)
-    {
-        try
-        {
-            $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
-            $array = [$user->getUserName()];
-            $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null)
-            {
-                return $query1->fetchAll();
-            }
-        }
-        catch (Exception $ex)
-        {
-            error_log($ex->getMessage());
-        }
-
-        return null;
-    }
-
-    /**
-     * @name getAllPurchasedSkill()
-     * @author Franc
-     * @version 1.0
-     * @date 15/05/2016
-     * @description get all data of skill previously purchased
-     * @param none.
-     * @return : data of skill purchased. (all)
-     */
-    public function getAllPurchasedSkill($user)
-    {
-        try
-        {
-            $sql = "SELECT idSkill FROM robotstoreskill WHERE idRobotStatistic = ?";
-            $array = [$user->getIdRobotStatistic()];
-            $query = $this->dbConnection->execute($sql, $array);
-            if ($query != null)
-            {
-                return $query->fetchAll();
-            }
-        }
-        catch (Exception $ex)
-        {
-            error_log($ex->getMessage());
-        }
-
-        return null;
-    }
-
-    /**
-     * @name getInfoSkill()
-     * @author Franc
-     * @version 1.0 
-     * @date 15/05/2016
-     * @description get all data of selected skills.
-     * @param id array of skills.
-     * @return : data of skill purchased. (selected)
-     */
-    public function getInfoSkill($arrayId)
-    {
-        $arrayResult = [];
-        try
-        {
-            for ($i = 0; $i < count($arrayId); $i++)
-            {
-                $sql = "SELECT * FROM skill WHERE id = ?";
-                $array = [$arrayId[$i][0]];
-                $query = $this->dbConnection->execute($sql, $array);
-                if ($query != null)
-                {
-                    $result = $query->fetch();
-                    array_push($arrayResult, $result);
-                }
-            }
-            return $arrayResult;
-        }
-        catch (Exception $ex)
-        {
-            error_log($ex->getMessage());
-        }
-
-        return null;
-    }
-
-    /**
-     * @name getAllSkills()
-     * @author Franc
-     * @version 1.0
-     * @date 12/05/2016
-     * @description get all data of skill
-     * @param none.
-     * @return : data of skill. (all)
-     */
-    public function getAllSkills()
-    {
-        try
-        {
-            $sql = "SELECT * FROM skill";
-            $array = [];
-            $query = $this->dbConnection->execute($sql, $array);
-            if ($query != null)
-            {
-                return $query->fetchAll();
-            }
-        }
-        catch (Exception $ex)
-        {
-            error_log($ex->getMessage());
-        }
-        return null;
-    }
-
-    /**
-     * @name sellSkill()
-     * @author Franc
-     * @version 1.0
-     * @date 12/05/2016
-     * @description allow sell a skill if all conditions are done.
-     * @param none.
-     * @return : boolean.
-     */
-    public function sellSkill($skill, $user)
-    {
-        try
-        {
-            //1 take user coins.
-            $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
-            $array = [$user->getUserName()];
-            $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null)
-            {
-                $result = $query1->fetch();
-                //2 update coins user.
-                $sql2 = "UPDATE `user` SET `coins`= ? WHERE `userName` = ?";
-                $array = [$result[0] + $skill->getSellPrice(), $user->getUserName()];
-                $query2 = $this->dbConnection->execute($sql2, $array);
-                //3 remove skill to inventory.
-                $sql3 = "DELETE FROM `robotstoreskill` WHERE `idRobotStatistic` = ? AND `idSkill` = ?";
-                $array = [$user->getIdRobotStatistic(), $skill->getId()];
-                $query3 = $this->dbConnection->execute($sql3, $array);
-                return true;
-            }
-            else
-            {
-                //problem coins// ¿hack?
-                return null;
-            }
-        }
-        catch (Exception $e)
-        {
-            return null;
-            error_log($e->getMessage());
-        }
-    }
-
-    /**
-     * @name purchaseSkill()
-     * @author Franc
-     * @version 1.0
-     * @date 12/05/2016
-     * @description allow purchase a skill if all conditions are done.
-     * @param none.
-     * @return : boolean.
-     */
-    public function purchaseSkill($skill, $user)
-    {
-        try
-        {
-            //1 comprobe user have enough coins.
-            $sql1 = "SELECT `coins` FROM `user` WHERE userName = ?";
-            $array = [$user->getUserName()];
-            $query1 = $this->dbConnection->execute($sql1, $array);
-            if ($query1 != null)
-            {
-                $result = $query1->fetch();
-                if ($result[0] >= $skill->getBuyPrice())
-                {
-                    //2 update coins user.
-                    $sql2 = "UPDATE `user` SET `coins`= ? WHERE `userName` = ?";
-                    $array = [$result[0] - $skill->getBuyPrice(), $user->getUserName()];
-                    $query2 = $this->dbConnection->execute($sql2, $array);
-                    //3 add skill to inventory.
-                    $sql3 = "INSERT INTO `robotstoreskill`(`idRobotStatistic`, `idSkill`) VALUES (?,?)";
-                    $array = [$user->getIdRobotStatistic(), $skill->getId()];
-                    $query3 = $this->dbConnection->execute($sql3, $array);
-                    return true;
-                }
-            }
-            else
-            {
-                //not enough coins// ¿hack?
-                return null;
-            }
-        }
-        catch (Exception $e)
-        {
-            return null;
-            error_log($e->getMessage());
-        }
-    }
 
     public function delete($entity)
     {
         
     }
 
-    public function getAll()
+    public function get($entity)
     {
         
     }
 
-    public function get($entity)
+    public function getAll()
     {
         
     }

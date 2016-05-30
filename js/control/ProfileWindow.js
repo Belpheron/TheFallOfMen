@@ -80,7 +80,7 @@ this.ProfileWindow = function (accessService, scope)
             scope.show = 1;
         }
     };
-
+    
     scope.saveChanges = function ()
     {
         scope.currentUser = angular.copy(scope.currentUser);
@@ -98,7 +98,7 @@ this.ProfileWindow = function (accessService, scope)
             if (outputData[0] === true)
             {
                 //changes saved
-                alert("Changes saved succesfuckly!");
+                alert("Changes succesfully saved!");
             }
             else
             {

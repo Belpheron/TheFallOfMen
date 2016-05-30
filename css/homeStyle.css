@@ -29,6 +29,9 @@
 .usersTab{
     background-color: rgba(89,34,240,0.5);
     color: white;
+    font-family: "Space";
+    font-size: 1em;
+    cursor: pointer;
 }
 .chatSendButton{
     font-family: "Space";

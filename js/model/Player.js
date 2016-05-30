@@ -1,4 +1,4 @@
-this.Player = function(playerName, playerNumber, accessService, scope) {
+this.Player = function (playerName, playerNumber, accessService, scope) {
     //properties
     this.playerNumber = playerNumber;
     this.playerName = playerName;
@@ -30,14 +30,14 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param instance : pointer to this
      * @returns {n/a}
      */
-    this.resetBonus = function(instance) {
+    this.resetBonus = function (instance) {
         instance.apBonus = 0;
         instance.dpBonus = 0;
         instance.hpBonus = 0;
         instance.cpBonus = 0;
         instance.attackBonusText = "";
     }
-    
+
     /**
      * @name setAttackBonus()
      * @author Juan
@@ -49,7 +49,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param instance : pointer to this
      * @returns {n/a}
      */
-    this.setAttackBonus = function(attackName, instance) {        
+    this.setAttackBonus = function (attackName, instance) {
         if (attackName == "attack1") {
             if (instance.playerNumber == 1) {
                 switch (scope.fightDetails.p1_attack1_attribute) {
@@ -59,15 +59,15 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                         break;
                     case "dp":
                         instance.dpBonus = parseInt(scope.fightDetails.p1_attack1_value);
-                        instance.attackBonusText = "DP+" + instance.apBonus;
+                        instance.attackBonusText = "DP+" + instance.dpBonus;
                         break;
                     case "cp":
                         instance.cpBonus = parseInt(scope.fightDetails.p1_attack1_value);
                         instance.attackBonusText = "CP+" + instance.cpBonus;
                         break;
                     case "hp":
-                        instance.hpBonus = parseInt(scope.fightDetails.p1_attack1_value);
-                        instance.attackBonusText = "HP+" + (instance.hpBonus * 10);
+                        instance.hpBonus = parseInt(scope.fightDetails.p1_attack1_value) * 10;
+                        instance.attackBonusText = "HP+" + instance.hpBonus;
                         break;
                     default:
                         instance.attackBonusText = "";
@@ -81,15 +81,15 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                         break;
                     case "dp":
                         instance.dpBonus = parseInt(scope.fightDetails.p2_attack1_value);
-                        instance.attackBonusText = "DP+" + instance.apBonus;
+                        instance.attackBonusText = "DP+" + instance.dpBonus;
                         break;
                     case "cp":
                         instance.cpBonus = parseInt(scope.fightDetails.p2_attack1_value);
                         instance.attackBonusText = "CP+" + instance.cpBonus;
                         break;
                     case "hp":
-                        instance.hpBonus = parseInt(scope.fightDetails.p2_attack1_value);
-                        instance.attackBonusText = "HP+" + (instance.hpBonus * 10);
+                        instance.hpBonus = parseInt(scope.fightDetails.p2_attack1_value) * 10;
+                        instance.attackBonusText = "HP+" + instance.hpBonus;
                         break;
                     default:
                         instance.attackBonusText = "";
@@ -106,15 +106,15 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                         break;
                     case "dp":
                         instance.dpBonus = parseInt(scope.fightDetails.p1_attack2_value);
-                        instance.attackBonusText = "DP+" + instance.apBonus;
+                        instance.attackBonusText = "DP+" + instance.dpBonus;
                         break;
                     case "cp":
                         instance.cpBonus = parseInt(scope.fightDetails.p1_attack2_value);
                         instance.attackBonusText = "CP+" + instance.cpBonus;
                         break;
                     case "hp":
-                        instance.hpBonus = parseInt(scope.fightDetails.p1_attack2_value);
-                        instance.attackBonusText = "HP+" + (instance.hpBonus * 10);
+                        instance.hpBonus = parseInt(scope.fightDetails.p1_attack2_value) * 10;
+                        instance.attackBonusText = "HP+" + instance.hpBonus;
                         break;
                     default:
                         instance.attackBonusText = "";
@@ -128,15 +128,15 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                         break;
                     case "dp":
                         instance.dpBonus = parseInt(scope.fightDetails.p2_attack2_value);
-                        instance.attackBonusText = "DP+" + instance.apBonus;
+                        instance.attackBonusText = "DP+" + instance.dpBonus;
                         break;
                     case "cp":
                         instance.cpBonus = parseInt(scope.fightDetails.p2_attack2_value);
                         instance.attackBonusText = "CP+" + instance.cpBonus;
                         break;
                     case "hp":
-                        instance.hpBonus = parseInt(scope.fightDetails.p2_attack2_value);
-                        instance.attackBonusText = "HP+" + (instance.hpBonus * 10);
+                        instance.hpBonus = parseInt(scope.fightDetails.p2_attack2_value) * 10;
+                        instance.attackBonusText = "HP+" + instance.hpBonus;
                         break;
                     default:
                         instance.attackBonusText = "";
@@ -153,15 +153,15 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                         break;
                     case "dp":
                         instance.dpBonus = parseInt(scope.fightDetails.p1_attack3_value);
-                        instance.attackBonusText = "DP+" + instance.apBonus;
+                        instance.attackBonusText = "DP+" + instance.dpBonus;
                         break;
                     case "cp":
                         instance.cpBonus = parseInt(scope.fightDetails.p1_attack3_value);
                         instance.attackBonusText = "CP+" + instance.cpBonus;
                         break;
                     case "hp":
-                        instance.hpBonus = parseInt(scope.fightDetails.p1_attack3_value);
-                        instance.attackBonusText = "HP+" + (instance.hpBonus * 10);
+                        instance.hpBonus = parseInt(scope.fightDetails.p1_attack3_value) * 10;
+                        instance.attackBonusText = "HP+" + instance.hpBonus;
                         break;
                     default:
                         instance.attackBonusText = "";
@@ -175,15 +175,15 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                         break;
                     case "dp":
                         instance.dpBonus = parseInt(scope.fightDetails.p2_attack3_value);
-                        instance.attackBonusText = "DP+" + instance.apBonus;
+                        instance.attackBonusText = "DP+" + instance.dpBonus;
                         break;
                     case "cp":
                         instance.cpBonus = parseInt(scope.fightDetails.p2_attack3_value);
                         instance.attackBonusText = "CP+" + instance.cpBonus;
                         break;
                     case "hp":
-                        instance.hpBonus = parseInt(scope.fightDetails.p2_attack3_value);
-                        instance.attackBonusText = "HP+" + (instance.hpBonus * 10);
+                        instance.hpBonus = parseInt(scope.fightDetails.p2_attack3_value) * 10;
+                        instance.attackBonusText = "HP+" + instance.hpBonus;
                         break;
                     default:
                         instance.attackBonusText = "";
@@ -203,7 +203,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param instance : pointer to this
      * @returns {n/a}
      */
-    this.setUltimate = function(damage, instance) {
+    this.setUltimate = function (damage, instance) {
         instance.ultimate += (Math.floor((damage * 100) / instance.totalHealth)) + 10;
     }
 
@@ -217,8 +217,21 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param actualHealth
      * @returns {n/a}
      */
-    this.calculateHealthPercent = function(actualHealth, instance) {
-        instance.healthPercent = Math.floor((actualHealth * 100) / instance.totalHealth);
+    this.calculateHealthPercent = function (actualHealth, instance) {
+        var temp;
+        if (actualHealth >= instance.totalHealth) {
+            instance.totalHealth = actualHealth;
+            temp = 100;
+        } else {
+            temp = Math.floor((actualHealth * 100) / instance.totalHealth);
+            if (temp > 100) {
+                temp = 100;
+            }
+            if (temp < 0) {
+                temp = 0;
+            }
+        }
+        instance.healthPercent = temp;
         $("#p" + instance.playerNumber + "healthBar").css("width", instance.healthPercent + "%");
     }
 
@@ -233,7 +246,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param instance : pointer to this
      * @returns {n/a}
      */
-    this.checkAnimationEvents = function(animationName, currentFrame, instance) {
+    this.checkAnimationEvents = function (animationName, currentFrame, instance) {
         if (animationName == "attack1") {
             if (instance.skinName == "mobot") {
                 if (currentFrame == 9) {
@@ -292,7 +305,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param instance : pointer to this
      * @returns {n/a}
      */
-    this.playAnim = function(animationName, instance) {
+    this.playAnim = function (animationName, instance) {
         var topFrame = instance.animationInfo[animationName];
         //blocks the screen for the animation duration
         if (animationName == "attack1" || animationName == "attack2" ||
@@ -300,25 +313,25 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
             $("#roundWatch").hide();
             $("#roundWatchTitle").hide();
             clearInterval(roundWatch);
-            var animationDuration = topFrame * 80;
+            var animationDuration = topFrame * 60;
             var frameCounter = 0;
             scope.game.showBlockScreen = true;
-            var blockerTimer = setInterval(function() {
-                frameCounter += 80;
+            var blockerTimer = setInterval(function () {
+                frameCounter += 60;
                 if (frameCounter >= animationDuration) {
                     clearInterval(blockerTimer);
                     scope.game.showBlockScreen = false;
                     scope.fightEvents.newRound();
                     scope.processRound();
                 }
-            }, 80);
+            }, 60);
         }
         //starts the animation
         var currentFrame = 1;
         if (this.playerNumber == 1) {
             clearInterval(p1AnimationTimer);
             instance.playerContainer = "p1ImagesContainer";
-            p1AnimationTimer = setInterval(function() {
+            p1AnimationTimer = setInterval(function () {
                 var filePath = "images/animations/" + instance.skinName + "/" +
                         animationName + "/" + (instance.skinName).toUpperCase() +
                         "_" + (animationName).toUpperCase() + "." + putFourDigits(currentFrame) +
@@ -335,11 +348,11 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                     }
                 }
                 currentFrame++;
-            }, 80);
+            }, 60);
         } else {
             clearInterval(p2AnimationTimer);
             instance.playerContainer = "p2ImagesContainer";
-            p2AnimationTimer = setInterval(function() {
+            p2AnimationTimer = setInterval(function () {
                 var filePath = "images/animations/" + instance.skinName + "/" +
                         animationName + "/" + (instance.skinName).toUpperCase() +
                         "_" + (animationName).toUpperCase() + "." + putFourDigits(currentFrame) +
@@ -356,7 +369,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
                     }
                 }
                 currentFrame++;
-            }, 80);
+            }, 60);
         }
     }
 
@@ -371,11 +384,11 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param instance : pointer to this
      * @returns {n/a}
      */
-    this.loadImages = function(skinName, loadWindow, instance) {
+    this.loadImages = function (skinName, loadWindow, instance) {
         this.skinName = skinName;
         var promise = accessService.getData("php/controllers/MainController.php", true, "POST",
                 {controllerType: 3, action: 105, jsonData: {skinName: skinName}});
-        promise.then(function(outputData) {
+        promise.then(function (outputData) {
             instance.animationInfo = {
                 "attack1": 0,
                 "attack2": 0,
@@ -430,7 +443,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param instance : pointer to this
      * @returns {n/a}
      */
-    this.setTooltips = function(instance) {
+    this.setTooltips = function (instance) {
         var toolTip;
         if (instance.playerNumber == 1) {
             toolTip = "p1Tooltip";
@@ -449,7 +462,7 @@ this.Player = function(playerName, playerNumber, accessService, scope) {
      * @param instance : pointer to this
      * @returns {n/a}
      */
-    this.loadPlayerImages = function(instance) {
+    this.loadPlayerImages = function (instance) {
         for (var i = 0; i < instance.animationInfo.length; i++) {
             for (var j = 1; j <= instance.animationInfo[i].numFrames; j++)
                 var imagePath = "images/animations/" + instance.skinName + "/" +

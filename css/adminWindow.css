@@ -25,6 +25,7 @@ body, html{
     padding: 0px;
     min-height: 720px;
     min-width: 1280px;
+    overflow: hidden;
 }
 html{
     background: url(../images/background/login_background.jpg) no-repeat center center fixed; 
@@ -45,6 +46,13 @@ html{
     border-radius: 8px;
     padding: 10px;
 }
+
+.bordered
+{
+    border: 2px solid graytext !important;
+    border-radius: 8px;
+    padding: 10px;
+}
 .semi-color-form
 {
     background-color:  rgba(89,34,240,0.5);
@@ -54,6 +62,138 @@ html{
     color: white;
     line-height: 2.05;
 }
+.tophangarInventoryWindow
+{
+    margin-top: 5px; 
+    background-color: white;
+    
+    border-radius: 5px;
+    padding: 5px;
+}
+#colBtn{
+    position: relative;
+    left: 10vw;
+}
+#colTarget{
+    position: relative;
+    left: 10vw;
+}
+#colValue{
+    position: relative;
+    left: 12vw;
+}
+#colAttribute
+{
+    position: relative;
+    left: 13vw;
+}
+
+#colPrice{
+    position: relative;
+    left: 13vw;
+}
+#colDescription{
+    position: relative;
+    left: 6vw;
+}
+.colDescriptionEdit{ 
+position: relative;
+    left: 0vw;
+    width: 27vw;
+}
+.colPriceEdit{ 
+position: relative;
+    left: 1vw;
+    width: 70px;
+}
+.colBtn{
+    position: relative;
+    left: 1vw;
+}
+.colTarget{
+    position: relative;
+    left: 2vw;
+}
+.colPriceSkill
+{
+    position: relative;
+    left: -5vw;
+}
+.colAttributeSkill
+{
+    position: relative;
+    left: -5vw;
+}
+.colValueSkill
+{
+    position: relative;
+    left: -2vw;
+}
+.colTargetSkill
+{
+    position: relative;
+    left: -1vw;
+}
+.colTargetEdit{
+    position: relative;
+    left: 4vw;
+}
+.colValue{
+    position: relative;
+    left: 1vw;
+}
+.colValueEdit{
+    position: relative;
+    left: 4vw;
+    width: 70px;
+}
+.colAttribute
+{
+    position: relative;
+    left: -1vw;
+}
+.colAttributeEdit
+{
+    position: relative;
+    left: 4vw;
+    
+}
+.colPrice{
+    position: relative;
+    left: 1vw;
+}
+.colDescription{
+    position: relative;
+    left: 1vw;
+}
+
+#colName{
+    position: relative;
+    left: 2vw;
+}
+.colName{
+    position: relative;
+    left: 1vw;
+}
+
+.hangarInventoryWindow
+{
+    margin-top: 3px;
+    height: 38vh;
+    overflow: auto;
+}
+#tableImplants
+{
+    overflow-y: scroll;
+
+}
+table
+{
+    background-color: rgba(89,34,240,0.7);
+    border: none;
+    border-radius: 10px;
+}
+
 #btnCreate
 {
     width: 97.6%;
@@ -95,6 +235,11 @@ select
     -webkit-box-shadow: 5px 5px 13px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 5px 5px 13px 0px rgba(0,0,0,0.75);
     box-shadow: 5px 5px 13px 0px rgba(0,0,0,0.75);
+}
+h3
+{
+    font-weight: bold;
+    font-family: "Space";
 }
 .loginLabel{
     font-weight: bold;
@@ -245,4 +390,10 @@ label{
 }
 .registerButton:hover{
     background-color: blue;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
